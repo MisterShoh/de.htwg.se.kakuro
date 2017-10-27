@@ -1,8 +1,8 @@
-package de.htwg.se.yourgame
+package de.htwg.se.kakuro
 
-import de.htwg.se.yourgame.model.Player
+import de.htwg.se.kakuro.model.Player
 
-object YourGame {
+object Kakuro {
   def main(args: Array[String]): Unit = {
     val student = Player("Your Name")
     println("Hello, " + student.name)

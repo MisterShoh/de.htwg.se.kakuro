@@ -1,6 +1,5 @@
-package de.htwg.se.yourgame.model
+package de.htwg.se.kakuro.model
 
 case class Player(name: String) {
    override def toString:String = name
 }
-
