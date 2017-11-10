@@ -1,6 +1,6 @@
 package de.htwg.se.kakuro.model
 
-case class WhiteCell extends Cell{
+class WhiteCell extends Cell(value: Int){
   
   def isSet: Boolean = value != 0
   def rowSum: Sum

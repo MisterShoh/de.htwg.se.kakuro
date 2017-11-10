@@ -1,5 +1,5 @@
 package de.htwg.se.kakuro.model
 
-case class Cell(value: Int) {
+case class Cell() {
   def pos: (Int, Int)
 }
