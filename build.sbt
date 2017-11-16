@@ -6,6 +6,8 @@ scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf
 
 resolvers += Resolver.jcenterRepo
 
+scalaSource in Compile := baseDirectory.value / "src/de/htwg/se/kakuro"
+
 libraryDependencies ++= {
   val scalaTestV       = "3.0.1"
   val scalaMockV       = "3.2.2"
