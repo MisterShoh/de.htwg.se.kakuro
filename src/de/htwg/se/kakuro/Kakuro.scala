@@ -11,11 +11,14 @@ object Kakuro {
     //create Array with ofDim()
     //Cant pass objects
     var field = Field(9, 9)
+
+    field.initField()
     field.printField()
-    //print(field)
+    /*print(field)
     var cell = new Cell(111111)
     print(cell.getValue)
     var fieldOfCells: Array[Array[Cell]] = Array(Array(new Cell(111111), new Cell(21), new Cell(6756754)))
     print(fieldOfCells)
+    */
   }
 }
