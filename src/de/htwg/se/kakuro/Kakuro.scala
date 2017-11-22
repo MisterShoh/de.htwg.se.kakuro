@@ -14,6 +14,7 @@ object Kakuro {
 
     field.initField()
     field.printField()
+    /*
     println("+--+--+--+--+--+--+--+--+")
     println("|##|##|##|##|##|##|##|##|")
     println("|##|23|30|##|##|27|12|16|")
@@ -39,6 +40,7 @@ object Kakuro {
     println("| 6>  |  |  |##| 3>  |  |")
     println("|##|**|**|**|##|##|**|**|")
     println("+--+--+--+--+--+--+--+--+")
+    */
     /*print(field)
     var cell = new Cell(111111)
     print(cell.getValue)

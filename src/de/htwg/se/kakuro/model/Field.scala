@@ -6,13 +6,27 @@ case class Field(height: Int, width: Int) {
   var field = Array.ofDim[Cell](height, width)
 
   def printField(): Unit = {
-    for (i <- 0 to field.length - 1) {
-      for (j <- 0 to field(i).length - 1) {
-        print(i + "/" + j + ":")
-        print(field(i)(j))
-        print(" ")
+    var flength = field.length - 1
+    //loop 1
+    for (i <- 0 to flength) {
+      if (i == 0) { // print first line
+        println("+--+--+--+--+--+--+--+--+--+")
       }
-      println()
+
+      //loop 
+      for (j <- 0 to field(i).length - 1) {
+        if (j == 0) { // first char of line
+          print("|")
+        }
+        if (j != 0 || j != field(i).length - 1) // everything in the middle
+          print("## ")
+        if (j == field(i).length - 1) { // last char of line
+          print("|\n")
+        }
+      }
+      if (i == flength) { // print last line
+        println("+--+--+--+--+--+--+--+--+--+\n")
+      }
     }
   }
 
