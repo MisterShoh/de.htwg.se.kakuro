@@ -1,0 +1,7 @@
+black cell:
+- empty
+- valueRight
+- valueDown
+- valueRight, valueDown
+
+
