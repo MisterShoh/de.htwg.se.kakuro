@@ -11,19 +11,6 @@ case class Cell(rowValue: Int, colValue: Int) {
   def getPosition(): (Int, Int) = {
     return (rowVal, colVal)
   }
-
-  def printCell(): Unit = {
-    /*Case left or right site:
-    if (colVal == 0 || colVal == 7) {
- 		print("+--+\n")
- 		print("    \n")
- 		print("    \n")
- 		print("+--+\n")
-
-    }*/
-    print(rowVal, colVal)
-  }
-
   def toStringRight(): String = {
 
     if (whiteCell) {
