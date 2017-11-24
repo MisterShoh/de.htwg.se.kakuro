@@ -1,0 +1,22 @@
+sbt // Start session
+
+show settings
+show name
+show scalaVersion
+show organization
+
+apply settings
+set organization := "BlaBlub"  
+set version :="2.8-SNAPSHOT"
+
+session save // save session
+
+compile // compiles project
+
+~compile // compiler waits for file changes and recompiles if saved YAY
+
+console // starts scala console BUT with ALL files from Project and Third party libs
+
+Add third party lib:
+add the line "libraryDependencies += 'THIRDPARTYLIB'" to the 
+build.sbt file

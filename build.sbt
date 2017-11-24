@@ -1,10 +1,12 @@
-name          := "Kakuro in Scala"
+name          := "htwg-scala-kakuro"
 organization  := "de.htwg.se"
 version       := "0.0.1"
-scalaVersion  := "2.12.3"
+scalaVersion  := "2.11.8"
 scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
 
 resolvers += Resolver.jcenterRepo
+
+scalaSource in Compile := baseDirectory.value / "src/de/htwg/se/kakuro"
 
 libraryDependencies ++= {
   val scalaTestV       = "3.0.1"
