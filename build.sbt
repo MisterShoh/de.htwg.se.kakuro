@@ -1,7 +1,7 @@
-name          := "htwg-scala-seed"
+name          := "Kakuro in Scala"
 organization  := "de.htwg.se"
 version       := "0.0.1"
-scalaVersion  := "2.11.8"
+scalaVersion  := "2.12.3"
 scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
 
 resolvers += Resolver.jcenterRepo
