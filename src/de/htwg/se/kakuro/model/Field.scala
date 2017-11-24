@@ -5,35 +5,39 @@ case class Field(height: Int, width: Int) {
 
   var field = Array.ofDim[Cell](height, width)
 
-  def printField(): Unit = {
+  override def toString(): String = {
+    var result: String = "+--+--+--+--+--+--+--+--+\n"
     var flength = field.length - 1
-    //loop 1
-    for (i <- 0 to flength) {
-      if (i == 0) { // print first line
-        println("+--+--+--+--+--+--+--+--+--+")
-      }
-
-      //loop 
-      for (j <- 0 to field(i).length - 1) {
-        if (j == 0) { // first char of line
-          print("|")
-        }
-        if (j != 0 || j != field(i).length - 1) // everything in the middle
-          print("## ")
-        if (j == field(i).length - 1) { // last char of line
-          print("|\n")
-        }
-      }
-      if (i == flength) { // print last line
-        println("+--+--+--+--+--+--+--+--+--+\n")
-      }
+    for (j <- 0 to height - 1) {
+      result += stringRow(j)
     }
+    return result
   }
 
+  def stringRow(row: Int): String = {
+
+    var result: String = "|"
+    for (i <- 0 to field(row).length - 1) {
+      result += field(row)(i).toStringRight
+      result += "|"
+    }
+    result += "\n|"
+    for (i <- 0 to field(row).length - 1) {
+      result += field(row)(i).toStringDown
+      result += "|"
+    }
+    result += "\n+"
+    for (i <- 0 to field(row).length - 1) {
+      result += "--+"
+    }
+    result += "\n"
+    return result
+  }
   def initField(): Unit = {
     for (i <- 0 to field.length - 1) {
       for (j <- 0 to field(i).length - 1) {
-        field(i)(j) = new Cell(i)
+        field(i)(j) = new Cell(i, j)
+        field(i)(j).whiteCell = true
       }
     }
   }
