@@ -3,12 +3,18 @@ package de.htwg.se.kakuro
 import de.htwg.se.kakuro.model.Player
 import de.htwg.se.kakuro.model.Field
 import de.htwg.se.kakuro.model.Cell
+import de.htwg.se.kakuro.controller.Controller
 
 object Kakuro {
   def main(args: Array[String]): Unit = {
-    var field = Field(8, 8)
-    field.initField()
-    println(field)
+    var field = new Field(8, 8)
+    //field.initField()
+    val controller = new Controller(field)
+    controller.createSampleField()
+
+    //println("$$$$$$$$$$$$$$$$$$$$$$$$")
+
+    println(controller.field)
     /*
     println("+--+--+--+--+--+--+--+--+")
     println("|##|##|##|##|##|##|##|##|")

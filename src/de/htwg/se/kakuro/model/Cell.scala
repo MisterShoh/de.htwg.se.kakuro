@@ -27,30 +27,31 @@ case class Cell(rowValue: Int, colValue: Int) {
   def toStringRight(): String = {
 
     if (whiteCell) {
-      return ("  ")
+      return "  "
     } else {
-      if (valueRight < 10) {
-        return valueRight.toString
+      if (valueRight <= 0) {
+        return "##"
       } else {
-        if (valueRight > 0) {
-          return (" " + valueRight)
+        if (valueRight < 10) {
+          return " " + valueRight
         } else {
-          return ("##")
+          return valueRight.toString
         }
       }
     }
   }
+
   def toStringDown(): String = {
     if (whiteCell) {
-      return ("**")
+      return Console.REVERSED + "**" + Console.RESET
     } else {
-      if (valueDown < 10) {
-        return valueDown.toString
+      if (valueDown <= 0) {
+        return "##"
       } else {
-        if (valueDown > 0) {
-          return (" " + valueDown)
+        if (valueDown < 10) {
+          return " " + valueDown
         } else {
-          return ("##")
+          return valueDown.toString
         }
       }
     }
