@@ -12,7 +12,8 @@ object Kakuro {
     val controller = new Controller(field)
     controller.createSampleField()
 
-    //println("$$$$$$$$$$$$$$$$$$$$$$$$")
+    //
+    // println("$$$$$$$$$$$$$$$$$$$$$$$$")
 
     println(controller.field)
     /*
