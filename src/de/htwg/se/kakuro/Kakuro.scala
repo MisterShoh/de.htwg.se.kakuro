@@ -7,8 +7,11 @@ import de.htwg.se.kakuro.controller.Controller
 
 object Kakuro {
   def main(args: Array[String]): Unit = {
-    var field = new Field(8, 8)
+    //var field = new Field(8, 8)
     //field.initField()
+    //println(field)
+
+    var field = Field(8, 8)
     val controller = new Controller(field)
     controller.createSampleField()
 
@@ -43,5 +46,6 @@ object Kakuro {
     println("|##|**|**|**|##|##|**|**|")
     println("+--+--+--+--+--+--+--+--+")
     */
+    
   }
 }

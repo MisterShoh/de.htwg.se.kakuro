@@ -6,7 +6,9 @@ case class Field(height: Int, width: Int) {
   var field = Array.ofDim[Cell](height, width)
 
   override def toString(): String = {
-    var result: String = "+--+--+--+--+--+--+--+--+\n"
+
+    var result: String = " 0  1  2  3  4  5  6  7\n"
+    result += "+--+--+--+--+--+--+--+--+\n"
     var flength = field.length - 1
     for (j <- 0 until height) {
       result += stringRow(j)
@@ -35,7 +37,7 @@ case class Field(height: Int, width: Int) {
       result += field(row)(i).toStringRight
       result += "|"
     }
-    result += "\n|"
+    result += " " + row +"\n|"
     for (i <- field(row).indices) {
       result += field(row)(i).toStringDown
       result += "|"

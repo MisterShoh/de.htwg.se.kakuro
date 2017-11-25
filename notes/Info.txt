@@ -1,0 +1,10 @@
+black cell:
+- empty
+- valueRight
+- valueDown
+- valueRight, valueDown
+
+
+Sum:
+- every Cell has a sum
+- every sum has a cell
