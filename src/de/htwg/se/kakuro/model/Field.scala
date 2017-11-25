@@ -37,7 +37,7 @@ case class Field(height: Int, width: Int) {
       result += field(row)(i).toStringRight
       result += "|"
     }
-    result += " " + row +"\n|"
+    result += " " + row + "\n|"
     for (i <- field(row).indices) {
       result += field(row)(i).toStringDown
       result += "|"
