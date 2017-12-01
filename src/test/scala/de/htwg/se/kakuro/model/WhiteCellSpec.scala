@@ -12,11 +12,11 @@ class WhiteCellSpec extends WordSpec with Matchers {
       "have value 0" in {
         emptyCell.whiteCellValue should be(0)
       }
-      /*
+
       "not be set" in {
         emptyCell.isSet should be(false)
       }
-      */
+
     }
     "set to a specific value" should {
       val nonEmptyCell = Cell(0,0)
@@ -24,11 +24,10 @@ class WhiteCellSpec extends WordSpec with Matchers {
       "return that value" in {
         nonEmptyCell.whiteCellValue should be(5)
       }
-      /*
+
       "be set" in {
         nonEmptyCell.isSet should be(true)
       }
-      */
     }
   }
 
