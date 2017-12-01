@@ -12,13 +12,20 @@ object Kakuro {
     var field = Field(8, 8)
     val controller = new Controller(field)
     field = controller.initField()
-    println(field)
     val tui = new Tui(field)
     while (break) {
-      val input = scala.io.StdIn.readLine()
-      println("Did you type this ? " + input)
-
-      if (input == "exit") break = false; println("Exit")
+      println(field)
+      println("Wert setzen:s col,row,value")
+      var input = scala.io.StdIn.readLine()
+      if (input.startsWith("s")) {
+        var values = input.split(",")
+        var row = values(0).split(" ")(1).toInt
+        var col = values(1).toInt
+        var value = values(2).toInt
+        var check = controller.set(row,col,value)
+        println(check)
+      }
+      if (input == "exit") break = false;
     }
   }
 }
