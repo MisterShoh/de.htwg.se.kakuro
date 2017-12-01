@@ -6,24 +6,29 @@ import org.scalatest.{Matchers, WordSpec}
 @RunWith(classOf[JUnitRunner])
 class WhiteCellSpec extends WordSpec with Matchers {
 
-  "A WhiteCell" when {
+  "A Cell" when {
     "not set to any value " should {
-      val emptyCell = WhiteCell(0)
+      val emptyCell = Cell(0,0)
       "have value 0" in {
-        emptyCell.value should be(0)
+        emptyCell.whiteCellValue should be(0)
       }
+      /*
       "not be set" in {
         emptyCell.isSet should be(false)
       }
+      */
     }
     "set to a specific value" should {
-      val nonEmptyCell = WhiteCell(5)
+      val nonEmptyCell = Cell(0,0)
+      nonEmptyCell.whiteCellValue = 5
       "return that value" in {
-        nonEmptyCell.value should be(5)
+        nonEmptyCell.whiteCellValue should be(5)
       }
+      /*
       "be set" in {
         nonEmptyCell.isSet should be(true)
       }
+      */
     }
   }
 
