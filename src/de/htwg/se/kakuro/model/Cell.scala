@@ -23,6 +23,7 @@ case class Cell(row: Int, colValue: Int) {
   def getPosition(): (Int, Int) = {
     (rowVal, colVal)
   }
+
   def toStringRight(): String = {
 
     if (whiteCell) {
@@ -30,9 +31,9 @@ case class Cell(row: Int, colValue: Int) {
         Console.REVERSED + "  " + Console.RESET
       else {
         if (valueRight < 10)
-          whiteCellValue.toString
+          Console.REVERSED +" "+ whiteCellValue.toString + Console.RESET
         else
-          " "+ whiteCellValue
+          Console.REVERSED + whiteCellValue + Console.RESET
       }
     } else {
       if (valueRight <= 0) {
