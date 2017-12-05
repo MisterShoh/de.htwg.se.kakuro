@@ -1,5 +1,7 @@
-package de.htwg.se.kakuro
+package de.htwg.se.kakuro.aview
 
-class Tui() {
+import de.htwg.se.kakuro.model.{ Field, Cell }
+
+class Tui(var field: Field) {
 
 }

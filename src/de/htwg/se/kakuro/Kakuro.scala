@@ -4,48 +4,28 @@ import de.htwg.se.kakuro.model.Player
 import de.htwg.se.kakuro.model.Field
 import de.htwg.se.kakuro.model.Cell
 import de.htwg.se.kakuro.controller.Controller
+import de.htwg.se.kakuro.aview.Tui
 
 object Kakuro {
   def main(args: Array[String]): Unit = {
-    //var field = new Field(8, 8)
-    //field.initField()
-    //println(field)
-
+    var break = true;
     var field = Field(8, 8)
     val controller = new Controller(field)
-    controller.createSampleField()
-
-    //
-    // println("$$$$$$$$$$$$$$$$$$$$$$$$")
-
-    println(controller.field)
-    /*
-    println("+--+--+--+--+--+--+--+--+")
-    println("|##|##|##|##|##|##|##|##|")
-    println("|##|23|30|##|##|27|12|16|")
-    println("+--+vv+vv+--+--+vv+vv+vv+")
-    println("|16>  |  |##|24>  |  |  |")
-    println("|##|**|**|##|17|**|**|**|")
-    println("+--+--+--+--+vv+--+--+--+")
-    println("|17>  |  |29>  |  |  |  |")
-    println("|##|**|**|15|**|**|**|**|")
-    println("+--+--+--+vv+--+--+--+--+")
-    println("|35>  |  |  |  |  |##|##|")
-    println("|##|**|**|**|**|**|12|##|")
-    println("+--+--+--+--+--+--+vv+--+")
-    println("|##| 7>  |  | 8>  |  |##|")
-    println("|##|##|**|**| 7|**|**| 7|")
-    println("+--+--+--+--+vv+--+--+vv+")
-    println("|##|##|16>  |  |  |  |  |")
-    println("|##|11|10|**|**|**|**|**|")
-    println("+--+vv+vv+--+--+--+--+--+")
-    println("|21>  |  |  |  | 5>  |  |")
-    println("|##|**|**|**|**|##|**|**|")
-    println("+--+--+--+--+--+--+--+--+")
-    println("| 6>  |  |  |##| 3>  |  |")
-    println("|##|**|**|**|##|##|**|**|")
-    println("+--+--+--+--+--+--+--+--+")
-    */
-
+    field = controller.initField()
+    val tui = new Tui(field)
+    while (break) {
+      println(field)
+      println("Wert setzen:s col,row,value")
+      var input = scala.io.StdIn.readLine()
+      if (input.startsWith("s")) {
+        var values = input.split(",")
+        var row = values(0).split(" ")(1).toInt
+        var col = values(1).toInt
+        var value = values(2).toInt
+        var check = controller.set(row,col,value)
+        println(check)
+      }
+      if (input == "exit") break = false;
+    }
   }
 }
