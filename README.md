@@ -1,3 +1,5 @@
+https://travis-ci.org/AvasDream/de.htwg.se.kakuro.svg?branch=master
+
 htwg-scala-kakuro
 =========================
 
