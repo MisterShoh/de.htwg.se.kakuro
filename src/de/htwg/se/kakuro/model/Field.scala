@@ -20,7 +20,7 @@ case class Field(height: Int, width: Int) {
     field(row)(col).whiteCell = true
   }
 
-  def initCell(row: Int, col: Int, value:Int): Unit = {
+  def initCell(row: Int, col: Int, value: Int): Unit = {
     field(row)(col) = Cell(row, col)
     field(row)(col).whiteCell = true
     field(row)(col).whiteCellValue = value;
@@ -32,7 +32,7 @@ case class Field(height: Int, width: Int) {
     field(row)(col).valueRight = right
     field(row)(col).whiteCell = false
   }
-  def cell(row: Int,col:Int): Cell = {
+  def cell(row: Int, col: Int): Cell = {
     field(row)(col)
   }
   def stringRow(row: Int): String = {
