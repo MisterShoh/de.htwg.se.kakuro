@@ -11,11 +11,11 @@ case class Cell(row: Int, colValue: Int) {
   def isSet: Boolean = whiteCellValue != 0
 
   def this(value: Int) = {
-    this(0,0)
+    this(0, 0)
     this.whiteCellValue = value
   }
 
-  def set(value:Int):Cell={
+  def set(value: Int): Cell = {
     whiteCellValue = value
     this
   }
@@ -27,13 +27,14 @@ case class Cell(row: Int, colValue: Int) {
   def toStringRight(): String = {
 
     if (whiteCell) {
-      if(whiteCellValue == 0)
+      if (whiteCellValue == 0) {
         Console.REVERSED + "  " + Console.RESET
-      else {
-        if (valueRight < 10)
-          Console.REVERSED +" "+ whiteCellValue.toString + Console.RESET
-        else
+      } else {
+        if (valueRight < 10) {
+          Console.REVERSED + " " + whiteCellValue.toString + Console.RESET
+        } else {
           Console.REVERSED + whiteCellValue + Console.RESET
+        }
       }
     } else {
       if (valueRight <= 0) {

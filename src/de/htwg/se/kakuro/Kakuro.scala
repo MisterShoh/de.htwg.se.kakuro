@@ -22,7 +22,7 @@ object Kakuro {
         var row = values(0).split(" ")(1).toInt
         var col = values(1).toInt
         var value = values(2).toInt
-        var check = controller.set(row,col,value)
+        var check = controller.set(row, col, value)
         println(check)
       }
       if (input == "exit") break = false;
