@@ -18,3 +18,5 @@ libraryDependencies ++= {
 }
 
 libraryDependencies += "junit" % "junit" % "4.8" % "test"
+
+libraryDependencies += "org.scala-lang" % "scala-swing" % "2.11+"

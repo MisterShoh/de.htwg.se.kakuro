@@ -1,14 +1,18 @@
 package de.htwg.se.kakuro.aview
 
-import de.htwg.se.kakuro.model.{ Field, Cell }
+import de.htwg.se.kakuro.model.{Cell, Field}
 import de.htwg.se.kakuro.controller.Controller
+
+import scala.swing.Reactor
 // https://www.safaribooksonline.com/library/view/scala-cookbook/9781449340292/
-class Tui(var field: Field) {
-  /* 
+class Tui(controller: Controller) extends Reactor {
+
+  listenTo(controller)
+  /*
 	reset,create,solve,undo,redo
 	check
 	*/
-  def handleInput(input: String, controller: Controller): Boolean = {
+  def handleInput(input: String): Boolean = {
     var firstChar = input.charAt(0)
     firstChar = firstChar.toChar
     firstChar match {
