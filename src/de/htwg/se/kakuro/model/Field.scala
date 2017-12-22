@@ -1,9 +1,12 @@
 package de.htwg.se.kakuro.model
 import de.htwg.se.kakuro.model.Cell
+import scala.collection.mutable.ListBuffer
 
 case class Field(height: Int, width: Int) {
 
   var field = Array.ofDim[Cell](height, width)
+  var whiteCells = ListBuffer[Cell]
+  var blackCells = ListBuffer[Cell]
 
   override def toString(): String = {
     var result: String = " 0  1  2  3  4  5  6  7\n"
@@ -16,9 +19,9 @@ case class Field(height: Int, width: Int) {
   }
 
   def initCell(row: Int, col: Int): Unit = {
-    field(row)(col) = Cell(row, col)
+    field(row)(col) = Cell(row,col)
     field(row)(col).whiteCell = true
-  }
+    }
 
   def initCell(row: Int, col: Int, value: Int): Unit = {
     field(row)(col) = Cell(row, col)
@@ -35,6 +38,8 @@ case class Field(height: Int, width: Int) {
   def cell(row: Int, col: Int): Cell = {
     field(row)(col)
   }
+
+  //def cells():
   def stringRow(row: Int): String = {
     var result: String = "|"
     for (i <- field(row).indices) {

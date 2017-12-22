@@ -1,7 +1,8 @@
 package de.htwg.se.kakuro.controller
 
-import de.htwg.se.kakuro.model.{ Field, Cell, FieldCreator }
-import de.htwg.se.kakuro.util.Observable
+import de.htwg.se.kakuro.model.{Cell, Field, FieldCreator}
+import util.Observable
+
 import scala.swing.Publisher
 
 class Controller(var field: Field) extends Publisher {

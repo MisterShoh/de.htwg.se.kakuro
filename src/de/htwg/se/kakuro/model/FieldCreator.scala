@@ -1,7 +1,7 @@
 package de.htwg.se.kakuro.model
 
-import de.htwg.se.kakuro.model.{ Field, Cell }
-import de.htwg.se.kakuro.util.Observable
+import de.htwg.se.kakuro.model.{Cell, Field}
+import util.Observable
 
 class FieldCreator() extends Observable {
 
@@ -16,6 +16,16 @@ class FieldCreator() extends Observable {
     notifyObservers
     return field
   }
+
+  /*
+  def createSums(field: Field): List[Sum] ={
+    val sums:List[Sum] // = new List[Sum]
+    //for (cell <- field.field { }
+
+    return sums
+  }
+  */
+
   def fillSampleField(field: Field): Field = {
     field.initCell(0, 0, 0, 0)
     field.initCell(0, 1, 0, 23)
