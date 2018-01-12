@@ -5,27 +5,20 @@ import de.htwg.se.kakuro.model.Field
 import de.htwg.se.kakuro.model.Cell
 import de.htwg.se.kakuro.controller.Controller
 import de.htwg.se.kakuro.aview.Tui
-
 object Kakuro {
   def main(args: Array[String]): Unit = {
-    var break = true;
     var field = Field(8, 8)
     val controller = new Controller(field)
     field = controller.initField()
-    val tui = new Tui(field)
-    while (break) {
+    val tui = new Tui(controller)
+    var input: String = ""
+    do {
       println(field)
-      println("Wert setzen:s col,row,value")
-      var input = scala.io.StdIn.readLine()
-      if (input.startsWith("s")) {
-        var values = input.split(",")
-        var row = values(0).split(" ")(1).toInt
-        var col = values(1).toInt
-        var value = values(2).toInt
-        var check = controller.set(row, col, value)
-        println(check)
-      }
-      if (input == "exit") break = false;
-    }
+      println("Wert setzen/ändern: s col row value")
+      input = scala.io.StdIn.readLine()
+      var output = true
+      if (input != "exit") output = tui.handleInput(input.toString)
+      if (output == false) println("Falsche Eingabe!")
+    } while (input != "exit")
   }
 }

@@ -20,6 +20,12 @@ case class Field(height: Int, width: Int) {
     field(row)(col).whiteCell = true
   }
 
+  def initCell(row: Int, col: Int, value: Int): Unit = {
+    field(row)(col) = Cell(row, col)
+    field(row)(col).whiteCell = true
+    field(row)(col).whiteCellValue = value;
+  }
+
   def initCell(row: Int, col: Int, right: Int, down: Int): Unit = {
     field(row)(col) = Cell(row, col)
     field(row)(col).valueDown = down

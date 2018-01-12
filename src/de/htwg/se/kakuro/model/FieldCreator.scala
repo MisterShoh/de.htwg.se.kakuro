@@ -26,7 +26,7 @@ class FieldCreator() extends Observable {
     field.initCell(0, 6, 0, 12)
     field.initCell(0, 7, 0, 16)
     field.initCell(1, 0, 16, 0)
-    field.initCell(1, 1)
+    field.initCell(1, 1, 5)
     field.initCell(1, 2)
     field.initCell(1, 3, 0, 0)
     field.initCell(1, 4, 24, 17)
