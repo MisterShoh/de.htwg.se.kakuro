@@ -12,8 +12,8 @@ class Controller(var field: Field) extends Observable {
     return field
   }
   def set(row: Int, col: Int, value: Int): Boolean = {
-    if(field.cell(row,col).whiteCell) {
-      field.cell(row,col).whiteCellValue = value
+    if (field.cell(row, col).whiteCell) {
+      field.cell(row, col).whiteCellValue = value
       return true
     } else {
       return false

@@ -26,7 +26,7 @@ case class Field(height: Int, width: Int) {
     field(row)(col).valueRight = right
     field(row)(col).whiteCell = false
   }
-  def cell(row: Int,col:Int): Cell = {
+  def cell(row: Int, col: Int): Cell = {
     field(row)(col)
   }
   def stringRow(row: Int): String = {
