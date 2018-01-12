@@ -1,28 +1,49 @@
 package de.htwg.se.kakuro.model
 
-case class Cell(rowValue: Int, colValue: Int) {
+case class Cell(row: Int, colValue: Int) {
   var whiteCell: Boolean = false;
-  var rowVal: Int = rowValue;
+  var rowVal: Int = row;
   var colVal: Int = colValue;
   var valueRight: Int = 0;
   var valueDown: Int = 0;
   var whiteCellValue: Int = 0;
 
-  def getPosition(): (Int, Int) = {
-    return (rowVal, colVal)
+  def isSet: Boolean = whiteCellValue != 0
+
+  def this(value: Int) = {
+    this(0, 0)
+    this.whiteCellValue = value
   }
+
+  def set(value: Int): Cell = {
+    whiteCellValue = value
+    this
+  }
+
+  def getPosition(): (Int, Int) = {
+    (rowVal, colVal)
+  }
+
   def toStringRight(): String = {
 
     if (whiteCell) {
-      return "  "
-    } else {
-      if (valueRight <= 0) {
-        return "##"
+      if (whiteCellValue == 0) {
+        Console.REVERSED + "  " + Console.RESET
       } else {
         if (valueRight < 10) {
-          return " " + valueRight
+          Console.REVERSED + " " + whiteCellValue.toString + Console.RESET
         } else {
-          return valueRight.toString
+          Console.REVERSED + whiteCellValue + Console.RESET
+        }
+      }
+    } else {
+      if (valueRight <= 0) {
+        "##"
+      } else {
+        if (valueRight < 10) {
+          " " + valueRight
+        } else {
+          valueRight.toString
         }
       }
     }
@@ -30,15 +51,15 @@ case class Cell(rowValue: Int, colValue: Int) {
 
   def toStringDown(): String = {
     if (whiteCell) {
-      return Console.REVERSED + "**" + Console.RESET
+      Console.REVERSED + "**" + Console.RESET
     } else {
       if (valueDown <= 0) {
-        return "##"
+        "##"
       } else {
         if (valueDown < 10) {
-          return " " + valueDown
+          " " + valueDown
         } else {
-          return valueDown.toString
+          valueDown.toString
         }
       }
     }

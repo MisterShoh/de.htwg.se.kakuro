@@ -6,7 +6,6 @@ case class Field(height: Int, width: Int) {
   var field = Array.ofDim[Cell](height, width)
 
   override def toString(): String = {
-
     var result: String = " 0  1  2  3  4  5  6  7\n"
     result += "+--+--+--+--+--+--+--+--+\n"
     var flength = field.length - 1
@@ -18,9 +17,13 @@ case class Field(height: Int, width: Int) {
 
   def initCell(row: Int, col: Int): Unit = {
     field(row)(col) = Cell(row, col)
-    //field(row)(col).valueDown = 0
-    //field(row)(col).valueRight = 0
     field(row)(col).whiteCell = true
+  }
+
+  def initCell(row: Int, col: Int, value: Int): Unit = {
+    field(row)(col) = Cell(row, col)
+    field(row)(col).whiteCell = true
+    field(row)(col).whiteCellValue = value;
   }
 
   def initCell(row: Int, col: Int, right: Int, down: Int): Unit = {
@@ -29,9 +32,10 @@ case class Field(height: Int, width: Int) {
     field(row)(col).valueRight = right
     field(row)(col).whiteCell = false
   }
-
+  def cell(row: Int, col: Int): Cell = {
+    field(row)(col)
+  }
   def stringRow(row: Int): String = {
-
     var result: String = "|"
     for (i <- field(row).indices) {
       result += field(row)(i).toStringRight
@@ -57,19 +61,6 @@ case class Field(height: Int, width: Int) {
         field(i)(j).whiteCell = true
       }
     }
-    field(4)(5) = Cell(4, 5)
-    field(4)(5).valueRight = 0
-    field(4)(5).valueDown = 0
-    field(4)(5).whiteCell = false
-    field(3)(5) = Cell(3, 5)
-    field(3)(5).valueRight = 15
-    field(3)(5).valueDown = 0
-    field(3)(5).whiteCell = false
-    field(4)(4) = Cell(4, 4)
-    field(4)(4).valueRight = 0
-    field(4)(4).valueDown = 23
-    field(4)(4).whiteCell = false
-
   }
 
 }
