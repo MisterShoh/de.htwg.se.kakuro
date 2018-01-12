@@ -1,6 +1,6 @@
 package de.htwg.se.kakuro.aview
 
-import de.htwg.se.kakuro.model.{Cell, Field}
+import de.htwg.se.kakuro.model.{ Cell, Field }
 import de.htwg.se.kakuro.controller.Controller
 
 import scala.swing.Reactor
