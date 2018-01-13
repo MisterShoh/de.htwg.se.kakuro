@@ -18,5 +18,6 @@ libraryDependencies ++= {
 }
 
 libraryDependencies += "junit" % "junit" % "4.8" % "test"
-
+libraryDependencies += "org.apache.logging.log4j" % "log4j-api" % "2.10.0"
+libraryDependencies += "org.apache.logging.log4j" % "log4j-core" % "2.10.0"
 libraryDependencies += "org.scala-lang" % "scala-swing" % "2.11+"

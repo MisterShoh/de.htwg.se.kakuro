@@ -1,9 +1,12 @@
 package de.htwg.se.kakuro.model
 import de.htwg.se.kakuro.model.Cell
+import org.apache.logging.log4j.Logger
+import org.apache.logging.log4j.LogManager
 
 case class Field(height: Int, width: Int) {
 
   var field = Array.ofDim[Cell](height, width)
+  val logger = LogManager.getLogger(this.getClass.getName)
 
   override def toString(): String = {
     var result: String = " 0  1  2  3  4  5  6  7\n"

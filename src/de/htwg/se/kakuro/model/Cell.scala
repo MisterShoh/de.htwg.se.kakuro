@@ -1,6 +1,8 @@
 package de.htwg.se.kakuro.model
-
+import org.apache.logging.log4j.Logger
+import org.apache.logging.log4j.LogManager
 case class Cell(row: Int, colValue: Int) {
+  val logger = LogManager.getLogger(this.getClass.getName)
   var whiteCell: Boolean = false;
   var rowVal: Int = row;
   var colVal: Int = colValue;
