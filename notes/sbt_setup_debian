@@ -1,0 +1,35 @@
+Tested on Debian Kernel 4.13.4 amd64
+
+
+Install sbt:
+echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
+sudo apt-get update
+sudo apt-get install sbt
+
+Start sbt:
+sbt 
+
+IF -> SBT Error: “Failed to construct terminal; falling back to unsupported…”
+THEN -> if $TERM = xterm-256color 
+set $TERM var to:
+export TERM=xterm-color
+*if you want these changes to be persistent add line to .bashrc file
+
+All sourcefiles need to be placed under
+src/main/scala/
+Or you can change the default source folder in the build.sbt file
+scalaSource in Compile := baseDirectory.value / "src/de/htwg/se/kakuro"
+
+
+Expected results from first commands:
+> show name
+[info] htwg-scala-seed
+> show scalaVersion
+[info] 2.11.8
+
+
+Sources:
+https://www.youtube.com/watch?v=dF9l15WMrxg
+http://www.scala-sbt.org/1.x/docs/Getting-Started.html
+http://www.scala-sbt.org/1.x/docs/Howto-Customizing-Paths.html

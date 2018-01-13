@@ -1,10 +1,12 @@
-name          := "htwg-scala-seed"
+name          := "htwg-scala-kakuro"
 organization  := "de.htwg.se"
 version       := "0.0.1"
 scalaVersion  := "2.11.8"
 scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
 
 resolvers += Resolver.jcenterRepo
+
+scalaSource in Compile := baseDirectory.value / "src/de/htwg/se/kakuro"
 
 libraryDependencies ++= {
   val scalaTestV       = "3.0.1"
@@ -16,3 +18,5 @@ libraryDependencies ++= {
 }
 
 libraryDependencies += "junit" % "junit" % "4.8" % "test"
+
+libraryDependencies += "org.scala-lang" % "scala-swing" % "2.11+"
