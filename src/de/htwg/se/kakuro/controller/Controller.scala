@@ -1,13 +1,33 @@
 package de.htwg.se.kakuro.controller
 
-import de.htwg.se.kakuro.model.{ Field, Cell, FieldCreator }
+import de.htwg.se.kakuro.model.{ Cell, Field, FieldCreator }
 import de.htwg.se.kakuro.util.Observable
+import de.htwg.se.kakuro.util.UndoManager
+
 import scala.swing.Publisher
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
 
 class Controller(var field: Field) extends Publisher {
   val logger = LogManager.getLogger(this.getClass.getName)
+
+  private val undoManager = new UndoManager
+  //var gameStatus: GameStatus = IDLE
+
+  /*
+  def undo: Unit = {
+    undoManager.undoStep
+    gameStatus = UNDO
+    publish(new CellChanged)
+  }
+
+  def redo: Unit = {
+    undoManager.redoStep
+    gameStatus = REDO
+    publish(new CellChanged)
+  }
+  */
+
   def initField(): Field = {
     var samplefield = new FieldCreator()
     field = samplefield.createEmptyGrid(8)

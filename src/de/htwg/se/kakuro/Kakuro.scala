@@ -1,4 +1,4 @@
-package src.de.htwg.se.kakuro
+package de.htwg.se.kakuro
 
 import de.htwg.se.kakuro.model.Player
 import de.htwg.se.kakuro.model.Field

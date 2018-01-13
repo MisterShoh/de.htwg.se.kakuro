@@ -5,13 +5,13 @@ import org.apache.logging.log4j.LogManager
 
 case class Field(height: Int, width: Int) {
 
-  var field = Array.ofDim[Cell](height, width)
   val logger = LogManager.getLogger(this.getClass.getName)
+  var grid = Array.ofDim[Cell](height, width)
 
   override def toString(): String = {
     var result: String = " 0  1  2  3  4  5  6  7\n"
     result += "+--+--+--+--+--+--+--+--+\n"
-    var flength = field.length - 1
+    var flength = grid.length - 1
     for (j <- 0 until height) {
       result += stringRow(j)
     }
@@ -19,38 +19,43 @@ case class Field(height: Int, width: Int) {
   }
 
   def initCell(row: Int, col: Int): Unit = {
-    field(row)(col) = Cell(row, col)
-    field(row)(col).whiteCell = true
+    grid(row)(col) = Cell(row, col)
+    grid(row)(col).whiteCell = true
   }
 
   def initCell(row: Int, col: Int, value: Int): Unit = {
-    field(row)(col) = Cell(row, col)
-    field(row)(col).whiteCell = true
-    field(row)(col).whiteCellValue = value;
+    grid(row)(col) = Cell(row, col)
+    grid(row)(col).whiteCell = true
+    grid(row)(col).whiteCellValue = value;
   }
 
   def initCell(row: Int, col: Int, right: Int, down: Int): Unit = {
-    field(row)(col) = Cell(row, col)
-    field(row)(col).valueDown = down
-    field(row)(col).valueRight = right
-    field(row)(col).whiteCell = false
+    grid(row)(col) = Cell(row, col)
+    grid(row)(col).valueDown = down
+    grid(row)(col).valueRight = right
+    grid(row)(col).whiteCell = false
   }
   def cell(row: Int, col: Int): Cell = {
-    field(row)(col)
+    grid(row)(col)
   }
+
+  def set(row: Int, col: Int, value: Int): Field = {
+    return this
+  }
+
   def stringRow(row: Int): String = {
     var result: String = "|"
-    for (i <- field(row).indices) {
-      result += field(row)(i).toStringRight
+    for (i <- grid(row).indices) {
+      result += grid(row)(i).toStringRight
       result += "|"
     }
     result += " " + row + "\n|"
-    for (i <- field(row).indices) {
-      result += field(row)(i).toStringDown
+    for (i <- grid(row).indices) {
+      result += grid(row)(i).toStringDown
       result += "|"
     }
     result += "\n+"
-    for (i <- field(row).indices) {
+    for (i <- grid(row).indices) {
       result += "--+"
     }
     result += "\n"
@@ -58,10 +63,10 @@ case class Field(height: Int, width: Int) {
   }
 
   def initField(): Unit = {
-    for (i <- field.indices) {
-      for (j <- field(i).indices) {
-        field(i)(j) = Cell(i, j)
-        field(i)(j).whiteCell = true
+    for (i <- grid.indices) {
+      for (j <- grid(i).indices) {
+        grid(i)(j) = Cell(i, j)
+        grid(i)(j).whiteCell = true
       }
     }
   }
