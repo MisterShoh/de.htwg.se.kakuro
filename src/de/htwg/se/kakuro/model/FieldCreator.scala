@@ -1,7 +1,7 @@
 package de.htwg.se.kakuro.model
 
 import de.htwg.se.kakuro.model.{Cell, Field}
-import util.Observable
+import de.htwg.se.kakuro.util.Observable
 
 class FieldCreator() extends Observable {
 

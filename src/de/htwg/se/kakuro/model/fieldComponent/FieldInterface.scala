@@ -11,9 +11,8 @@ trait FieldInterface {
 
   def size: Int
 
-  def isHighlighted(row: Int, col: Int): Boolean
+  //def isHighlighted(row: Int, col: Int): Boolean
   def available(row: Int, col: Int): Set[Int]
-
 }
 
 trait CellInterface {
@@ -31,6 +30,7 @@ trait WhiteCellInterface extends CellInterface {
   def value: Int
   def showCandidates: Boolean
   def isSet: Boolean
+
 }
 
 trait SumInterface {

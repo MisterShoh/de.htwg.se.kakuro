@@ -1,10 +1,15 @@
 package de.htwg.se.kakuro.model
+
 import de.htwg.se.kakuro.model.Cell
+import org.apache.logging.log4j.Logger
+import org.apache.logging.log4j.LogManager
 
 case class Field(height: Int, width: Int) {
 
   val logger = LogManager.getLogger(this.getClass.getName)
   var grid = Array.ofDim[Cell](height, width)
+  //var whiteCells = ListBuffer[Cell]
+  //var blackCells = ListBuffer[Cell]
 
   override def toString(): String = {
     var result: String = " 0  1  2  3  4  5  6  7\n"
@@ -61,10 +66,10 @@ case class Field(height: Int, width: Int) {
   }
 
   def initField(): Unit = {
-    for (i <- field.indices) {
-      for (j <- field(i).indices) {
-        field(i)(j) = Cell(i, j)
-        field(i)(j).whiteCell = true
+    for (i <- grid.indices) {
+      for (j <- grid(i).indices) {
+        grid(i)(j) = Cell(i, j)
+        grid(i)(j).whiteCell = true
       }
     }
   }

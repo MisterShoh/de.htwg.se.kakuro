@@ -1,6 +1,6 @@
 package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
-import de.htwg.se.kakuro.model.fieldComponent.Cell
+import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Cell
 import de.htwg.se.kakuro.model.fieldComponent.{CellInterface, FieldInterface}
 import de.htwg.se.model.fieldComponent.FieldImpl.Matrix
 import org.apache.logging.log4j.LogManager

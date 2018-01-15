@@ -1,4 +1,4 @@
-package controller
+package controller.controllerComponent.controllerImpl
 
 import de.htwg.se.kakuro.controller.Controller
 import de.htwg.se.kakuro.util.Command

@@ -47,7 +47,7 @@ class Tui(controller: Controller) extends Reactor {
   }
 }
 
-/* 
+/*
 
 case d =>
         var values = input.split(" ")
@@ -59,5 +59,5 @@ case d =>
           var col = values(2).toInt
           var check = controller.delete(row, col)
           return check
-        } else return false; 
-        */ 
+        } else return false;
+        */

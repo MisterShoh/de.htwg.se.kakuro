@@ -1,9 +1,10 @@
-package de.htwg.se.kakuro.model
+package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
+import de.htwg.se.kakuro.model.fieldComponent.CellInterface
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
 
-case class Cell(row: Int, colValue: Int) {
+case class Cell (row: Int, colValue: Int) extends CellInterface{
   val logger = LogManager.getLogger(this.getClass.getName)
   var whiteCell: Boolean = false
   var rowVal: Int = row
@@ -16,7 +17,6 @@ case class Cell(row: Int, colValue: Int) {
 
   def isWhite: Boolean = whiteCell
   def isBlack: Boolean = !whiteCell
-
 
   def this(value: Int) = {
     this(0, 0)
@@ -38,7 +38,7 @@ case class Cell(row: Int, colValue: Int) {
       if (whiteCellValue == 0) {
         Console.REVERSED + "  " + Console.RESET
       } else {
-        if (valueRight < 10) {
+        if (whiteCellValue < 10) {
           Console.REVERSED + " " + whiteCellValue.toString + Console.RESET
         } else {
           Console.REVERSED + whiteCellValue + Console.RESET
@@ -73,4 +73,3 @@ case class Cell(row: Int, colValue: Int) {
     }
   }
 }
-

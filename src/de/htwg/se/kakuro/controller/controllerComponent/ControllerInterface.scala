@@ -1,6 +1,6 @@
-package de.htwg.se.kakuro.controller.controllerComponent
+package controller.controllerComponent
 
-import de.htwg.se.kakuro.controller.GameStatus.GameStatus
+import GameStatus.GameStatus
 import de.htwg.se.kakuro.model.fieldComponent.CellInterface
 
 import scala.swing.Publisher
@@ -8,20 +8,16 @@ import scala.swing.Publisher
 trait ControllerInterface extends Publisher {
 
   def gridSize: Int
-  def blockSize: Int
   def createEmptyGrid(size: Int): Unit
-  def createRandomGrid(size: Int, randomCells: Int)
   def undo: Unit
   def redo: Unit
-  def solve: Unit
   def resize(newSize: Int): Unit
   def cell(row: Int, col: Int): CellInterface
   def set(row: Int, col: Int, value: Int): Unit
   def isSet(row: Int, col: Int): Boolean
-  def isGiven(row: Int, col: Int): Boolean
   def showCandidates(row: Int, col: Int): Unit
-  def highlight(index: Int): Unit
-  def isHighlighted(row: Int, col: Int): Boolean
+  //def highlight(index: Int): Unit
+  //def isHighlighted(row: Int, col: Int): Boolean
   def gridToString: String
   def isShowCandidates(row: Int, col: Int): Boolean
   def toggleShowAllCandidates: Unit

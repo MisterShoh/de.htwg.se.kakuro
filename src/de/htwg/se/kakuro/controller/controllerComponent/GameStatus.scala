@@ -1,4 +1,4 @@
-package de.htwg.se.kakuro.controller
+package controller.controllerComponent
 
 object GameStatus extends Enumeration {
   type GameStatus = Value
@@ -16,7 +16,7 @@ object GameStatus extends Enumeration {
     NOT_SOLVABLE -> "Game not solvable"
   )
 
-  def message(gameStatus: GameStatus) = {
+  def message(gameStatus: GameStatus): String = {
     map(gameStatus)
   }
 
