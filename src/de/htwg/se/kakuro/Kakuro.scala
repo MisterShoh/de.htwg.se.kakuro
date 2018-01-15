@@ -22,7 +22,7 @@ object Kakuro {
       input = scala.io.StdIn.readLine()
       var output = true
       if (input != "exit" && input != "") output = tui.handleInput(input.toString)
-      logger.debug("input: " + input + " output: " + output)
+      logger.debug("kakuro() input: " + input + " output: " + output)
       if (output == false) println("Falsche Eingabe!")
     } while (input != "exit")
   }

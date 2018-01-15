@@ -34,15 +34,31 @@ class Controller(var field: Field) extends Publisher {
     field = samplefield.createSampleField(field)
     field
   }
+
   def set(row: Int, col: Int, value: Int): Boolean = {
-    logger.debug("row: " + row.toString() + " col: " + col.toString() + " value:" + value.toString())
-    if (field.cell(row, col).whiteCell
+    var wCell = field.cell(row, col).whiteCell
+    logger.debug("set() row: " + row.toString() + " col: " + col.toString()
+      + " value:" + value.toString() + " whiteCell: " + wCell)
+    if (wCell
       && isValidInput(row)
       && isValidInput(col)
       && isValidInput(value)) {
       field.cell(row, col).whiteCellValue = value
       true
-    } else false
+    } else return false
+    false
+  }
+
+  def delete(row: Int, col: Int): Boolean = {
+    var wCell = field.cell(row, col).whiteCell
+    logger.debug("delete() row: " + row.toString() + " col: " + col.toString() + " whiteCell: " + wCell)
+    if (wCell
+      && isValidInput(row)
+      && isValidInput(col)) {
+      field.cell(row, col).whiteCellValue = 0
+      true
+    } else return false
+    false
   }
 
   def isValidInput(input: Int): Boolean = {
