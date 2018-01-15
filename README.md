@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/AvasDream/de.htwg.se.kakuro.svg?branch=dev)](https://travis-ci.org/AvasDream/de.htwg.se.kakuro)
+
 htwg-scala-kakuro
 =========================
 

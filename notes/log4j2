@@ -1,0 +1,14 @@
+config file:
+/root/se/de.htwg.se.kakuro/target/scala-2.11/classes/log4j2.xml
+
+log4j2.xml
+
+
+
+Change log level:
+1. Open File
+/root/se/de.htwg.se.kakuro/target/scala-2.11/classes/log4j2.xml
+2. Change value
+<Root level="trace"> 
+to 
+<Root level="error">
