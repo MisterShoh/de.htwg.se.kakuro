@@ -1,32 +1,41 @@
 package de.htwg.se.kakuro.model.fieldComponent
 
-trait GridInterface {
+trait FieldInterface {
 
   def cell(row: Int, col: Int): CellInterface
-  def set(row: Int, col: Int, value: Int): GridInterface
-  def reset(row: Int, col: Int): GridInterface
-  //def highlight(index: Int):GridInterface
-  //def setShowCandidates(row: Int, col: Int): GridInterface
-  def createNewGrid(size: Int): GridInterface
-  //def solve:(Boolean, GridInterface)
+  def set(row: Int, col: Int, value: Int): FieldInterface
+  def reset(row: Int, col: Int): FieldInterface
+  def createNewGrid(size: Int): FieldInterface
   def valid: Boolean
-  //def isSymmetric:Boolean
   def solved: Boolean
 
   def size: Int
 
   def isHighlighted(row: Int, col: Int): Boolean
   def available(row: Int, col: Int): Set[Int]
-  def indexToRowCol(index: Int): (Int, Int)
-  def markFilledCellsAsGiven: GridInterface
 
 }
 
 trait CellInterface {
-  def value: Int
   def isWhite: Boolean
-  def showCandidates: Boolean
-  def given: Boolean
-  def isSet: Boolean
+  def toStringRight: String
+  def toStringDown: String
+}
 
+trait BlackCellInterface extends CellInterface {
+  def rightSum: Int
+  def downSum: Int
+}
+
+trait WhiteCellInterface extends CellInterface {
+  def value: Int
+  def showCandidates: Boolean
+  def isSet: Boolean
+}
+
+trait SumInterface {
+  def isHorizontal: Boolean
+  def isVertical: Boolean = !isHorizontal
+  def blackCell : BlackCellInterface
+  def members: Set[WhiteCellInterface]
 }

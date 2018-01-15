@@ -13,7 +13,6 @@ class Controller(var field: Field) extends Publisher {
 
   private val undoManager = new UndoManager
   //var gameStatus: GameStatus = IDLE
-
   /*
   def undo: Unit = {
     undoManager.undoStep
@@ -26,8 +25,7 @@ class Controller(var field: Field) extends Publisher {
     gameStatus = REDO
     publish(new CellChanged)
   }
-  */
-
+*/
   def initField(): Field = {
     var samplefield = new FieldCreator()
     field = samplefield.createEmptyGrid(8)

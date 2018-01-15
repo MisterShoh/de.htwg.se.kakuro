@@ -1,4 +1,5 @@
-package de.htwg.se.kakuro.model
+package de.htwg.se.kauro.model
+
 import de.htwg.se.kakuro.model.Cell
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
