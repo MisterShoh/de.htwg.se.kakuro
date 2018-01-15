@@ -20,6 +20,7 @@ class Tui(controller: Controller) extends Reactor {
     firstChar match {
       case 's' => retVal = setIn(input)
       case 'd' => retVal = deleteIn(input)
+      case _ =>
     }
     return retVal
   }
@@ -56,19 +57,11 @@ class Tui(controller: Controller) extends Reactor {
     }
     checkdelete
   }
+
+  def print(field: Field): Unit = {
+    println(field)
+    println("Wert setzen: s row col value")
+    println("Wert löschen: d row col")
+  }
 }
 
-/* 
-
-case d =>
-        var values = input.split(" ")
-        if (values.length != 3) return false
-        var testinput = values(1) + values(2)
-        println(testinput)
-        if (isDigit(testinput)) {
-          var row = values(1).toInt
-          var col = values(2).toInt
-          var check = controller.delete(row, col)
-          return check
-        } else return false; 
-        */ 
