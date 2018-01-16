@@ -1,15 +1,19 @@
 package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
-import de.htwg.se.kakuro.model.fieldComponent.WhiteCellInterface
+import de.htwg.se.kakuro.model.fieldComponent.{ SumInterface, WhiteCellInterface }
 
-case class WhiteCell (value:Int =0, showCandidates:Boolean = false)extends WhiteCellInterface{
+case class WhiteCell(value: Int = 0, showCandidates: Boolean = false) extends WhiteCellInterface {
 
-  //override def value: Int = value
-  //override def showCandidates: Boolean = false
+  /*
+  def this(value: Int) = {
+    this(0, 0)
+    this.value = value
+  }
+  */
 
   override def isSet: Boolean = value > 0
 
-  override def isWhite = true
+  override def isWhite: Boolean = true
 
   override def toStringRight: String = {
     if (value == 0) {
@@ -25,4 +29,7 @@ case class WhiteCell (value:Int =0, showCandidates:Boolean = false)extends White
 
   override def toStringDown: String = Console.REVERSED + "**" + Console.RESET
 
+  //override def hSum: SumInterface = ???
+
+  //override def vSum: SumInterface = ???
 }

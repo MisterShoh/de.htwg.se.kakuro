@@ -1,11 +1,11 @@
-package de.htwg.se.model.fieldComponent.FieldImpl
+package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
 case class Matrix[T](rows: Vector[Vector[T]]) {
   def this(size: Int, filling: T) = this(Vector.tabulate(size, size) { (row, col) => filling })
 
+  def this(width: Int, height: Int, filling: T) = this(Vector.tabulate(width, height) { (row, col) => filling })
+
   val size: Int = rows.size
-  val length: Int = size
-  val height: Int = size
 
   def cell(row: Int, col: Int): T = rows(row)(col)
 

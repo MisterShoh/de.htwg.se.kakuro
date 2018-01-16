@@ -4,12 +4,11 @@ import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Field
 import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
 
 trait FieldCreatorTemplate {
-  var field: FieldInterface
 
-  def makefield(size: Int): FieldInterface //abstract
+  def makeField(size: Int): FieldInterface //abstract
 
   def createNewField(size: Int): FieldInterface = {
-    var field: FieldInterface = makefield(size)
+    var field: FieldInterface = makeField(size)
     field = prepare(field)
     field = fill(field)
     field

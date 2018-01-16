@@ -17,7 +17,6 @@ case class Cell(row: Int, colValue: Int) {
   def isWhite: Boolean = whiteCell
   def isBlack: Boolean = !whiteCell
 
-
   def this(value: Int) = {
     this(0, 0)
     this.whiteCellValue = value

@@ -3,7 +3,9 @@ package de.htwg.se.kakuro.model.fieldComponent
 trait FieldInterface {
 
   def cell(row: Int, col: Int): CellInterface
+  def set(row: Int, col: Int): FieldInterface
   def set(row: Int, col: Int, value: Int): FieldInterface
+  def set(row: Int, col: Int, rightSum: Int, downSum: Int): FieldInterface
   def reset(row: Int, col: Int): FieldInterface
   def createNewGrid(size: Int): FieldInterface
   def valid: Boolean
@@ -24,10 +26,13 @@ trait CellInterface {
 trait BlackCellInterface extends CellInterface {
   def rightSum: Int
   def downSum: Int
+  def sumCount: Int
 }
 
 trait WhiteCellInterface extends CellInterface {
   def value: Int
+  //def hSum: SumInterface
+  //def vSum: SumInterface
   def showCandidates: Boolean
   def isSet: Boolean
 
@@ -36,6 +41,6 @@ trait WhiteCellInterface extends CellInterface {
 trait SumInterface {
   def isHorizontal: Boolean
   def isVertical: Boolean = !isHorizontal
-  def blackCell : BlackCellInterface
+  def blackCell: BlackCellInterface
   def members: Set[WhiteCellInterface]
 }
