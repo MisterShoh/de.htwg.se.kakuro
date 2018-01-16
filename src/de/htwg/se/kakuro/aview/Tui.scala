@@ -20,6 +20,7 @@ class Tui(controller: Controller) extends Reactor {
     firstChar match {
       case 's' => retVal = setIn(input)
       case 'd' => retVal = deleteIn(input)
+      case 'r' => controller.undo
       case _ =>
     }
     return retVal

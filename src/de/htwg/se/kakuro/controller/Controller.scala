@@ -3,7 +3,6 @@ package de.htwg.se.kakuro.controller
 import de.htwg.se.kakuro.model.{ Cell, Field, FieldCreator }
 import de.htwg.se.kakuro.util.Observable
 import de.htwg.se.kakuro.util.UndoManager
-
 import scala.swing.Publisher
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
@@ -14,13 +13,12 @@ class Controller(var field: Field) extends Publisher {
   private val undoManager = new UndoManager
   //var gameStatus: GameStatus = IDLE
 
-  /*
   def undo: Unit = {
     undoManager.undoStep
-    gameStatus = UNDO
-    publish(new CellChanged)
+    //gameStatus = UNDO
+    //publish(new CellChanged)
   }
-
+  /*
   def redo: Unit = {
     undoManager.redoStep
     gameStatus = REDO
@@ -36,6 +34,7 @@ class Controller(var field: Field) extends Publisher {
   }
 
   def set(row: Int, col: Int, value: Int): Boolean = {
+    undoManager.doStep(new SetCommand(row, col, value, this))
     var wCell = field.cell(row, col).whiteCell
     logger.debug("set() row: " + row.toString() + " col: " + col.toString()
       + " value:" + value.toString() + " whiteCell: " + wCell)
@@ -50,6 +49,7 @@ class Controller(var field: Field) extends Publisher {
   }
 
   def delete(row: Int, col: Int): Boolean = {
+    undoManager.doStep(new SetCommand(row, col, 0, this))
     var wCell = field.cell(row, col).whiteCell
     logger.debug("delete() row: " + row.toString() + " col: " + col.toString() + " whiteCell: " + wCell)
     if (wCell
