@@ -3,7 +3,6 @@ package de.htwg.se.kakuro.controller
 import de.htwg.se.kakuro.model.{ Cell, Field, FieldCreator }
 import de.htwg.se.kakuro.util.Observable
 import de.htwg.se.kakuro.util.UndoManager
-
 import scala.swing.Publisher
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
@@ -13,34 +12,53 @@ class Controller(var field: Field) extends Publisher {
 
   private val undoManager = new UndoManager
   //var gameStatus: GameStatus = IDLE
-  /*
+
   def undo: Unit = {
     undoManager.undoStep
-    gameStatus = UNDO
-    publish(new CellChanged)
+    //gameStatus = UNDO
+    //publish(new CellChanged)
   }
-
+  /*
   def redo: Unit = {
     undoManager.redoStep
     gameStatus = REDO
     publish(new CellChanged)
   }
-*/
+  */
+
   def initField(): Field = {
     var samplefield = new FieldCreator()
     field = samplefield.createEmptyGrid(8)
     field = samplefield.createSampleField(field)
     field
   }
+
   def set(row: Int, col: Int, value: Int): Boolean = {
-    logger.debug("row: " + row.toString() + " col: " + col.toString() + " value:" + value.toString())
-    if (field.cell(row, col).whiteCell
+    undoManager.doStep(new SetCommand(row, col, value, this))
+    var wCell = field.cell(row, col).whiteCell
+    logger.debug("set() row: " + row.toString() + " col: " + col.toString()
+      + " value:" + value.toString() + " whiteCell: " + wCell)
+    if (wCell
       && isValidInput(row)
       && isValidInput(col)
       && isValidInput(value)) {
       field.cell(row, col).whiteCellValue = value
       true
-    } else false
+    } else return false
+    false
+  }
+
+  def delete(row: Int, col: Int): Boolean = {
+    undoManager.doStep(new SetCommand(row, col, 0, this))
+    var wCell = field.cell(row, col).whiteCell
+    logger.debug("delete() row: " + row.toString() + " col: " + col.toString() + " whiteCell: " + wCell)
+    if (wCell
+      && isValidInput(row)
+      && isValidInput(col)) {
+      field.cell(row, col).whiteCellValue = 0
+      true
+    } else return false
+    false
   }
 
   def isValidInput(input: Int): Boolean = {
