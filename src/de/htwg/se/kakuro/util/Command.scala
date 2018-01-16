@@ -1,9 +1,9 @@
 package de.htwg.se.kakuro.util
-
+import de.htwg.se.kakuro.model.Field
 trait Command {
 
-  def doStep: Unit
-  def undoStep: Unit
-  def redoStep: Unit
+  def doStep: Field
+  def undoStep: Field
+  def redoStep: Field
 
 }

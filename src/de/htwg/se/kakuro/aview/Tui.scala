@@ -20,7 +20,7 @@ class Tui(controller: Controller) extends Reactor {
     firstChar match {
       case 's' => retVal = setIn(input)
       case 'd' => retVal = deleteIn(input)
-      case 'r' => controller.undo
+      case 'u' => retVal = controller.undoField
       case _ =>
     }
     return retVal
@@ -37,10 +37,12 @@ class Tui(controller: Controller) extends Reactor {
         var col = values(2).toInt
         var value = values(3).toInt
         check = controller.set(row, col, value)
-        check
-      } else false;
-    } else false
-    false
+        logger.debug("setIn() row: " + row + " col: " + col + " rt set():" + check +
+          "length: " + values.length)
+        return check
+      }
+    }
+    check
   }
   def deleteIn(input: String): Boolean = {
     var values = input.split(" ")
@@ -51,10 +53,10 @@ class Tui(controller: Controller) extends Reactor {
         var row = values(1).toInt
         var col = values(2).toInt
         checkdelete = controller.delete(row, col)
-        logger.debug("deleteIn() row: " + row + " col: " + col + " return value delete():" + checkdelete +
-          "length: " + values.length)
-        checkdelete
-      } else false
+        logger.debug("deleteIn() row: " + row + " col: " + col + " rt delete():" + checkdelete +
+          " length: " + values.length)
+        return checkdelete
+      }
     }
     checkdelete
   }
@@ -63,6 +65,7 @@ class Tui(controller: Controller) extends Reactor {
     println(field)
     println("Wert setzen: s row col value")
     println("Wert löschen: d row col")
+    println("Undo: u")
   }
 }
 

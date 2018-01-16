@@ -11,7 +11,7 @@ class UndoManager {
   def doStep(command: Command) = {
     undoStack = command :: undoStack
     command.doStep
-    logger.debug("doStep() undoStack:" + undoStack.head)
+    logger.debug("doStep() undoStack:" + undoStack.head.toString)
   }
   def undoStep = {
     logger.debug("undoStep()")
@@ -23,6 +23,7 @@ class UndoManager {
         redoStack = head :: redoStack
       }
     }
+    logger.debug("undoStep() undoStack.length():" + undoStack.length)
   }
   def redoStep = {
     logger.debug("redoStep()")
