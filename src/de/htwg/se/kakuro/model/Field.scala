@@ -12,7 +12,7 @@ case class Field(height: Int, width: Int) {
   //var blackCells = ListBuffer[Cell]
 
   override def toString(): String = {
-    var result: String = " 0  1  2  3  4  5  6  7\n"
+    var result: String = "\n 0  1  2  3  4  5  6  7\n"
     result += "+--+--+--+--+--+--+--+--+\n"
     var flength = grid.length - 1
     for (j <- 0 until height) {

@@ -6,7 +6,7 @@ import de.htwg.se.kakuro.util.Observable
 class FieldCreator() extends Observable {
 
   def createEmptyGrid(size: Int): Field = {
-    val field = Field(size, size)
+    var field = Field(size, size)
     notifyObservers
     return field
   }

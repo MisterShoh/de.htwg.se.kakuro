@@ -5,6 +5,7 @@ import de.htwg.se.kakuro.model.Field
 import de.htwg.se.kakuro.model.Cell
 import de.htwg.se.kakuro.controller.Controller
 import de.htwg.se.kakuro.aview.Tui
+import de.htwg.se.kakuro.aview.Gui
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
 
@@ -15,9 +16,12 @@ object Kakuro {
     val controller = new Controller(field)
     field = controller.initField()
     val tui = new Tui(controller)
+    val gui = new Gui(controller)
+    gui.visible = true
     var input: String = ""
     do {
       tui.print(field);
+
       input = scala.io.StdIn.readLine()
       var output = true
       if (input != "exit" && input != "") output = tui.handleInput(input.toString)

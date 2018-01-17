@@ -1,44 +1,42 @@
 package de.htwg.se.kakuro.controller
 
 import de.htwg.se.kakuro.model.{ Cell, Field, FieldCreator }
-import de.htwg.se.kakuro.util.{ Observable, UndoManager, UndoManagerField }
+import de.htwg.se.kakuro.util.{ Observable, UndoManager }
 
 import scala.swing.Publisher
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
 
-class Controller(var field: Field) extends Publisher {
-  val logger = LogManager.getLogger(this.getClass.getName)
+class Controller(var field: Field) extends ControllerInterface with Publisher {
+  var logger = LogManager.getLogger(this.getClass.getName)
 
-  private val undoManagerField = new UndoManagerField
+  var undoManager = new UndoManager
   //var gameStatus: GameStatus = IDLE
-
-  def undoField: Boolean = {
-    //undoManagerField.undo
-    true
-  }
   /*
-  def undo: Unit = {
-    undoManager.undoStep
-    //gameStatus = UNDO
-    //publish(new CellChanged)
+  def undoField: Boolean = {
+    field = undoManagerField.undoStepF
+    true
+  }*/
+
+  def controllerUndo: Boolean = {
+    //val grid = undoManager.undoField
+    return true
   }
-  def redo: Unit = {
-    undoManager.redoStep
-    gameStatus = REDO
-    publish(new CellChanged)
+  def controllerRedo: Boolean = {
+    //undoManager.redoStep
+    return true
   }
-  */
 
   def initField(): Field = {
     var samplefield = new FieldCreator()
     field = samplefield.createEmptyGrid(8)
     field = samplefield.createSampleField(field)
+    //undoManager.addField(this.field.grid)
     field
   }
 
   def set(row: Int, col: Int, value: Int): Boolean = {
-    undoManagerField.doStep(this.field)
+    //undoManager.doStep(new SetCommand(row, col, value, this.field, this.undoManager))
     var wCell = field.cell(row, col).whiteCell
     logger.debug("set() row: " + row.toString() + " col: " + col.toString()
       + " value:" + value.toString() + " whiteCell: " + wCell)
@@ -47,13 +45,13 @@ class Controller(var field: Field) extends Publisher {
       && isValidInput(col)
       && isValidInput(value)) {
       field.cell(row, col).whiteCellValue = value
+      //undoManager.addField(this.field.grid)
       return true
     }
     false
   }
 
   def delete(row: Int, col: Int): Boolean = {
-    undoManagerField.doStep(this.field)
     var wCell = field.cell(row, col).whiteCell
     logger.debug("delete() row: " + row.toString() + " col: " + col.toString() + " whiteCell: " + wCell)
     if (wCell

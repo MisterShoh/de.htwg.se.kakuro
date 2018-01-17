@@ -1,3 +1,5 @@
+/*
+
 package de.htwg.se.kakuro.controller
 
 import de.htwg.se.kakuro.controller.Controller
@@ -22,3 +24,4 @@ class SetCommand(row: Int, col: Int, value: Int, controller: Controller) extends
     return controller.field
   }
 }
+*/ 

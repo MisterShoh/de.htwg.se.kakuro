@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager
 import scala.swing.Reactor
 // https://www.safaribooksonline.com/library/view/scala-cookbook/9781449340292/
 class Tui(controller: Controller) extends Reactor {
-  val logger = LogManager.getLogger(this.getClass.getName)
+  var logger = LogManager.getLogger(this.getClass.getName)
   listenTo(controller)
   /*
 	reset,create,solve,undo,redo
@@ -20,7 +20,7 @@ class Tui(controller: Controller) extends Reactor {
     firstChar match {
       case 's' => retVal = setIn(input)
       case 'd' => retVal = deleteIn(input)
-      case 'u' => retVal = controller.undoField
+      case 'u' => retVal = controller.controllerUndo
       case _ =>
     }
     return retVal
@@ -62,10 +62,10 @@ class Tui(controller: Controller) extends Reactor {
   }
 
   def print(field: Field): Unit = {
-    println(field)
-    println("Wert setzen: s row col value")
-    println("Wert löschen: d row col")
-    println("Undo: u")
+    logger.info(field.toString)
+    logger.info("Wert setzen: s row col value")
+    logger.info("Wert löschen: d row col")
+    logger.info("Undo: u")
   }
 }
 

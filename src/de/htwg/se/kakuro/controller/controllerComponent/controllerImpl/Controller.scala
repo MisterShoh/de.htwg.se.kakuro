@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.kakuro.controller.controllerComponent.controllerImpl
 
 import controller.controllerComponent.CellChanged
@@ -54,3 +55,4 @@ class Controller(var field: FieldInterface) extends Publisher {
   }
 
 }
+*/ 
