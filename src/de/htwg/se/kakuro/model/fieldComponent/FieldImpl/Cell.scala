@@ -4,10 +4,12 @@ import de.htwg.se.kakuro.model.fieldComponent.CellInterface
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
 
-case class Cell(isWhite: Boolean = false) extends CellInterface {
+case class Cell() extends CellInterface {
   val logger = LogManager.getLogger(this.getClass.getName)
 
-  def isBlack: Boolean = !isWhite
+  override def showCandidates: Boolean = false
+  override def isBlack: Boolean = false
+  override def isWhite: Boolean = false
 
   /*
   def this(value: Int) = {
@@ -20,11 +22,13 @@ case class Cell(isWhite: Boolean = false) extends CellInterface {
   //  (rowVal, colVal)
   //}
 
-  def toStringRight(): String = {
+  def toStringRight: String = {
     "##"
   }
 
-  def toStringDown(): String = {
+  def toStringDown: String = {
     "##"
   }
+
+  override def isSet: Boolean = true
 }
