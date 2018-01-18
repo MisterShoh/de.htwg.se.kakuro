@@ -1,6 +1,7 @@
 package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Matrix
+import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, SumInterface, BlackCellInterface }
 import de.htwg.se.kakuro.model.fieldComponent._
 import org.apache.logging.log4j.LogManager
 
@@ -19,20 +20,20 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
     copy(grid, sums.+(s))
   }
 
-  def getWhiteRow(row: Int, col: Int) : Set[WhiteCell] = {
-    grid.rows(row).drop(col).dropRight(grid.rows(row).indexWhere(p=>p.isBlack, row)-width).toSet
+  def getWhiteRow(row: Int, col: Int): Set[WhiteCell] = {
+    grid.rows(row).drop(col).dropRight(grid.rows(row).indexWhere(p => p.isBlack, row) - width).toSet
       .asInstanceOf[Set[WhiteCell]]
-}
+  }
 
   def generateSums(): FieldInterface = {
-    var _sums : List[Sum]= List()
+    var _sums: List[Sum] = List()
     for (i <- 0 until width) {
       for (j <- 0 until height) {
-        if(!grid.cell(j,i).isBlack) {
+        if (!grid.cell(j, i).isBlack) {
           var members = List[WhiteCell]()
           for (k <- i until width) {
-            if (grid.cell(k, j).isWhite) members.+(grid.cell(k,j).asInstanceOf[WhiteCell])
-            else break
+            // Achtung toStringRight ist wahrscheinlich nicht der richtige String!
+            //if (grid.cell(k, j).isWhite) members.+(grid.cell(k, j).asInstanceOf[WhiteCell])
           }
         }
       }
@@ -43,17 +44,19 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
     this
   }
 
-
-
-
   override def set(row: Int, col: Int, value: Int): FieldInterface =
     copy(grid.replaceCell(row, col, WhiteCell(value).asInstanceOf[Cell]))
 
   override def set(row: Int, col: Int): FieldInterface =
     copy(grid.replaceCell(row, col, Cell()))
 
-  override def set(row: Int, col: Int, rightVal: Int, downVal: Int): FieldInterface =
-    copy(grid.replaceCell(row, col, BlackCell(rightVal, downVal).asInstanceOf[Cell]))
+  override def set(row: Int, col: Int, rightVal: Int, downVal: Int): FieldInterface = {
+    // Achtung v, rightSum, downSum nur wegen den errors
+    val v = Vector[WhiteCellInterface]
+    val rightSum = Sum(10, v, true)
+    val downSum = Sum(10, v, true)
+    copy(grid.replaceCell(row, col, BlackCell(rightVal, downVal, rightSum, downSum).asInstanceOf[Cell]))
+  }
 
   override def reset(row: Int, col: Int): FieldInterface =
     copy(grid.replaceCell(row, col, WhiteCell(0).asInstanceOf[Cell]))

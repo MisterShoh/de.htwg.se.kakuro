@@ -1,6 +1,7 @@
 package de.htwg.se.kakuro.model.fieldComponent
 
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Matrix
+import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, BlackCellInterface, SumInterface }
 
 trait FieldInterface {
 
@@ -10,7 +11,7 @@ trait FieldInterface {
   def set(row: Int, col: Int, rightSum: Int, downSum: Int): FieldInterface
   //def cells(): Matrix[CellInterface]
   def blackCells(): Vector[BlackCellInterface]
-  def sums():Vector[SumInterface]
+  def sums(): Vector[SumInterface]
   def putSum(s: SumInterface): FieldInterface
 
   //def cells(): Seq[CellInterface]
@@ -26,11 +27,15 @@ trait FieldInterface {
 
   def width: Int
   def height: Int
+  //Nötig?
+  def size: Int
 
   //def isHighlighted(row: Int, col: Int): Boolean
   def available(row: Int, col: Int): Set[Int]
 }
 
+/*
+Own File for everything
 trait CellInterface {
   def isWhite: Boolean
   def isBlack: Boolean
@@ -76,3 +81,4 @@ trait AltSumInterface {
   def blackCell: BlackCellInterface
   def members: Seq[WhiteCellInterface]
 }
+*/

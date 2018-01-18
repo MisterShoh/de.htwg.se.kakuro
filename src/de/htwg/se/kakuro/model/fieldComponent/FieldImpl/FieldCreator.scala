@@ -20,15 +20,15 @@ class FieldCreator extends FieldCreatorTemplate {
     var tabular = Array.ofDim[String](row, col)
 
     var field: FieldInterface = new Field(row, col)
-   //var rSums: List[Tuple2[Int, Int]] = List()
+    //var rSums: List[Tuple2[Int, Int]] = List()
     for (i <- tabular.indices) {
       tabular(i) = lines(i).split(',')
       for (j <- tabular(i).indices) {
         tabular(i)(j).toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
-          case Nil =>           field = field.set(i, j, 0)
-          case v :: Nil =>      field = field.set(i, j, v)
+          case Nil => field = field.set(i, j, 0)
+          case v :: Nil => field = field.set(i, j, v)
           case s :: t :: Nil => {
-            field = if (s == 0 && j == 0) field.set(i,j) else field.set(i, j, s, t)
+            field = if (s == 0 && j == 0) field.set(i, j) else field.set(i, j, s, t)
             //if(s != 0) rSums = rSums.:: (i,j)
           }
         }
@@ -38,7 +38,7 @@ class FieldCreator extends FieldCreatorTemplate {
   }
 
   override def fill(_field: FieldInterface): FieldInterface = {
-    var grid: FieldInterface = new Field(_field.height, _field.width )
+    var grid: FieldInterface = new Field(_field.height, _field.width)
 
     grid = grid.set(0, 0)
     grid = grid.set(0, 1, 0, 23)
