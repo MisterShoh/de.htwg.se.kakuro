@@ -11,7 +11,8 @@ trait FieldInterface {
   def set(row: Int, col: Int, rightSum: Int, downSum: Int): FieldInterface
   //def cells(): Matrix[CellInterface]
   def blackCells(): Vector[BlackCellInterface]
-  def sums(): Vector[SumInterface]
+  //def sums(): Vector[SumInterface]
+  def sums(): Set[SumInterface]
   def putSum(s: SumInterface): FieldInterface
 
   //def cells(): Seq[CellInterface]

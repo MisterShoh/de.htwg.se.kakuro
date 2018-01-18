@@ -15,7 +15,12 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
   def this(size: Int) = this(new Matrix[Cell](size, Cell()))
 
   //var blackCells: Array[BlackCell]
+  def isShowCandidates(row: Int, col: Int): Boolean = ???
+  def showCandidates(row: Int, col: Int): Set[Int] = ???
+  def size: Int = ???
+  def unsetShowCandidates(row: Int, col: Int): de.htwg.se.kakuro.model.fieldComponent.FieldInterface = ???
 
+  def toggleShotAllCandidates(): Unit = ???
   override def putSum(s: SumInterface): FieldInterface = {
     copy(grid, sums.+(s))
   }
@@ -52,7 +57,7 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
 
   override def set(row: Int, col: Int, rightVal: Int, downVal: Int): FieldInterface = {
     // Achtung v, rightSum, downSum nur wegen den errors
-    val v = Vector[WhiteCellInterface]
+    val v = Vector[WhiteCellInterface]()
     val rightSum = Sum(10, v, true)
     val downSum = Sum(10, v, true)
     copy(grid.replaceCell(row, col, BlackCell(rightVal, downVal, rightSum, downSum).asInstanceOf[Cell]))
@@ -117,5 +122,5 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
   //override def cells(): Matrix[CellInterface] = grid.asInstanceOf[Matrix[CellInterface]]
 
   override def available(row: Int, col: Int): Set[Int] = Set(1, 2, 3, 4, 5, 6, 7, 8, 9) //TODO fix ...
-  override def setShowCandidates(row: Int, col: Int): Field = copy(grid.replaceCell(row, col, cell(row, col).copy(showCandidates = true)))
+  override def setShowCandidates(row: Int, col: Int): Field = this //copy(grid.replaceCell(row, col, cell(row, col).copy(showCandidates = true)))
 }

@@ -36,7 +36,9 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
     //field = samplefield.createNewField(8)
     field
   }
-
+  def available(row: Int, col: Int): Set[Int] = ???
+  def isShowCandidates(row: Int, col: Int): Boolean = ???
+  def isWhite(row: Int, col: Int): Boolean = ???
   /*
   def set(row: Int, col: Int, value: Int): Boolean = {
     logger.debug("row: " + row.toString + " col: " + col.toString + " value:" + value.toString)
@@ -84,8 +86,8 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
 
   def cell(row: Int, col: Int) = field.cell(row, col)
 
-  override def isSet(row: Int, col: Int): Boolean = cell(row, col).isSet
-
+  //override def isSet(row: Int, col: Int): Boolean = true //cell(row, col).isSet
+  def isSet(row: Int, col: Int): Boolean = true
   def showCandidates(row: Int, col: Int): Unit = {
     field = field.setShowCandidates(row, col)
     gameStatus = CANDIDATES
