@@ -5,12 +5,12 @@ import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, BlackCellInterfac
 
 trait FieldInterface {
 
-  def cell(row: Int, col: Int): CellInterface
+  //def cell(row: Int, col: Int): FullCellInterface
   def set(row: Int, col: Int): FieldInterface
   def set(row: Int, col: Int, value: Int): FieldInterface
   def set(row: Int, col: Int, rightSum: Int, downSum: Int): FieldInterface
   //def cells(): Matrix[CellInterface]
-  def blackCells(): Vector[BlackCellInterface]
+  //def blackCells(): Vector[BlackCellInterface]
   //def sums(): Vector[SumInterface]
   def sums(): Set[SumInterface]
   def putSum(s: SumInterface): FieldInterface
@@ -28,14 +28,27 @@ trait FieldInterface {
 
   def width: Int
   def height: Int
-  //Nötig?
-  def size: Int
 
   //def isHighlighted(row: Int, col: Int): Boolean
   def available(row: Int, col: Int): Set[Int]
 }
 
 //Own File for everything
+
+trait FullCellInterface {
+  def isWhite: Boolean
+  def isBlack: Boolean
+  def toStringRight: String
+  def toStringDown: String
+  def isSet: Boolean
+  def showCandidates: Boolean
+  def rightSum: Int
+  def downSum: Int
+  def value: Int
+  //def hSum: SumInterface
+  //def vSum: SumInterface
+}
+
 trait CellInterface {
   def isWhite: Boolean
   def isBlack: Boolean
@@ -57,8 +70,6 @@ trait WhiteCellInterface extends CellInterface {
   def value: Int
   //def hSum: SumInterface
   //def vSum: SumInterface
-  def showCandidates: Boolean
-
 }
 
 trait SumInterface {
