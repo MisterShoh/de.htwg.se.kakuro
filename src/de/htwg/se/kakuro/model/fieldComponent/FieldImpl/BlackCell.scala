@@ -2,7 +2,8 @@ package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
 import de.htwg.se.kakuro.model.fieldComponent.{ BlackCellInterface, SumInterface }
 
-case class BlackCell(rightVal: Int = 0, downVal: Int = 0, rightSum: SumInterface, downSum: SumInterface) extends BlackCellInterface {
+case class BlackCell(rightVal: Int = 0, downVal: Int = 0 //,rightSum: SumInterface, downSum: SumInterface
+) extends BlackCellInterface {
 
   //def this(rightVal: Int, downVal: Int, row: Int, col: Int) = this(rightVal, downVal, new Sum(), new Sum(), row, col)
 
@@ -23,9 +24,11 @@ case class BlackCell(rightVal: Int = 0, downVal: Int = 0, rightSum: SumInterface
       }
     }
   }
+  /*
   override def copy: BlackCell = {
     BlackCell(this.rightVal, this.downVal, this.rightSum, this.downSum)
   }
+  */
   override def toStringDown: String = {
     if (downVal <= 0) {
       "##"

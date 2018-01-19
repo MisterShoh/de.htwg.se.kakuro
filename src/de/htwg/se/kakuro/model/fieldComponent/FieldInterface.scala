@@ -35,8 +35,7 @@ trait FieldInterface {
   def available(row: Int, col: Int): Set[Int]
 }
 
-/*
-Own File for everything
+//Own File for everything
 trait CellInterface {
   def isWhite: Boolean
   def isBlack: Boolean
@@ -82,4 +81,4 @@ trait AltSumInterface {
   def blackCell: BlackCellInterface
   def members: Seq[WhiteCellInterface]
 }
-*/
+

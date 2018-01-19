@@ -10,7 +10,7 @@ case class Cell() extends CellInterface {
   override def showCandidates: Boolean = false
   override def isBlack: Boolean = false
   override def isWhite: Boolean = false
-  override def copy(): Cell = this
+  //override def copy(): Cell = this
   /*
   def this(value: Int) = {
     this(0, 0)

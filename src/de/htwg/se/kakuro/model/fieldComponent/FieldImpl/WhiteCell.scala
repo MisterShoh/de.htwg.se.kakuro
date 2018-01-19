@@ -26,9 +26,11 @@ case class WhiteCell(value: Int = 0, showCandidates: Boolean = false) extends Wh
       }
     }
   }
+  /*
   override def copy: WhiteCell = {
     WhiteCell(this.value, this.showCandidates)
   }
+  */
   override def toStringDown: String = Console.REVERSED + "□□" + Console.RESET
 
   //override def hSum: SumInterface = ???

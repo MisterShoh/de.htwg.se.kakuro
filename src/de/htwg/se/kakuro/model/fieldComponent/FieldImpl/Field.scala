@@ -60,7 +60,7 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
     val v = Vector[WhiteCellInterface]()
     val rightSum = Sum(10, v, true)
     val downSum = Sum(10, v, true)
-    copy(grid.replaceCell(row, col, BlackCell(rightVal, downVal, rightSum, downSum).asInstanceOf[Cell]))
+    copy(grid.replaceCell(row, col, BlackCell(rightVal, downVal).asInstanceOf[Cell]))
   }
 
   override def reset(row: Int, col: Int): FieldInterface =

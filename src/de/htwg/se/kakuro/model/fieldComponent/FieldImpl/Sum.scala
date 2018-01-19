@@ -10,7 +10,7 @@ case class Sum(sumValue: Int, members: Vector[WhiteCellInterface], isHorizontal:
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
   //def sumValue: Int = if (isHorizontal) black.rightVal else black.downVal
 
-  //def this() = this(0, () )
+  def this() = this(0, Vector[WhiteCellInterface]())
 
   def current: Int = members.foldLeft(0)(_ + _.value)
 
