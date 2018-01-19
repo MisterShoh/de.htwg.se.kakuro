@@ -1,8 +1,9 @@
 package de.htwg.se.kakuro.aview
 import scala.swing._
 import scala.swing.event._
+import de.htwg.se.kakuro.controller.controllerComponent.{CellChanged, ControllerInterface}
 
-import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface }
+import scala.collection.immutable
 
 class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends FlowPanel {
 
@@ -39,7 +40,7 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
     }
   }
 
-  val candidatelist = (1 to controller.gridSize).map {
+  val candidatelist: immutable.IndexedSeq[Label] = (1 to controller.gridSize).map {
     (value =>
       new Label {
         text = if (controller.available(row, column).contains(value)) value.toString else " "
