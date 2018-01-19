@@ -1,0 +1,117 @@
+Source:
+http://www.newthinktank.com/2015/08/learn-scala-one-video/
+
+ 
+// ---------- CLASSES ----------
+val rover = new Animal
+rover.setName("Rover")
+rover.setSound("Woof")
+printf("%s says %s\n", rover.getName, rover.getSound)
+ 
+val whiskers = new Animal("Whiskers", "Meow")
+println(s"${whiskers.getName} with id ${whiskers.id} says ${whiskers.getSound}")
+ 
+println(whiskers.toString)
+ 
+val spike = new Dog("Spike", "Woof", "Grrrr")
+ 
+spike.setName("Spike")
+println(spike.toString)
+ 
+val fang = new Wolf("Fang")
+fang.moveSpeed = 36.0
+println(fang.move)
+ 
+// ---------- TRAITS ----------
+val superman = new Superhero("Superman")
+println(superman.fly)
+println(superman.hitByBullet)
+println(superman.ricochet(2500))
+
+// ---------- EXCEPTION HANDLING ----------
+ 
+def divideNums(num1 : Int, num2 : Int) = try
+{
+  (num1 / num2)
+} catch {
+    case ex: java.lang.ArithmeticException => "Can't divide by zero"
+} finally {
+  // Clean up after exception here
+}
+ 
+println("3 / 0 = " + divideNums(3,0))
+ 
+} 
+// ---------- INHERITANCE ----------
+// A class that inherits from another gains all its fields and methods
+// A class declared final can't be extended
+class Dog (name : String, sound : String, growl : String) extends
+Animal(name, sound){
+ 
+  def this (name : String, sound : String){
+    this("No Name", sound, "No Growl")
+    this.setName(name)
+  }
+ 
+  def this (name : String){
+    this("No Name", "No Sound", "No Growl")
+    this.setName(name)
+  }
+ 
+  def this (){
+    this("No Name", "No Sound", "No Growl")
+  }
+ 
+  // You can override any other method
+  override def toString() : String = {
+    return "%s with the id %d says %s or %s".format(
+      this.name, this.id, this.sound, this.growl)
+  }
+}
+ 
+// ---------- ABSTRACT CLASS ----------
+// An abstract class can't be instantiated. It is made up of both abstract
+// and non-abstract methods and fields
+ 
+abstract class Mammal(val name : String){
+  // An abstract field has no initial value
+  var moveSpeed : Double
+ 
+  // An abstract method has no body
+  def move : String
+ 
+}
+ 
+class Wolf(name : String) extends Mammal(name){
+  // You don't use override when defining abstract fields
+  var moveSpeed = 35.0;
+ 
+  def move = "The wolf %s runs %.2f mph".format(this.name, this.moveSpeed)
+ 
+}
+ 
+// ---------- TRAITS ----------
+// A trait is a like a Java interface in that a class can extend more then 1
+// Unlike Java interfaces traits can provide concrete methods and fields
+trait Flyable {
+  def fly : String
+ 
+}
+ 
+trait Bulletproof {
+  def hitByBullet : String
+ 
+  // You can define concrete methods in traits
+  def ricochet(startSpeed : Double) : String = {
+    "The bullet ricochets at a speed of %.1f ft/sec".format(startSpeed * .75)
+  }
+}
+ 
+// The first trait starts with extends and then with for each other
+class Superhero(val name : String) extends Flyable with Bulletproof{
+  def fly = "%s flys through the air".format(this.name)
+ 
+  def hitByBullet = "The bullet bounces off of %s".format(this.name)
+}
+ 
+} 
