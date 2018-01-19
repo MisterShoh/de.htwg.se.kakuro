@@ -3,13 +3,11 @@ package de.htwg.se.kakuro.controller.controllerComponent.controllerImpl
 import controller.controllerComponent.GameStatus._
 import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface }
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Field, FieldCreator }
-import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface, WhiteCellInterface }
-import de.htwg.se.kakuro.util.Observable
+import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
 import de.htwg.se.kakuro.util.UndoManager
+import org.apache.logging.log4j.{ LogManager, Logger }
 
 import scala.swing.Publisher
-import org.apache.logging.log4j.Logger
-import org.apache.logging.log4j.LogManager
 
 class Controller(var field: FieldInterface) extends ControllerInterface with Publisher {
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
@@ -32,7 +30,7 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
 
   def initField(): FieldInterface = {
     var samplefield = new FieldCreator()
-    //field = samplefield.createEmptyGrid(8)
+    field = samplefield.fill(field)
     //field = samplefield.createNewField(8)
     field
   }
@@ -50,23 +48,23 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
       true
     } else { false }
   }*/
-  def set(row: Int, col: Int): Unit = {
+  override def set(row: Int, col: Int): Unit = {
     logger.debug("row: " + row.toString + " col: " + col.toString + "set to simple Cell")
     field.set(row, col)
   }
 
-  def set(row: Int, col: Int, value: Int): Unit = {
+  override def set(row: Int, col: Int, value: Int): Unit = {
     logger.debug("row: " + row.toString + " col: " + col.toString + "type: white value: " + value.toString)
     field.set(row, col, value)
   }
 
-  def set(row: Int, col: Int, rightSum: Int, downSum: Int): Unit = {
+  override def set(row: Int, col: Int, rightSum: Int, downSum: Int): Unit = {
     logger.debug("row: " + row.toString + " col: " + col.toString + "type: black" +
       " rightSum: " + rightSum.toString + " downSum: " + downSum.toString)
     field.set(row, col, rightSum, downSum)
   }
 
-  def clear(row: Int, col: Int): Unit = {
+  override def clear(row: Int, col: Int): Unit = {
     logger.debug("row: " + row.toString + " col: " + col.toString + " reset")
     field.reset(row, col)
   }
@@ -77,9 +75,9 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
     else { false }
   }
 
-  def gridSize: Int = field.width
+  override def gridSize: Int = field.width // TODO check if actually used ...
 
-  def createEmptyGrid(size: Int): Unit = {
+  override def createEmptyGrid(size: Int): Unit = {
     field = new Field(8)
     publish(new CellChanged)
   }
@@ -94,11 +92,11 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
     publish(new CandidatesChanged)
   }
 
-  def fieldToString: String = Field.toString()
+  override def fieldToString: String = field.toString()
 
   //override def isShowCandidates(row: Int, col: Int): Boolean = ???
 
-  def toggleShowAllCandidates: Unit = {
+  override def toggleShowAllCandidates: Unit = {
     showAllCandidates = !showAllCandidates
     gameStatus = CANDIDATES
     publish(new CellChanged)

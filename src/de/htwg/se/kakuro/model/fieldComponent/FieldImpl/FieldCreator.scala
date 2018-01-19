@@ -1,8 +1,6 @@
 package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
-import de.htwg.se.kakuro.util.Observable
-import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface }
-import de.htwg.se.kakuro.model.fieldComponent.FieldCreatorTemplate
+import de.htwg.se.kakuro.model.fieldComponent.{ FieldCreatorTemplate, FieldInterface }
 
 class FieldCreator extends FieldCreatorTemplate {
 

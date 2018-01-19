@@ -1,4 +1,4 @@
-import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{Field2, FieldCreator2}
+import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{Field, FieldCreator}
 import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
 
 //(1 to 9).toSet.&~(members.toSet.map(_.value)).filter(_ <= sumValue - current)
@@ -12,7 +12,7 @@ var rSums: List[Tuple2[Int, Int]] = List()
 //rSums.::(0,0).::(1,1)
 var x = Vector((0,0),(1,1),(2,2),(3,3),(4,4),(5,5))
 var y = x.flatMap(t => List(t._1, t._2))
-var field: FieldInterface = new Field2(8)
+var field: FieldInterface = new Field(8)
 field = field.set(2,2,5,7)
 field = field.set(2,3,4)
 //val creator:FieldCreator2 = new FieldCreator2()

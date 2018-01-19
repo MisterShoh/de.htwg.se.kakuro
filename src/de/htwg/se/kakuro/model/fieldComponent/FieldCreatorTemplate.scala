@@ -1,6 +1,5 @@
 package de.htwg.se.kakuro.model.fieldComponent
 
-import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Field
 import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
 
 trait FieldCreatorTemplate {

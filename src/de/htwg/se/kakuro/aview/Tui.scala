@@ -1,7 +1,7 @@
 package de.htwg.se.kakuro.aview
 
-import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged }
 import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.Controller
+import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged }
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
 

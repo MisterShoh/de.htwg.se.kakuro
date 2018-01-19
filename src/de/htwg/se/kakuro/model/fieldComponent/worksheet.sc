@@ -5,7 +5,7 @@ import java.io.File
 import java.nio.file.FileSystem
 import javax.security.auth.login.Configuration
 
-import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Field2
+import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Field
 import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
 
 
@@ -26,7 +26,7 @@ val row: Int = lines.length
 val col: Int = lines.head.count(_ == ',')+1
 val tabular = Array.ofDim[String](row, col)
 
-var field: FieldInterface = new Field2(row)
+var field: FieldInterface = new Field(row)
 //var rSums: List[Tuple2[Int, Int]] = List()
 //field = fill(field)
 //var field2: FieldInterface = field.set(2,2,10)
