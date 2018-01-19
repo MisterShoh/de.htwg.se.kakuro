@@ -1,42 +1,51 @@
 package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
-import de.htwg.se.kakuro.model.fieldComponent.BlackCellInterface
+import de.htwg.se.kakuro.model.fieldComponent.{ BlackCellInterface, SumInterface }
 
-case class BlackCell(rightSum: Int = 0, downSum: Int = 0) extends BlackCellInterface {
-  //override def rightSum: Int = ???
+case class BlackCell(rightVal: Int = 0, downVal: Int = 0 //,rightSum: SumInterface, downSum: SumInterface
+) extends BlackCellInterface {
 
-  //override def downSum: Int = ???
+  //def this(rightVal: Int, downVal: Int, row: Int, col: Int) = this(rightVal, downVal, new Sum(), new Sum(), row, col)
 
   override def isWhite: Boolean = false
+  override def isBlack: Boolean = true
+  override def isSet: Boolean = true
+
+  override def showCandidates: Boolean = false
 
   override def toStringRight: String = {
-    if (rightSum <= 0) {
+    if (rightVal <= 0) {
       "##"
     } else {
-      if (rightSum < 10) {
-        " " + rightSum
+      if (rightVal < 10) {
+        " " + rightVal
       } else {
-        rightSum.toString
+        rightVal.toString
       }
     }
   }
-
+  /*
+  override def copy: BlackCell = {
+    BlackCell(this.rightVal, this.downVal, this.rightSum, this.downSum)
+  }
+  */
   override def toStringDown: String = {
-    if (downSum <= 0) {
+    if (downVal <= 0) {
       "##"
     } else {
-      if (downSum < 10) {
-        " " + downSum
+      if (downVal < 10) {
+        " " + downVal
       } else {
-        downSum.toString
+        downVal.toString
       }
     }
   }
 
   override def sumCount: Int = {
     var c: Int = 0
-    if (rightSum > 0) c += 1
-    if (downSum > 0) c += 1
+    if (rightVal > 0) c += 1
+    if (downVal > 0) c += 1
     c
   }
 }
+

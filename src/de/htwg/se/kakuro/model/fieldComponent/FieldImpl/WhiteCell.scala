@@ -12,7 +12,7 @@ case class WhiteCell(value: Int = 0, showCandidates: Boolean = false) extends Wh
   */
 
   override def isSet: Boolean = value > 0
-
+  override def isBlack: Boolean = false
   override def isWhite: Boolean = true
 
   override def toStringRight: String = {
@@ -26,8 +26,12 @@ case class WhiteCell(value: Int = 0, showCandidates: Boolean = false) extends Wh
       }
     }
   }
-
-  override def toStringDown: String = Console.REVERSED + "**" + Console.RESET
+  /*
+  override def copy: WhiteCell = {
+    WhiteCell(this.value, this.showCandidates)
+  }
+  */
+  override def toStringDown: String = Console.REVERSED + "□□" + Console.RESET
 
   //override def hSum: SumInterface = ???
 

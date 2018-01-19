@@ -1,4 +1,4 @@
-package model.fieldComponent
+package de.htwg.se.kakuro.model.fieldComponent
 
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Field
 import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
@@ -20,4 +20,9 @@ trait FieldCreatorTemplate {
   }
 
   def fill(field: FieldInterface): FieldInterface // abstract
+
+  def postprocess(field: FieldInterface): FieldInterface = {
+    //default: NOOP
+    field
+  }
 }

@@ -1,71 +1,97 @@
 package de.htwg.se.kakuro.aview
 
-import de.htwg.se.kakuro.model.{ Cell, Field }
-import de.htwg.se.kakuro.controller.Controller
+import controller.controllerComponent.{ CandidatesChanged, CellChanged }
+import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.Controller
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
+
 import scala.swing.Reactor
 // https://www.safaribooksonline.com/library/view/scala-cookbook/9781449340292/
-class Tui(controller: Controller) extends Reactor {
-  var logger = LogManager.getLogger(this.getClass.getName)
+
+class Tui2(controller: Controller) extends Reactor {
+  val logger: Logger = LogManager.getLogger(this.getClass.getName)
   listenTo(controller)
+  def size: Int = controller.gridSize
+
   /*
 	reset,create,solve,undo,redo
 	check
 	*/
-  def handleInput(input: String): Boolean = {
-    var firstChar = input.charAt(0)
-    var retVal = false
-    firstChar = firstChar.toChar
-    firstChar match {
-      case 's' => retVal = setIn(input)
-      case 'd' => retVal = deleteIn(input)
-      case 'u' => retVal = controller.controllerUndo
-      case _ =>
+  def handleInput(input: String): Unit = {
+    input.charAt(0) match {
+      case 's' => setIn(input)
+      case 'd' => deleteIn(input)
+      case 'u' => controller.undo()
+      case _ => handle2(input)
     }
-    return retVal
   }
-  def isDigit(x: String) = x forall Character.isDigit
 
-  def setIn(input: String): Boolean = {
+  def handle2(input: String): Unit = {
+    input match {
+      case "q" =>
+      case "n" => controller.createEmptyGrid(size)
+      case "z" => controller.undo()
+      case "y" => controller.redo()
+      case _ => input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
+        case row :: col :: value :: Nil => controller.set(row, col, value)
+        case row :: col :: Nil => controller.showCandidates(row, col)
+        //case index::Nil => controller.highlight(index)
+        case _ => println("didn't understand input: please try again")
+      }
+    }
+  }
+
+  reactions += {
+    case event: CellChanged => printTui()
+    case event: CandidatesChanged => printCandidates
+  }
+  def isNumber(x: String): Boolean = x forall Character.isDigit
+
+  def setIn(input: String): Unit = {
     var values = input.split(" ")
+
     var check = false
+
     if (values.length == 4) {
       var testinput = values(1) + values(2) + values(3)
-      if (isDigit(testinput)) {
+      if (isNumber(testinput)) {
         var row = values(1).toInt
         var col = values(2).toInt
         var value = values(3).toInt
-        check = controller.set(row, col, value)
-        logger.debug("setIn() row: " + row + " col: " + col + " rt set():" + check +
+        controller.set(row, col, value)
+        logger.debug("setIn() row: " + row + " col: " + col + " rt set():" +
           "length: " + values.length)
-        return check
       }
     }
-    check
-  }
-  def deleteIn(input: String): Boolean = {
-    var values = input.split(" ")
-    var checkdelete = false
-    if (values.length == 3) {
-      var test = values(1) + values(2)
-      if (isDigit(test)) {
-        var row = values(1).toInt
-        var col = values(2).toInt
-        checkdelete = controller.delete(row, col)
-        logger.debug("deleteIn() row: " + row + " col: " + col + " rt delete():" + checkdelete +
-          " length: " + values.length)
-        return checkdelete
-      }
-    }
-    checkdelete
   }
 
-  def print(field: Field): Unit = {
-    logger.info(field.toString)
-    logger.info("Wert setzen: s row col value")
-    logger.info("Wert löschen: d row col")
-    logger.info("Undo: u")
+  def deleteIn(input: String): Unit = {
+    var values = input.split(" ")
+    if (values.length == 3) {
+      var test = values(1) + values(2)
+      if (isNumber(test)) {
+        var row = values(1).toInt
+        var col = values(2).toInt
+        controller.clear(row, col)
+        logger.debug("deleteIn() row: " + row + " col: " + col + " rt delete():" +
+          " length: " + values.length)
+      }
+    }
+
+  }
+
+  def printTui(): Unit = {
+    println(controller.fieldToString)
+    println("Wert setzen: [row] [col] [value]")
+    println("Wert löschen: d row col")
+    println("Undo: u")
+  }
+
+  def printCandidates(): Unit = {
+    println("Candidates: ")
+    for (row <- 0 until size; col <- 0 until size) {
+      if (controller.isShowCandidates(row, col)) println("(" + row + "," + col + "):" + controller.available(row, col).toList.sorted)
+    }
   }
 }
 
