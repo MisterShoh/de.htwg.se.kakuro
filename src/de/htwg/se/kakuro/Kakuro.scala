@@ -21,23 +21,4 @@ object Kakuro {
       logger.debug("kakuro() input: " + input)
     } while (input != "exit" && input != "q")
   }
-
-  /*
-  def mainold(args: Array[String]): Unit = {
-    val logger = LogManager.getLogger(this.getClass.getName)
-    var field = Field(8, 8)
-    val controller = new Controller(field)
-    field = controller.initField()
-    val tui = new Tui(controller)
-    var input: String = ""
-    do {
-      tui.print(field);
-      input = scala.io.StdIn.readLine()
-      var output = true
-      if (input != "exit" && input != "") output = tui.handleInput(input.toString)
-      logger.debug("kakuro() input: " + input + " output: " + output)
-      if (!output) println("Falsche Eingabe!")
-    } while (input != "exit")
-  }
-  */
 }
