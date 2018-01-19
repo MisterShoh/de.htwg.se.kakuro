@@ -46,8 +46,10 @@ case class Field(grid: Matrix[SuperCell], sums: Set[SumInterface]) extends Field
     this
   }
 
-  override def set(row: Int, col: Int, value: Int): FieldInterface =
+  override def set(row: Int, col: Int, value: Int): FieldInterface = {
+    logger.debug("controller.set()" + "value - " + value)
     copy(grid.replaceCell(row, col, new SuperCell(value)))
+  }
 
   override def set(row: Int, col: Int): FieldInterface =
     copy(grid.replaceCell(row, col, new SuperCell()))
@@ -57,6 +59,7 @@ case class Field(grid: Matrix[SuperCell], sums: Set[SumInterface]) extends Field
     //val v = Vector[WhiteCellInterface]()
     //val rightSum = Sum(10, v, true)
     //val downSum = Sum(10, v, true)
+
     copy(grid.replaceCell(row, col, new SuperCell(rightVal, downVal)))
   }
 
@@ -64,7 +67,7 @@ case class Field(grid: Matrix[SuperCell], sums: Set[SumInterface]) extends Field
     copy(grid.replaceCell(row, col, new SuperCell(0)))
 
   override def toString: String = {
-    var result: String = " 0  1  2  3  4  5  6  7\n"
+    var result: String = "\n 0  1  2  3  4  5  6  7\n"
     result += "+--+--+--+--+--+--+--+--+\n"
     //var flength = grid.length - 1
     for (j <- 0 until width) {

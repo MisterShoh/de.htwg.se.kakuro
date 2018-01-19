@@ -49,9 +49,7 @@ class Tui(controller: Controller) extends Reactor {
 
   def setIn(input: String): Unit = {
     var values = input.split(" ")
-
     var check = false
-
     if (values.length == 4) {
       var testinput = values(1) + values(2) + values(3)
       if (isNumber(testinput)) {
