@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager
 import scala.swing.Reactor
 // https://www.safaribooksonline.com/library/view/scala-cookbook/9781449340292/
 
-class Tui2(controller: Controller) extends Reactor {
+class Tui(controller: Controller) extends Reactor {
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
   listenTo(controller)
   def size: Int = controller.gridSize
@@ -81,7 +81,7 @@ class Tui2(controller: Controller) extends Reactor {
   }
 
   def printTui(): Unit = {
-    logger.info(controller.fieldToString)
+    logger.info("\n" + controller.fieldToString)
     logger.info("Wert setzen: s row col value")
     logger.info("Wert löschen: d row col")
     logger.info("Undo: u")
