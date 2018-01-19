@@ -17,7 +17,7 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
   //var blackCells: Array[BlackCell]
   def isShowCandidates(row: Int, col: Int): Boolean = ???
   def showCandidates(row: Int, col: Int): Set[Int] = ???
-  def size: Int = ???
+  def size: Int = 8
   def unsetShowCandidates(row: Int, col: Int): de.htwg.se.kakuro.model.fieldComponent.FieldInterface = ???
 
   def toggleShotAllCandidates(): Unit = ???
