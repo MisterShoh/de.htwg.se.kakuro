@@ -81,10 +81,10 @@ class Tui2(controller: Controller) extends Reactor {
   }
 
   def printTui(): Unit = {
-    println(controller.fieldToString)
-    println("Wert setzen: [row] [col] [value]")
-    println("Wert löschen: d row col")
-    println("Undo: u")
+    logger.info(controller.fieldToString)
+    logger.info("Wert setzen: s row col value")
+    logger.info("Wert löschen: d row col")
+    logger.info("Undo: u")
   }
 
   def printCandidates(): Unit = {

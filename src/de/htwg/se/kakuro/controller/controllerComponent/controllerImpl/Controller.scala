@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.kakuro.controller.controllerComponent.controllerImpl
 
 import controller.controllerComponent.GameStatus._
@@ -108,3 +109,4 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
 
   //override def statusText: String = ???
 }
+*/ 
