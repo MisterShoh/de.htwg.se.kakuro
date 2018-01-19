@@ -1,4 +1,3 @@
-/*
 package de.htwg.se.kakuro.controller.controllerComponent.controllerImpl
 
 import controller.controllerComponent.GameStatus._
@@ -18,13 +17,15 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
   var showAllCandidates: Boolean = false
 
   def undo(): Unit = {
-    undoManager.undoStep
+    //undoManager.undoStep
+    undoManager.undoStack //TODO fixme
     gameStatus = UNDO
     publish(new CellChanged)
   }
 
   def redo(): Unit = {
-    undoManager.redoStep
+    //undoManager.redoStep
+    undoManager.redoStack // TODO fixme
     gameStatus = REDO
     publish(new CellChanged)
   }
@@ -109,4 +110,3 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
 
   //override def statusText: String = ???
 }
-*/ 

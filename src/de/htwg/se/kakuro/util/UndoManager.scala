@@ -2,14 +2,14 @@ package de.htwg.se.kakuro.util
 
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
-import de.htwg.se.kakuro.model.Field
 import scala.collection.mutable.Stack
 
 class UndoManager {
   val logger = LogManager.getLogger(this.getClass.getName)
-  var undoStack = new Stack[Field]
-  var redoStack = new Stack[Field]
+  var undoStack = new Stack[Command]
+  var redoStack = new Stack[Command]
 
+  /*
   def addField(field: Field) = {
     undoStack.push(field)
     println("*************************")
@@ -17,18 +17,27 @@ class UndoManager {
     println("*************************")
     logger.debug("addField() undoStack:" + undoStack.length)
   }
+  */
 
-  def undoField = {
+  def undoField: Command = {
     var field = undoStack.pop
     redoStack.push(field)
     logger.debug("undoField() undoStack.length():" + undoStack.length)
     field
   }
-  def redoField = {
+  def redoField: Command = {
     var field = redoStack.pop
     undoStack.push(field)
     logger.debug("undoStep() undoStack.length():" + undoStack.length)
     field
+  }
+
+  def UndoStep() = {
+
+  }
+
+  def RedoStep() = {
+
   }
   /*
   def doStep(command: Command) = {
@@ -59,4 +68,5 @@ class UndoManager {
     }
   }
   */
+
 }
