@@ -6,7 +6,7 @@ case class Matrix[T](rows: Vector[Vector[T]]) {
 
   def this(width: Int, height: Int, filling: T) = this(Vector.tabulate(width, height) { (row, col) => filling })
 
-  //val size: Int = rows.size
+  val size: Int = rows.size
   val height: Int = rows.size
   val width: Int = rows.head.size
 
