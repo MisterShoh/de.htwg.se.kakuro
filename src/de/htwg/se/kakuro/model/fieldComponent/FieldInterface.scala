@@ -14,7 +14,9 @@ trait FieldInterface {
   //def sums(): Vector[SumInterface]
   def sums(): Set[SumInterface]
   def putSum(s: SumInterface): FieldInterface
-
+  def isBlack(row: Int, col: Int): Boolean
+  def isWhite(row: Int, col: Int): Boolean
+  def isNone(row: Int, col: Int): Boolean
   //def cells(): Seq[CellInterface]
   def reset(row: Int, col: Int): FieldInterface
   def createNewGrid(size: Int): FieldInterface

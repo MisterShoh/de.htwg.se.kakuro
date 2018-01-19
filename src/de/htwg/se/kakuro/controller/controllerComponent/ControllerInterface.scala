@@ -1,7 +1,7 @@
 package de.htwg.se.kakuro.controller.controllerComponent
 
 import controller.controllerComponent.GameStatus.GameStatus
-import de.htwg.se.kakuro.model.fieldComponent.CellInterface
+import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FullCellInterface }
 
 import scala.swing.Publisher
 
@@ -11,9 +11,9 @@ trait ControllerInterface extends Publisher {
   def createEmptyGrid(size: Int): Unit
   def undo(): Unit
   def redo(): Unit
-  //def isSet(): Boolean
+  def isSet(row: Int, col: Int): Boolean
   //def resize(newSize: Int): Unit
-  //def cell(row: Int, col: Int): CellInterface
+  def cell(row: Int, col: Int): FullCellInterface
   def set(row: Int, col: Int, value: Int): Unit
   def set(row: Int, col: Int): Unit
   def set(row: Int, col: Int, rightSum: Int, downSum: Int): Unit

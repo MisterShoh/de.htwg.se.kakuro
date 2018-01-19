@@ -15,7 +15,6 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
   private val undoManager = new UndoManager
   var gameStatus: GameStatus = IDLE
   var showAllCandidates: Boolean = false
-
   def undo(): Unit = {
     //undoManager.undoStep
     undoManager.undoStack //TODO fixme
@@ -36,9 +35,9 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
     //field = samplefield.createNewField(8)
     field
   }
-  def available(row: Int, col: Int): Set[Int] = ???
-  def isShowCandidates(row: Int, col: Int): Boolean = ???
-  def isWhite(row: Int, col: Int): Boolean = ???
+  def available(row: Int, col: Int): Set[Int] = Set(0, 0)
+  def isShowCandidates(row: Int, col: Int): Boolean = false
+  def isWhite(row: Int, col: Int): Boolean = false
   /*
   def set(row: Int, col: Int, value: Int): Boolean = {
     logger.debug("row: " + row.toString + " col: " + col.toString + " value:" + value.toString)
@@ -87,7 +86,7 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
   //def cell(row: Int, col: Int) = field.cell(row, col)
 
   //override def isSet(row: Int, col: Int): Boolean = true //cell(row, col).isSet
-  def isSet(row: Int, col: Int): Boolean = true
+  override def isSet(row: Int, col: Int): Boolean = cell(row, col).isSet
   def showCandidates(row: Int, col: Int): Unit = {
     field = field.setShowCandidates(row, col)
     gameStatus = CANDIDATES
@@ -109,4 +108,5 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
   //override def available(row: Int, col: Int): Set[Int] = ???
 
   //override def statusText: String = ???
+  override def cell(row: Int, col: Int) = cell(row, col)
 }

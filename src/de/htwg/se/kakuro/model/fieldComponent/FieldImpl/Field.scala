@@ -123,4 +123,9 @@ case class Field(grid: Matrix[SuperCell], sums: Set[SumInterface]) extends Field
 
   override def available(row: Int, col: Int): Set[Int] = Set(1, 2, 3, 4, 6, 5, 7, 8, 9) //TODO fix ...
   override def setShowCandidates(row: Int, col: Int): FieldInterface = this //copy(grid.replaceCell(row, col, cell(row, col).copy(showCandidates = true)))
+  override def isBlack(row: Int, col: Int) = cell(row, col).isBlack
+
+  override def isWhite(row: Int, col: Int) = cell(row, col).isWhite
+
+  override def isNone(row: Int, col: Int) = !isWhite(row, col) && !isBlack(row, col)
 }
