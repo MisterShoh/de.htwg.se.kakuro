@@ -13,19 +13,12 @@ case class SuperCell(
   def this() = this(false, false, 0, 0, 0)
   def this(value: Int) = this(true, false, value, 0, 0)
   def this(rightSum: Int, downSum: Int) = this(false, true, 0, rightSum, downSum)
-
+  val whiteStrings = List("  ", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9")
+  //override def toStringRight: String =  if(value == 0) "##" else if (value < 10) " "+ value else value.toString
   override def toStringRight: String = {
     if (isWhite) {
-      if (value == 0) {
-        Console.REVERSED + "  " + Console.RESET
-      } else {
-        if (value < 10) {
-          Console.REVERSED + " " + value.toString + Console.RESET
-        } else {
-          Console.REVERSED + value + Console.RESET
-        }
-      }
-    } else if (isBlack) {
+      whiteStrings(value)
+    } else {
       if (rightSum <= 0) {
         "##"
       } else {
@@ -35,15 +28,13 @@ case class SuperCell(
           rightSum.toString
         }
       }
-    } else {
-      "##"
     }
   }
 
   override def toStringDown: String = {
     if (isWhite) {
-      ""
-    } else if (isBlack) {
+      "**"
+    } else {
       if (downSum <= 0) {
         "##"
       } else {
@@ -53,10 +44,10 @@ case class SuperCell(
           downSum.toString
         }
       }
-    } else {
-      "##"
     }
   }
+
+  //override def toString: String = toStringRight+"\n"+toStringDown
 
   override def isSet: Boolean = if (isWhite) value > 0 else true
 

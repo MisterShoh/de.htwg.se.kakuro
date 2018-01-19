@@ -30,8 +30,8 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
   }
 
   def initField(): FieldInterface = {
-    var samplefield = new FieldCreator()
-    field = samplefield.fill(field)
+    var generator = new FieldCreator()
+    field = generator.fill(field)
     //field = samplefield.createNewField(8)
     field
   }

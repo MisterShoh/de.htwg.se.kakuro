@@ -12,9 +12,8 @@ object Kakuro {
     val logger = LogManager.getLogger(this.getClass.getName)
     val defaultsize = 8
     val controller = new Controller(new Field(defaultsize))
-    //var field = Field(8, 8)
+    controller.initField()
     val tui = new Tui(controller)
-    //val gui = new SwingGui(controller)
     var input: String = ""
     do {
       tui.printTui()

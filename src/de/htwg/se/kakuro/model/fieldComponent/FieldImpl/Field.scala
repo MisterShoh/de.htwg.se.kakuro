@@ -35,7 +35,7 @@ case class Field(grid: Matrix[SuperCell], sums: Set[SumInterface]) extends Field
           var members = List[SuperCell]()
           for (k <- i until width) {
             // Achtung toStringRight ist wahrscheinlich nicht der richtige String!
-            //if (grid.cell(k, j).isWhite) members.+(grid.cell(k, j).asInstanceOf[WhiteCell])
+            //if (grid.cell(k, j).isWhite) members.+(grid.cell(k, j))
           }
         }
       }

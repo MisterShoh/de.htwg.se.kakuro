@@ -79,7 +79,7 @@ class Tui(controller: Controller) extends Reactor {
   }
 
   def printTui(): Unit = {
-    logger.info(controller.fieldToString)
+    logger.info("\n" + controller.fieldToString)
     logger.info("Wert setzen: s row col value")
     logger.info("Wert löschen: d row col")
     logger.info("Undo: u")
