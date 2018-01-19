@@ -1,6 +1,6 @@
 package de.htwg.se.kakuro
 
-import de.htwg.se.kakuro.aview.Tui2
+import de.htwg.se.kakuro.aview.Tui
 import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.Controller
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Field
 import org.apache.logging.log4j.Logger
@@ -12,7 +12,7 @@ object Kakuro {
     val defaultsize = 8
     val controller = new Controller(new Field(defaultsize))
     //var field = Field(8, 8)
-    val tui = new Tui2(controller)
+    val tui = new Tui(controller)
     var input: String = ""
     do {
       tui.printTui()

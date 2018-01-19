@@ -3,7 +3,7 @@ package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 import de.htwg.se.kakuro.model.fieldComponent.FullCellInterface
 
 case class SuperCell(
-  override val isWhite: Boolean = false,
+    override val isWhite: Boolean = false,
     override val isBlack: Boolean = false,
     override val value: Int,
     override val rightSum: Int,
