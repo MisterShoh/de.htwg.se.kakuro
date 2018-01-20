@@ -128,4 +128,8 @@ case class Field(grid: Matrix[SuperCell], sums: Set[SumInterface]) extends Field
   override def isWhite(row: Int, col: Int) = cell(row, col).isWhite
 
   override def isNone(row: Int, col: Int) = !isWhite(row, col) && !isBlack(row, col)
+
+  //override def cells(): Matrix[FullCellInterface] =
+
+  //override def coords(cell: FullCellInterface): (Int, Int) = ???
 }

@@ -1,7 +1,7 @@
 package de.htwg.se.kakuro.aview
 import scala.swing._
 import scala.swing.event._
-import de.htwg.se.kakuro.controller.controllerComponent.{CellChanged, ControllerInterface}
+import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface }
 
 import scala.collection.immutable
 

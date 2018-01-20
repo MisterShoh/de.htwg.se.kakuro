@@ -15,6 +15,10 @@ case class SuperCell(
   def this(rightSum: Int, downSum: Int) = this(false, true, 0, rightSum, downSum)
   val whiteStrings = List("  ", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9")
   //override def toStringRight: String =  if(value == 0) "##" else if (value < 10) " "+ value else value.toString
+
+  override def hasRight: Boolean = rightSum > 0
+  override def hasDown: Boolean = downSum > 0
+
   override def toStringRight: String = {
     if (isWhite) {
       whiteStrings(value)

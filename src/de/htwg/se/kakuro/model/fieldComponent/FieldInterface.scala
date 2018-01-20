@@ -5,14 +5,16 @@ import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, BlackCellInterfac
 
 trait FieldInterface {
 
-  //def cell(row: Int, col: Int): FullCellInterface
+  def cell(row: Int, col: Int): FullCellInterface
   def set(row: Int, col: Int): FieldInterface
   def set(row: Int, col: Int, value: Int): FieldInterface
   def set(row: Int, col: Int, rightSum: Int, downSum: Int): FieldInterface
-  //def cells(): Matrix[CellInterface]
+  //def cells(): Matrix[FullCellInterface]
   //def blackCells(): Vector[BlackCellInterface]
   //def sums(): Vector[SumInterface]
-  def sums(): Set[SumInterface]
+  def sums: Set[SumInterface]
+  //def grid: Matrix[FullCellInterface]
+  //def coords(cell: FullCellInterface): (Int, Int)
   def putSum(s: SumInterface): FieldInterface
   def isBlack(row: Int, col: Int): Boolean
   def isWhite(row: Int, col: Int): Boolean
@@ -47,6 +49,8 @@ trait FullCellInterface {
   def rightSum: Int
   def downSum: Int
   def value: Int
+  def hasRight: Boolean
+  def hasDown: Boolean
   //def hSum: SumInterface
   //def vSum: SumInterface
 }

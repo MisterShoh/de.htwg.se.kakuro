@@ -26,13 +26,21 @@ class FieldCreator extends FieldCreatorTemplate {
           case Nil => field = field.set(i, j, 0)
           case v :: Nil => field = field.set(i, j, v)
           case s :: t :: Nil => {
-            field = if (s == 0 && j == 0) field.set(i, j) else field.set(i, j, s, t)
+            field = if (s == 0 && t == 0) field.set(i, j) else field.set(i, j, s, t)
             //if(s != 0) rSums = rSums.:: (i,j)
           }
         }
       }
     }
     field
+  }
+
+  def generateSums(field: FieldInterface): FieldInterface = {
+    //field.cells.toVector.filter(_.hasRight).foreach(
+    //field.coords.foreach(field.cell(_1,_2))
+    //)
+    field
+
   }
 
   override def fill(_field: FieldInterface): FieldInterface = {
