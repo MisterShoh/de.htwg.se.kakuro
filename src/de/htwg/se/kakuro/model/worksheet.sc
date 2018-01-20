@@ -1,4 +1,4 @@
-import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{Field, FieldCreator, SuperCell}
+import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{Field, FieldCreator, Cell}
 import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
 
 //(1 to 9).toSet.&~(members.toSet.map(_.value)).filter(_ <= sumValue - current)
@@ -16,8 +16,8 @@ var y = x.flatMap(t => List(t._1, t._2))
 //val X = (0 to 45).map{ _:Int => if(_ == 0) "##" else if (_ < 10) " "+ _ else _ }
 
 
-var white:SuperCell = new SuperCell(8)
-var black:SuperCell = new SuperCell(4,5)
+var white:Cell = new Cell(8)
+var black:Cell = new Cell(4,5)
 
 val whiStr:String = white.toStringRight// +"\n"+white.toStringDown
 val blStr:String = white.toStringDown

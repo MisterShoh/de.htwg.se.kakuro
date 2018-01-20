@@ -1,38 +1,63 @@
 package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
-import de.htwg.se.kakuro.model.fieldComponent.{ BlackCellInterface, CellInterface, SumInterface, _ }
-import org.apache.logging.log4j.LogManager
+import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface, SumInterface }
+import org.apache.logging.log4j.{ LogManager, Logger }
 
-case class Field(grid: Matrix[SuperCell], sums: Set[SumInterface]) extends FieldInterface {
+case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInterface {
 
-  val logger = LogManager.getLogger(this.getClass.getName)
+  val logger: Logger = LogManager.getLogger(this.getClass.getName)
   //var grid = Array.ofDim[Cell](height, width)
   //var s : Set[Int] = Set()
-  def this(grid: Matrix[SuperCell]) = this(grid, Set.empty[SumInterface])
-  def this(width: Int, height: Int) = this(new Matrix[SuperCell](width, height, new SuperCell()))
-  def this(size: Int) = this(new Matrix[SuperCell](size, new SuperCell()))
+  def this(grid: Matrix[Cell]) = this(grid, Set.empty[SumInterface])
+  def this(width: Int, height: Int) = this(new Matrix[Cell](width, height, new Cell()))
+  def this(size: Int) = this(new Matrix[Cell](size, new Cell()))
 
   //var blackCells: Array[BlackCell]
   def isShowCandidates(row: Int, col: Int): Boolean = false
   def showCandidates(row: Int, col: Int): Set[Int] = available(row, col)
   def unsetShowCandidates(row: Int, col: Int): FieldInterface = this
 
+  def rows(row: Int): Vector[Cell] = grid.rows(row)
+  def cols(col: Int): Vector[Cell] = grid.rows.map(row => row(col))
+
   def toggleShotAllCandidates(): Unit = {}
   override def putSum(s: SumInterface): FieldInterface = {
     copy(grid, sums.+(s))
   }
 
-  def getWhiteRow(row: Int, col: Int): Set[SuperCell] = {
+  def getWhiteRow(row: Int, col: Int): Set[Cell] = {
     grid.rows(row).drop(col).dropRight(grid.rows(row).indexWhere(p => p.isBlack, row) - width).toSet
-      .asInstanceOf[Set[SuperCell]]
+      .asInstanceOf[Set[Cell]]
   }
 
   def generateSums(): FieldInterface = {
+    for (row <- 0 until grid.height) {
+      for (col <- 0 until grid.width) {
+        if (cell(row, col).hasRight) {
+          rows(row).drop(col).map(_.isWhite)
+          /*
+          var summy = col
+          var sumlist = List[CellInterface]()
+          while( col  < grid.width && cell(row,summy).isWhite){
+            sumlist.+(cell(row, summy))
+          }
+          putSum()
+          */
+        }
+      }
+    }
+    //grid.toVector.filter(_.hasRight).foreach
+    //field.coords.foreach(field.cell(_1,_2))
+    //)
+    this
+  }
+
+  def generateSums2(): FieldInterface = {
     var _sums: List[Sum] = List()
     for (i <- 0 until width) {
       for (j <- 0 until height) {
         if (!grid.cell(j, i).isBlack) {
-          var members = List[SuperCell]()
+          var members = List[Cell]()
           for (k <- i until width) {
             // Achtung toStringRight ist wahrscheinlich nicht der richtige String!
             //if (grid.cell(k, j).isWhite) members.+(grid.cell(k, j))
@@ -48,11 +73,11 @@ case class Field(grid: Matrix[SuperCell], sums: Set[SumInterface]) extends Field
 
   override def set(row: Int, col: Int, value: Int): FieldInterface = {
     logger.debug("controller.set()" + "value - " + value)
-    copy(grid.replaceCell(row, col, new SuperCell(value)))
+    copy(grid.replaceCell(row, col, new Cell(value)))
   }
 
   override def set(row: Int, col: Int): FieldInterface =
-    copy(grid.replaceCell(row, col, new SuperCell()))
+    copy(grid.replaceCell(row, col, new Cell()))
 
   override def set(row: Int, col: Int, rightVal: Int, downVal: Int): FieldInterface = {
     // Achtung v, rightSum, downSum nur wegen den errors
@@ -60,11 +85,11 @@ case class Field(grid: Matrix[SuperCell], sums: Set[SumInterface]) extends Field
     //val rightSum = Sum(10, v, true)
     //val downSum = Sum(10, v, true)
 
-    copy(grid.replaceCell(row, col, new SuperCell(rightVal, downVal)))
+    copy(grid.replaceCell(row, col, new Cell(rightVal, downVal)))
   }
 
   override def reset(row: Int, col: Int): FieldInterface =
-    copy(grid.replaceCell(row, col, new SuperCell(0)))
+    copy(grid.replaceCell(row, col, new Cell(0)))
 
   override def toString: String = {
     var result: String = "\n 0  1  2  3  4  5  6  7\n"
@@ -107,7 +132,7 @@ case class Field(grid: Matrix[SuperCell], sums: Set[SumInterface]) extends Field
   */
   //override def blackCells(): Vector[BlackCellInterface] = { grid.toVector.filter(_.isBlack).asInstanceOf[Vector[BlackCellInterface]] }
 
-  def cell(row: Int, col: Int): FullCellInterface = grid.cell(row, col)
+  def cell(row: Int, col: Int): CellInterface = grid.cell(row, col)
 
   override def createNewGrid(size: Int): FieldInterface = (new FieldCreator).createNewField(size)
 
@@ -131,5 +156,8 @@ case class Field(grid: Matrix[SuperCell], sums: Set[SumInterface]) extends Field
 
   //override def cells(): Matrix[FullCellInterface] =
 
-  //override def coords(cell: FullCellInterface): (Int, Int) = ???
+  def coords(cell: CellInterface): (Int, Int) = {
+    //grid.toVector.map()
+    (0, 0)
+  }
 }

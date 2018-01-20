@@ -14,8 +14,9 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   listenTo(controller)
 
   title = "Kakuro"
-  var cells = Array.ofDim[CellPanel](controller.gridSize, controller.gridSize)
+  var cells = Array.ofDim[CellPanel](controller.width, controller.height)
 
+  /*
   def highlightpanel = new FlowPanel {
     contents += new Label("Highlight:")
     for { index <- 0 to controller.gridSize } {
@@ -27,16 +28,22 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       listenTo(button)
     }
   }
+  */
 
-  def gridPanel = new GridPanel(controller.gridSize, controller.gridSize) {
+  def gridPanel = new GridPanel(controller.width, controller.height) {
     border = LineBorder(java.awt.Color.BLACK, 2)
     background = java.awt.Color.BLACK
     for {
-      outerRow <- 0 until controller.gridSize
-      outerColumn <- 0 until controller.gridSize
+      row <- 0 until controller.width
+      col <- 0 until controller.height
     } {
-      contents += new GridPanel(controller.gridSize, controller.gridSize) {
-        border = LineBorder(java.awt.Color.BLACK, 2)
+      val cellPanel = new CellPanel(row, col, controller)
+      cells(row)(col) = cellPanel
+      contents += cellPanel
+      listenTo(cellPanel)
+      //contents += new CellPanel(row, col, controller) {
+      border = LineBorder(java.awt.Color.GREEN, 1)
+      /*
         for {
           innerRow <- 0 until controller.gridSize
           innerColumn <- 0 until controller.gridSize
@@ -48,13 +55,14 @@ class SwingGui(controller: ControllerInterface) extends Frame {
           contents += cellPanel
           listenTo(cellPanel)
         }
-      }
+        */
     }
   }
+
   val statusline = new TextField("statusText", 20)
 
   contents = new BorderPanel {
-    add(highlightpanel, BorderPanel.Position.North)
+    //add(highlightpanel, BorderPanel.Position.North)
     add(gridPanel, BorderPanel.Position.Center)
     add(statusline, BorderPanel.Position.South)
   }
@@ -75,35 +83,32 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     }
     contents += new Menu("Options") {
       mnemonic = Key.O
-      contents += new MenuItem(Action("Show all candidates") { controller.toggleShowAllCandidates })
-      contents += new MenuItem(Action("Size 1*1") { /*controller.resize(1)*/ })
-      contents += new MenuItem(Action("Size 4*4") { /*controller.resize(4)*/ })
-      contents += new MenuItem(Action("Size 9*9") { /*controller.resize(9)*/ })
+      //contents += new MenuItem(Action("Show all candidates") { controller.toggleShowAllCandidates })
 
     }
   }
 
   visible = true
   redraw
-
+  preferredSize = new Dimension(400, 400)
+  resize(8)
   reactions += {
-    case event: GridSizeChanged => resize(event.newSize)
     case event: CellChanged => redraw
-    case event: CandidatesChanged => redraw
+    //case event: CandidatesChanged => redraw
   }
 
   def resize(gridSize: Int) = {
-    cells = Array.ofDim[CellPanel](controller.gridSize, controller.gridSize)
+    cells = Array.ofDim[CellPanel](controller.width, controller.height)
     contents = new BorderPanel {
-      add(highlightpanel, BorderPanel.Position.North)
+      //add(highlightpanel, BorderPanel.Position.North)
       add(gridPanel, BorderPanel.Position.Center)
       add(statusline, BorderPanel.Position.South)
     }
   }
   def redraw = {
     for {
-      row <- 0 until controller.gridSize
-      column <- 0 until controller.gridSize
+      row <- 0 until controller.width
+      column <- 0 until controller.height
     } cells(row)(column).redraw
     statusline.text = "statusText"
     repaint

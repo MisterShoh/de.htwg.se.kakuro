@@ -1,19 +1,20 @@
 package de.htwg.se.kakuro.controller.controllerComponent
 
 import controller.controllerComponent.GameStatus.GameStatus
-import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FullCellInterface }
+import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface }
 
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
-  def gridSize: Int
+  def width: Int
+  def height: Int
   def createEmptyGrid(size: Int): Unit
   def undo(): Unit
   def redo(): Unit
   def isSet(row: Int, col: Int): Boolean
   //def resize(newSize: Int): Unit
-  def cell(row: Int, col: Int): FullCellInterface
+  def cell(row: Int, col: Int): CellInterface
   def set(row: Int, col: Int, value: Int): Unit
   def set(row: Int, col: Int): Unit
   def set(row: Int, col: Int, rightSum: Int, downSum: Int): Unit

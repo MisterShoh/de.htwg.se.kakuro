@@ -13,8 +13,9 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
 
   def myCell = controller.cell(row, column)
 
-  def cellText(row: Int, col: Int) = "AAAAA" //TODO ...
-  // if (controller.isSet(row, column)) " " + controller.cell(row, column).value.toString else " "
+  def cellText(row: Int, col: Int) = {
+    if (controller.isSet(row, column)) " " + controller.cell(row, column).value.toString else " "
+  }
 
   val label =
     new Label {
@@ -31,6 +32,7 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
     reactions += {
       case e: CellChanged => {
         label.text = cellText(row, column)
+        println(label.text)
         repaint
       }
       case MouseClicked(src, pt, mod, clicks, pops) => {
@@ -40,7 +42,8 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
     }
   }
 
-  val candidatelist: immutable.IndexedSeq[Label] = (1 to controller.gridSize).map {
+  /*
+  val candidatelist: immutable.IndexedSeq[Label] = (1 to 9).map {
     (value =>
       new Label {
         text = if (controller.available(row, column).contains(value)) value.toString else " "
@@ -63,26 +66,28 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
         }
       })
   }
-  val candidates = new GridPanel(controller.gridSize, controller.gridSize) {
+
+  val candidates = new GridPanel(controller.width, controller.height) {
     setBackground(this)
     contents ++= candidatelist
   }
-  contents += candidates
 
+  contents += candidates
+  */
   def redraw = {
     contents.clear()
-    if ((controller.isShowCandidates(row, column) || controller.showAllCandidates) && !controller.isSet(row, column)) {
-      setBackground(candidates)
-      contents += candidates
-    } else {
-      label.text = cellText(row, column)
-      setBackground(cell)
-      contents += cell
-    }
+    //if ((controller.isShowCandidates(row, column) || controller.showAllCandidates) && !controller.isSet(row, column)) {
+    //  setBackground(candidates)
+    //  contents += candidates
+    //} else {
+    label.text = cellText(row, column)
+    setBackground(cell)
+    contents += cell
+    //}
     repaint
   }
 
-  def setBackground(p: Panel) = p.background = givenCellColor //if (controller.isGiven(row, column)) givenCellColor
+  def setBackground(p: Panel) = p.background = if (controller.isSet(row, column)) givenCellColor else cellColor
   //else if (controller.isHighlighted(row, column)) highlightedCellColor
   //else cellColor
 }

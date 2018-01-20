@@ -11,7 +11,7 @@ import scala.swing.Reactor
 class Tui(controller: Controller) extends Reactor {
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
   listenTo(controller)
-  def size: Int = controller.gridSize
+  //def size: Int = controller.width
 
   /*
 	reset,create,solve,undo,redo
@@ -29,7 +29,7 @@ class Tui(controller: Controller) extends Reactor {
   def handle2(input: String): Unit = {
     input match {
       case "q" =>
-      case "n" => controller.createEmptyGrid(size)
+      case "n" => controller.createEmptyGrid(0)
       case "z" => controller.undo()
       case "y" => controller.redo()
       case _ => input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
@@ -87,7 +87,7 @@ class Tui(controller: Controller) extends Reactor {
 
   def printCandidates(): Unit = {
     println("Candidates: ")
-    for (row <- 0 until size; col <- 0 until size) {
+    for (row <- 0 until controller.width; col <- 0 until controller.height) {
       if (controller.isShowCandidates(row, col)) println("(" + row + "," + col + "):" + controller.available(row, col).toList.sorted)
     }
   }

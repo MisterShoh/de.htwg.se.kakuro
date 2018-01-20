@@ -19,13 +19,13 @@ class UndoManager {
   }
   */
 
-  def undoField: Command = {
-    var field = undoStack.pop
-    redoStack.push(field)
+  def undoStep: Command = {
+    var command = undoStack.pop
+    redoStack.push(command)
     logger.debug("undoField() undoStack.length():" + undoStack.length)
-    field
+    command
   }
-  def redoField: Command = {
+  def redoStep: Command = {
     var field = redoStack.pop
     undoStack.push(field)
     logger.debug("undoStep() undoStack.length():" + undoStack.length)

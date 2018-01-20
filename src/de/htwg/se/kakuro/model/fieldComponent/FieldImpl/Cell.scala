@@ -1,14 +1,14 @@
 package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
-import de.htwg.se.kakuro.model.fieldComponent.FullCellInterface
+import de.htwg.se.kakuro.model.fieldComponent.CellInterface
 
-case class SuperCell(
+case class Cell(
     override val isWhite: Boolean = false,
     override val isBlack: Boolean = false,
     override val value: Int,
     override val rightSum: Int,
     override val downSum: Int
-) extends FullCellInterface {
+) extends CellInterface {
 
   def this() = this(false, false, 0, 0, 0)
   def this(value: Int) = this(true, false, value, 0, 0)
@@ -55,7 +55,7 @@ case class SuperCell(
 
   override def isSet: Boolean = if (isWhite) value > 0 else true
 
-  override def showCandidates: Boolean = false
+  //override def showCandidates: Boolean = false
 
   //override def value: Int = if(white) content else -1
 

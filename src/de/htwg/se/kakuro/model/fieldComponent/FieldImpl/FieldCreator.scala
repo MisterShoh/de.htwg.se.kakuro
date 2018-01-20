@@ -10,39 +10,33 @@ class FieldCreator extends FieldCreatorTemplate {
     var field = new Field(size)
     field
   }
-
+  /*
   def stringToField(input: String): FieldInterface = {
     var lines = input.split('\n')
     var row: Int = lines.size
-    var col: Int = lines.head.count(_ == ',')
+    var col: Int = lines.head.count(_ == ',' + 1)
     var tabular = Array.ofDim[String](row, col)
 
     var field: FieldInterface = new Field(row, col)
     //var rSums: List[Tuple2[Int, Int]] = List()
-    for (i <- tabular.indices) {
-      tabular(i) = lines(i).split(',')
-      for (j <- tabular(i).indices) {
-        tabular(i)(j).toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
-          case Nil => field = field.set(i, j, 0)
-          case v :: Nil => field = field.set(i, j, v)
-          case s :: t :: Nil => {
-            field = if (s == 0 && t == 0) field.set(i, j) else field.set(i, j, s, t)
-            //if(s != 0) rSums = rSums.:: (i,j)
+    for (row <- tabular.indices) {
+      tabular(row) = lines(row).split(',')
+      for (col <- tabular(row).indices) {
+        tabular(row)(col).split(" ").map(c => c.toInt).toList match {
+          case Nil => field = field.set(row, col, 0)
+          case whiteCellValue :: Nil => field = field.set(row, col, whiteCellValue)
+          case rightVal :: downVal :: Nil => {
+            field = if (rightVal == 0 && downVal == 0)
+              field.set(row, col)
+            else
+              field.set(row, col, rightVal, downVal)
           }
         }
       }
     }
-    field
+    //field.generateSums(field)
   }
-
-  def generateSums(field: FieldInterface): FieldInterface = {
-    //field.cells.toVector.filter(_.hasRight).foreach(
-    //field.coords.foreach(field.cell(_1,_2))
-    //)
-    field
-
-  }
-
+*/
   override def fill(_field: FieldInterface): FieldInterface = {
     var grid: FieldInterface = new Field(_field.height, _field.width)
 

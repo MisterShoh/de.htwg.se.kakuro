@@ -37,7 +37,7 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
   }
   def available(row: Int, col: Int): Set[Int] = Set(0, 0)
   def isShowCandidates(row: Int, col: Int): Boolean = false
-  def isWhite(row: Int, col: Int): Boolean = false
+  def isWhite(row: Int, col: Int): Boolean = cell(row, col).isWhite
   /*
   def set(row: Int, col: Int, value: Int): Boolean = {
     logger.debug("row: " + row.toString + " col: " + col.toString + " value:" + value.toString)
@@ -76,7 +76,8 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
     else { false }
   }
 
-  override def gridSize: Int = field.width // TODO check if actually used ...
+  override def width: Int = field.width
+  override def height: Int = field.height
 
   override def createEmptyGrid(size: Int): Unit = {
     field = new Field(8)
@@ -108,5 +109,5 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
   //override def available(row: Int, col: Int): Set[Int] = ???
 
   //override def statusText: String = ???
-  override def cell(row: Int, col: Int) = cell(row, col)
+  override def cell(row: Int, col: Int) = field.cell(row, col)
 }

@@ -1,16 +1,16 @@
 package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
-import de.htwg.se.kakuro.model.fieldComponent.{ BlackCellInterface, SumInterface, WhiteCellInterface }
+import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, SumInterface }
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
 
 import scala.swing.Reactor
 
-case class Sum(sumValue: Int, members: Vector[WhiteCellInterface], isHorizontal: Boolean = true) extends SumInterface with Reactor {
+case class Sum(sumValue: Int, members: Vector[CellInterface], isHorizontal: Boolean = true) extends SumInterface with Reactor {
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
   //def sumValue: Int = if (isHorizontal) black.rightVal else black.downVal
 
-  def this() = this(0, Vector[WhiteCellInterface]())
+  def this() = this(0, Vector[CellInterface]())
 
   def current: Int = members.foldLeft(0)(_ + _.value)
 

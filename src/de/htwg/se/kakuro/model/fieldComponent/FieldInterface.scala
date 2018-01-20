@@ -1,20 +1,21 @@
 package de.htwg.se.kakuro.model.fieldComponent
 
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Matrix
-import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, BlackCellInterface, SumInterface }
 
 trait FieldInterface {
 
-  def cell(row: Int, col: Int): FullCellInterface
+  def cell(row: Int, col: Int): CellInterface
   def set(row: Int, col: Int): FieldInterface
   def set(row: Int, col: Int, value: Int): FieldInterface
   def set(row: Int, col: Int, rightSum: Int, downSum: Int): FieldInterface
-  //def cells(): Matrix[FullCellInterface]
-  //def blackCells(): Vector[BlackCellInterface]
+  //def cells(): Matrix[CellInterface]
+  //def blackCells(): Vector[CellInterface]
   //def sums(): Vector[SumInterface]
+  def generateSums: FieldInterface
+  def rows(row: Int): Vector[CellInterface]
   def sums: Set[SumInterface]
-  //def grid: Matrix[FullCellInterface]
-  //def coords(cell: FullCellInterface): (Int, Int)
+  //def grid: Matrix[CellInterface]
+  //def coords(cell: CellInterface): (Int, Int)
   def putSum(s: SumInterface): FieldInterface
   def isBlack(row: Int, col: Int): Boolean
   def isWhite(row: Int, col: Int): Boolean
@@ -39,41 +40,18 @@ trait FieldInterface {
 
 //Own File for everything
 
-trait FullCellInterface {
-  def isWhite: Boolean
-  def isBlack: Boolean
-  def toStringRight: String
-  def toStringDown: String
-  def isSet: Boolean
-  def showCandidates: Boolean
-  def rightSum: Int
-  def downSum: Int
-  def value: Int
-  def hasRight: Boolean
-  def hasDown: Boolean
-  //def hSum: SumInterface
-  //def vSum: SumInterface
-}
-
 trait CellInterface {
   def isWhite: Boolean
   def isBlack: Boolean
   def toStringRight: String
   def toStringDown: String
   def isSet: Boolean
-  def showCandidates: Boolean
-}
-
-trait BlackCellInterface extends CellInterface {
-  //def rightSum: SumInterface
-  //def downSum: SumInterface
-  def rightVal: Int
-  def downVal: Int
-  def sumCount: Int
-}
-
-trait WhiteCellInterface extends CellInterface {
+  //def showCandidates: Boolean
+  def rightSum: Int
+  def downSum: Int
   def value: Int
+  def hasRight: Boolean
+  def hasDown: Boolean
   //def hSum: SumInterface
   //def vSum: SumInterface
 }
@@ -86,16 +64,6 @@ trait SumInterface {
   def sumValue: Int
   def current: Int
   def getCandidates: Set[Int]
-  def members: Seq[WhiteCellInterface]
+  def members: Seq[CellInterface]
 
 }
-
-trait AltSumInterface {
-  def isHorizontal: Boolean
-  def isVertical: Boolean = !isHorizontal
-  def isValid: Boolean
-  def isSolved: Boolean
-  def blackCell: BlackCellInterface
-  def members: Seq[WhiteCellInterface]
-}
-
