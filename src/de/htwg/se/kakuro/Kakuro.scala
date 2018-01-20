@@ -1,7 +1,7 @@
 package de.htwg.se.kakuro
 
 import de.htwg.se.kakuro.aview.Tui
-import de.htwg.se.kakuro.aview.gui.{ SwingGui, SwingGui2 }
+import de.htwg.se.kakuro.aview.{ SwingGui2 }
 import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.Controller
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Field
 import org.apache.logging.log4j.Logger

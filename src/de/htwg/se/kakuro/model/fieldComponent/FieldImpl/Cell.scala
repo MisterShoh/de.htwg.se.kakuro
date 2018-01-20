@@ -39,7 +39,7 @@ case class Cell(
 
   override def toStringDown: String = {
     if (isWhite) {
-      "**"
+      "\"\""
     } else {
       if (downSum <= 0) {
         "##"

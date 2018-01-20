@@ -13,7 +13,6 @@ class Tui(controller: Controller) extends Reactor {
   listenTo(controller)
   //def size: Int = controller.width
 
-
   def handleInput(input: String): Unit = {
     input.charAt(0) match {
       case 's' => setIn(input)
