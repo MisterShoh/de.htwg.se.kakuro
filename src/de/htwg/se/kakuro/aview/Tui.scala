@@ -13,15 +13,13 @@ class Tui(controller: Controller) extends Reactor {
   listenTo(controller)
   //def size: Int = controller.width
 
-  /*
-	reset,create,solve,undo,redo
-	check
-	*/
+
   def handleInput(input: String): Unit = {
     input.charAt(0) match {
       case 's' => setIn(input)
-      case 'd' => deleteIn(input)
+      case 'd' => setIn(input)
       case 'u' => controller.undo()
+      case 'r' => controller.redo()
       case _ => handle2(input)
     }
   }
@@ -42,7 +40,10 @@ class Tui(controller: Controller) extends Reactor {
   }
 
   reactions += {
-    case event: CellChanged => printTui()
+    case event: CellChanged => {
+      logger.debug("reactions Tui Cellchanged")
+      printTui()
+    }
     case event: CandidatesChanged => printCandidates
   }
   def isNumber(x: String): Boolean = x forall Character.isDigit
@@ -50,6 +51,16 @@ class Tui(controller: Controller) extends Reactor {
   def setIn(input: String): Unit = {
     var values = input.split(" ")
     var check = false
+    if (values.length == 3) {
+      var test = values(1) + values(2)
+      if (isNumber(test)) {
+        var row = values(1).toInt
+        var col = values(2).toInt
+        controller.set(row, col)
+        logger.debug("deleteIn() row: " + row + " col: " + col + " rt delete():" +
+          " length: " + values.length)
+      }
+    }
     if (values.length == 4) {
       var testinput = values(1) + values(2) + values(3)
       if (isNumber(testinput)) {
@@ -63,26 +74,12 @@ class Tui(controller: Controller) extends Reactor {
     }
   }
 
-  def deleteIn(input: String): Unit = {
-    var values = input.split(" ")
-    if (values.length == 3) {
-      var test = values(1) + values(2)
-      if (isNumber(test)) {
-        var row = values(1).toInt
-        var col = values(2).toInt
-        controller.clear(row, col)
-        logger.debug("deleteIn() row: " + row + " col: " + col + " rt delete():" +
-          " length: " + values.length)
-      }
-    }
-
-  }
-
   def printTui(): Unit = {
     logger.info("\n" + controller.fieldToString)
     logger.info("Wert setzen: s row col value")
     logger.info("Wert löschen: d row col")
     logger.info("Undo: u")
+    logger.info("Redo: r")
   }
 
   def printCandidates(): Unit = {

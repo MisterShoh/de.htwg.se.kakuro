@@ -1,6 +1,7 @@
 package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
 import de.htwg.se.kakuro.model.fieldComponent.CellInterface
+import org.apache.logging.log4j.{ LogManager, Logger }
 
 case class Cell(
     override val isWhite: Boolean = false,
@@ -9,7 +10,7 @@ case class Cell(
     override val rightSum: Int,
     override val downSum: Int
 ) extends CellInterface {
-
+  val logger: Logger = LogManager.getLogger(this.getClass.getName)
   def this() = this(false, false, 0, 0, 0)
   def this(value: Int) = this(true, false, value, 0, 0)
   def this(rightSum: Int, downSum: Int) = this(false, true, 0, rightSum, downSum)
@@ -21,6 +22,7 @@ case class Cell(
 
   override def toStringRight: String = {
     if (isWhite) {
+      logger.debug("toStringRight - " + value)
       whiteStrings(value)
     } else {
       if (rightSum <= 0) {

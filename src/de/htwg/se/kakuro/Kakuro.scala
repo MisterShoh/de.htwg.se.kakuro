@@ -14,8 +14,8 @@ object Kakuro {
     val controller = new Controller(new Field(defaultsize))
     controller.initField()
     val tui = new Tui(controller)
-    val gui = new SwingGui2(controller)
-    gui.visible
+    //val gui = new SwingGui2(controller)
+    //gui.visible
     var input: String = ""
     do {
       tui.printTui()

@@ -7,18 +7,17 @@ import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
 class SetCommand(row: Int, col: Int, value: Int, controller: Controller) extends Command {
   val logger = LogManager.getLogger(this.getClass.getName)
 
-  override def doStep: FieldInterface = {
-    //controller.field = controller.field.set(row, col, value)
-    return controller.field
+  override def doStep: Unit = {
+    logger.debug("doStep()")
+    controller.field = controller.field.set(row, col, value)
   }
 
-  override def undoStep: FieldInterface = {
+  override def undoStep: Unit = {
     logger.debug("undoStep()")
-    //controller.field = controller.field.set(row, col, 0)
-    return controller.field
+    controller.field = controller.field.set(row, col, 0)
   }
-  override def redoStep: FieldInterface = {
-    //controller.field = controller.field.set(row, col, value)
-    return controller.field
+  override def redoStep: Unit = {
+    logger.debug("redoStep()")
+    controller.field = controller.field.set(row, col, value)
   }
 }

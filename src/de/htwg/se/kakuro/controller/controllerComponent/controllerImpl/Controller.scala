@@ -15,16 +15,15 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
   private val undoManager = new UndoManager
   var gameStatus: GameStatus = IDLE
   var showAllCandidates: Boolean = false
+
   def undo(): Unit = {
-    //undoManager.undoStep
-    undoManager.undoStack //TODO fixme
+    undoManager.undoStep
     gameStatus = UNDO
     publish(new CellChanged)
   }
 
   def redo(): Unit = {
-    //undoManager.redoStep
-    undoManager.redoStack // TODO fixme
+    undoManager.redoStep
     gameStatus = REDO
     publish(new CellChanged)
   }
@@ -33,6 +32,7 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
     var generator = new FieldCreator()
     field = generator.fill(field)
     //field = samplefield.createNewField(8)
+    field.set(1, 2, 7)
     field
   }
   def available(row: Int, col: Int): Set[Int] = Set(0, 0)
@@ -49,20 +49,26 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
       true
     } else { false }
   }*/
+
   override def set(row: Int, col: Int): Unit = {
+    undoManager.doStep(new SetCommand(row, col, 0, this))
     logger.debug("row: " + row.toString + " col: " + col.toString + "set to simple Cell")
     field.set(row, col)
+    publish(new CellChanged)
   }
 
   override def set(row: Int, col: Int, value: Int): Unit = {
+    undoManager.doStep(new SetCommand(row, col, value, this))
     logger.debug("row: " + row.toString + " col: " + col.toString + "type: white value: " + value.toString)
     field.set(row, col, value)
+    publish(new CellChanged)
   }
 
   override def set(row: Int, col: Int, rightSum: Int, downSum: Int): Unit = {
     logger.debug("row: " + row.toString + " col: " + col.toString + "type: black" +
       " rightSum: " + rightSum.toString + " downSum: " + downSum.toString)
     field.set(row, col, rightSum, downSum)
+    publish(new CellChanged)
   }
 
   override def clear(row: Int, col: Int): Unit = {

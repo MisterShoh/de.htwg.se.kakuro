@@ -44,12 +44,12 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends Fl
     foreground = java.awt.Color.BLACK
   }
 
-  val WhiteCell = new GridLayout(3, 3) {
+  val WhiteCell = new GridPanel(3, 3) {
     background = java.awt.Color.WHITE
     foreground = java.awt.Color.BLACK
     minimumSize = new Dimension(cellSize, cellSize)
   }
-  contents += label
+  contents += WhiteCell
 }
 /*
 
