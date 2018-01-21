@@ -1,5 +1,8 @@
 package de.htwg.se.kakuro.aview
 
+import java.awt.{ GridBagConstraints, GridBagLayout }
+import javax.swing.SpringLayout.Constraints
+
 import de.htwg.se.kakuro.aview.{ CellPanel, CellPanel2 }
 import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface, GridSizeChanged }
 
@@ -14,14 +17,25 @@ class SwingGui2(controller: ControllerInterface) extends Frame {
   title = "Kakuro"
   var cells = Array.ofDim[CellPanel2](controller.width, controller.height)
 
-  def fieldview: GridPanel = new GridPanel(controller.height, controller.width) {
+  def fieldview: GridBagPanel = new GridBagPanel() {
+    var gblayout = new GridBagLayout()
+    //fieldview.layout = gblayout
+    var c: Constraints = new Constraints()
 
+    c.fill = GridBagPanel.Fill.Both
+    c.weightx = 1.0
+    c.weighty = 1.0
+
+    background = java.awt.Color.CYAN
+    //fieldview.
     for {
-      row <- 0 until controller.width
-      col <- 0 until controller.height
+      row <- 0 until controller.height
+      col <- 0 until controller.width
     } {
-      val cellview = new CellPanel2(row, col, controller)
-      contents += cellview
+      val cellview = new CellPanel2(col, row, controller)
+      //contents += cellview
+      c.grid = (row, col)
+      add(cellview, c)
     }
 
   }
@@ -40,4 +54,5 @@ class SwingGui2(controller: ControllerInterface) extends Frame {
   visible = true
   centerOnScreen()
   repaint
+
 }

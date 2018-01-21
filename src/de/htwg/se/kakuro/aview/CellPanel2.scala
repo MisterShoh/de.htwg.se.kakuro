@@ -1,79 +1,164 @@
 package de.htwg.se.kakuro.aview
-import java.awt.GridLayout
+import java.awt.geom.Line2D
+import java.awt.{ AlphaComposite, BasicStroke, FlowLayout, GridLayout, RenderingHints, Stroke }
+import javafx.scene.shape.Line
+import javax.swing.SwingConstants
 
 import scala.swing._
 import scala.swing.event._
 import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface }
+import de.htwg.se.kakuro.model.fieldComponent.CellInterface
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Cell
 
 import scala.collection.immutable
 
-class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends FlowPanel {
+class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends BorderPanel { //(Orientation.Vertical) {
 
-  val cellSize: Int = 51
-  hGap = 1
-  vGap = 1
+  val cellSize: Int = 60
   val blackCellColor = new Color(80, 80, 80)
   val whiteCellColor = new Color(252, 252, 252)
   val highlightedCellColor = new Color(200, 255, 200)
 
-  //def myCell = new Cell(6)
-  controller.cell(row, col)
+  xLayoutAlignment = 0.5
+  yLayoutAlignment = 0.5
 
-  def cellText(row: Int, col: Int) = if (controller.cell(row, col).isWhite) controller.cell(row, col).value.toString else "B"
+  //def myCell = new Cell(6)
+  def myCell: CellInterface = controller.cell(row, col)
+
+  def cellText(row: Int, col: Int): String = if (controller.cell(row, col).isWhite) controller.cell(row, col).value.toString else "B"
 
   /*
-  contents = new GridPanel(3,3) {
-
-
-
-
-    //def myCell = controller.cell(row, col)
-
-
-    def cellText(row: Int, col: Int) = {
-      if (controller.isSet(row, col)) " " + controller.cell(row, col).value.toString else " "
-    }
-
-
-
-
-
-    //add(WhiteCell)
+  def cellText(row: Int, col: Int) = {
+    if (controller.isSet(row, col)) " " + controller.cell(row, col).value.toString else " "
+  }
+  //add(WhiteCell)
     minimumSize = new Dimension(cellSize, cellSize)
     border = Swing.BeveledBorder(Swing.Raised)
     listenTo(mouse.clicks)
     listenTo(controller)
   }
   */
-  var label = new Label() {
+  def wlabel: Label = new Label() {
     text = row.toString
     //contents += new Label("_")
+    xLayoutAlignment = 0.5
+    yLayoutAlignment = 0.5
     font = new Font("Verdana", 1, 30)
-    //horizontalTextPosition = Alignment.Center
-    //verticalTextPosition = Alignment.Center
-    xAlignment = Alignment.Center
-    yAlignment = Alignment.Center
+    horizontalAlignment = Alignment.Center
+    verticalAlignment = Alignment.Center
+    preferredSize = new Dimension(cellSize, cellSize)
   }
 
-  val whiteCell = new FlowPanel {
-    contents += label
+  def rlabel: Label = new Label() {
+    text = myCell.rightSum.toString
+    //contents += new Label("_")
+    xLayoutAlignment = 0.2
+    yLayoutAlignment = 0.8
+    font = new Font("Verdana", 1, 18)
+    horizontalTextPosition = Alignment.Center
+    verticalTextPosition = Alignment.Center
+    if (myCell.hasRight)
+      foreground = java.awt.Color.WHITE
+    else
+      foreground = java.awt.Color.BLACK
+    //preferredSize = new Dimension(cellSize, cellSize)
+  }
+
+  def dlabel: Label = new Label() {
+    text = myCell.downSum.toString
+    //contents += new Label("_")
+    xLayoutAlignment = 0.8
+    yLayoutAlignment = 0.2
+    font = new Font("Verdana", 1, 18)
+    horizontalTextPosition = Alignment.Center
+    verticalTextPosition = Alignment.Center
+    if (myCell.hasDown)
+      foreground = java.awt.Color.WHITE
+    else
+      foreground = java.awt.Color.BLACK
+  }
+
+  class plainCell extends FlowPanel {
+    //def plainCell: BoxPanel = new BoxPanel(Orientation.Vertical) {
+    background = java.awt.Color.BLACK
+    foreground = java.awt.Color.BLACK
+    preferredSize = new Dimension(cellSize, cellSize)
+  }
+
+  class blackCell extends GridPanel(2, 2) {
+    //def blackCell: BoxPanel = new BoxPanel(Orientation.Vertical) {
+    background = java.awt.Color.BLACK
+    val empty = new FlowPanel {
+      background = java.awt.Color.BLACK
+    }
+    contents += empty
+    contents += rlabel
+    contents += dlabel
+    //foreground = java.awt.Color.WHITE
+    preferredSize = new Dimension(cellSize, cellSize)
+
+    override def paintComponent(g: swing.Graphics2D) {
+      super.paintComponent(g)
+      val g2 = g.create.asInstanceOf[Graphics2D]
+      //g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+
+      g2.setStroke(new BasicStroke(3f))
+      g2.draw(new Line2D.Float(0, 0, 1, 1))
+      val old = g2.getComposite
+      //g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaComposite))
+      g2.setColor(java.awt.Color.WHITE)
+      //val shape = new Line(0, 0, 1, 1)
+      //g2.drawLine(0, 0, 10, 10)
+      g2.setComposite(old)
+      g2.dispose
+    }
+  }
+
+  class whiteCell extends FlowPanel {
+    //def whiteCell: BoxPanel = new BoxPanel(Orientation.Vertical) {
+    contents += wlabel
+    //contents += new Label(row.toString, SwingConstants.CENTER)
+    border = Swing.BeveledBorder(Swing.Raised)
+    //border.
+    xLayoutAlignment = 0.5
+    yLayoutAlignment = 0.5
+    //xAlignment = Alignment.Center
+    //yAlignment = Alignment.Center
+
     preferredSize = new Dimension(cellSize, cellSize)
     //minimumSize = new Dimension(cellSize, cellSize)
     listenTo(controller)
-    //background = java.awt.Color.WHITE
-    //foreground = java.awt.Color.BLACK
+    background = java.awt.Color.WHITE
+    foreground = java.awt.Color.BLACK
   }
 
-  //contents += label
-  contents += whiteCell
+  if (myCell.isWhite)
+    //contents += new whiteCell
+    add(new whiteCell, BorderPanel.Position.Center)
+  else if (myCell.isBlack)
+    //contents += new blackCell
+    add(new blackCell, BorderPanel.Position.Center)
+  else
+    //contents += new plainCell
+    add(new plainCell, BorderPanel.Position.Center)
+
+  //add(whiteCell, BorderPanel.Position.Center)
   background = java.awt.Color.darkGray
 
   def redraw(): Unit = {
-    contents.clear()
-    label.text = cellText(row, col)
-    setPaint(whiteCell)
-    contents += whiteCell
+    //contents.clear()
+    wlabel.text = cellText(row, col)
+    //setPaint(whiteCell)
+    //add(whiteCell, BorderPanel.Position.Center)
+    if (myCell.isWhite)
+      //contents += new whiteCell
+      add(new whiteCell, BorderPanel.Position.Center)
+    else if (myCell.isBlack)
+      //contents += new blackCell
+      add(new blackCell, BorderPanel.Position.Center)
+    else
+      //contents += new plainCell
+      add(new plainCell, BorderPanel.Position.Center)
 
     repaint
   }

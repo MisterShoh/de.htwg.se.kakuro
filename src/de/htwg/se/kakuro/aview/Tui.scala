@@ -33,7 +33,7 @@ class Tui(controller: Controller) extends Reactor {
         case row :: col :: value :: Nil => controller.set(row, col, value)
         case row :: col :: Nil => controller.showCandidates(row, col)
         //case index::Nil => controller.highlight(index)
-        case _ => println("didn't understand input: please try again")
+        case _ => logger.info("didn't understand input: please try again")
       }
     }
   }

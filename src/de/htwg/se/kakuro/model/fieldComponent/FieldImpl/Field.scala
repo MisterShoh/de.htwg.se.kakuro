@@ -30,7 +30,7 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
       .asInstanceOf[Set[Cell]]
   }
 
-  def generateSums(): FieldInterface = {
+  def generateSums: FieldInterface = {
     for (row <- 0 until grid.height) {
       for (col <- 0 until grid.width) {
         if (cell(row, col).hasRight) {
@@ -145,16 +145,17 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
 
   override def available(row: Int, col: Int): Set[Int] = Set(1, 2, 3, 4, 6, 5, 7, 8, 9) //TODO fix ...
   override def setShowCandidates(row: Int, col: Int): FieldInterface = this //copy(grid.replaceCell(row, col, cell(row, col).copy(showCandidates = true)))
-  override def isBlack(row: Int, col: Int) = cell(row, col).isBlack
+  override def isBlack(row: Int, col: Int): Boolean = cell(row, col).isBlack
 
-  override def isWhite(row: Int, col: Int) = cell(row, col).isWhite
+  override def isWhite(row: Int, col: Int): Boolean = cell(row, col).isWhite
 
-  override def isNone(row: Int, col: Int) = !isWhite(row, col) && !isBlack(row, col)
-
+  override def isNone(row: Int, col: Int): Boolean = !isWhite(row, col) && !isBlack(row, col)
+  /*
   //override def cells(): Matrix[FullCellInterface] =
 
   def coords(cell: CellInterface): (Int, Int) = {
     //grid.toVector.map()
     (0, 0)
   }
+  */
 }

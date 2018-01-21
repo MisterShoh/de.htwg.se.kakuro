@@ -51,7 +51,7 @@ class FieldCreator extends FieldCreatorTemplate {
     grid = grid.set(1, 0, 16, 0)
     grid = grid.set(1, 1, 0)
     grid = grid.set(1, 2, 0)
-    grid = grid.set(1, 3, 0, 0)
+    grid = grid.set(1, 3)
     grid = grid.set(1, 4, 24, 17)
     grid = grid.set(1, 5, 0)
     grid = grid.set(1, 6, 0)
