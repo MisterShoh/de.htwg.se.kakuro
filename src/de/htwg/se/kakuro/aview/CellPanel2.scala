@@ -54,7 +54,7 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends Bo
     //contents += new Label("_")
     xLayoutAlignment = 0.2
     yLayoutAlignment = 0.8
-    font = new Font("Verdana", 1, 18)
+    font = new Font("Verdana", 1, 20)
     horizontalTextPosition = Alignment.Center
     verticalTextPosition = Alignment.Center
     if (myCell.hasRight)
@@ -69,7 +69,7 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends Bo
     //contents += new Label("_")
     xLayoutAlignment = 0.8
     yLayoutAlignment = 0.2
-    font = new Font("Verdana", 1, 18)
+    font = new Font("Verdana", 1, 20)
     horizontalTextPosition = Alignment.Center
     verticalTextPosition = Alignment.Center
     if (myCell.hasDown)
@@ -82,6 +82,7 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends Bo
     //def plainCell: BoxPanel = new BoxPanel(Orientation.Vertical) {
     background = java.awt.Color.BLACK
     foreground = java.awt.Color.BLACK
+
     preferredSize = new Dimension(cellSize, cellSize)
   }
 
@@ -89,7 +90,8 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends Bo
     //def blackCell: BoxPanel = new BoxPanel(Orientation.Vertical) {
     background = java.awt.Color.BLACK
     val empty = new FlowPanel {
-      background = java.awt.Color.BLACK
+      visible = false
+      //background = java.awt.Color.BLACK
     }
     contents += empty
     contents += rlabel
@@ -99,18 +101,15 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends Bo
 
     override def paintComponent(g: swing.Graphics2D) {
       super.paintComponent(g)
-      val g2 = g.create.asInstanceOf[Graphics2D]
-      //g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 
-      g2.setStroke(new BasicStroke(3f))
-      g2.draw(new Line2D.Float(0, 0, 1, 1))
-      val old = g2.getComposite
-      //g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaComposite))
-      g2.setColor(java.awt.Color.WHITE)
-      //val shape = new Line(0, 0, 1, 1)
-      //g2.drawLine(0, 0, 10, 10)
-      g2.setComposite(old)
-      g2.dispose
+      //val color = g.getColor
+      //val stroke = g.getStroke
+      g.setColor(java.awt.Color.WHITE)
+      g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+      g.setStroke(new BasicStroke(2))
+      g.drawLine(0, 0, this.size.width, this.size.height)
+      //g.setStroke(stroke)
+      //g.setColor(color)
     }
   }
 
@@ -130,6 +129,12 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends Bo
     listenTo(controller)
     background = java.awt.Color.WHITE
     foreground = java.awt.Color.BLACK
+
+    override def paintComponent(g: swing.Graphics2D) {
+      super.paintComponent(g)
+      //g.setStroke(new BasicStroke(3))
+      //g.drawLine(0, 0, this.size.width, this.size.height)
+    }
   }
 
   if (myCell.isWhite)
