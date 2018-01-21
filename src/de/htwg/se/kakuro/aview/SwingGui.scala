@@ -1,7 +1,7 @@
 package de.htwg.se.kakuro.aview.gui
 
 import de.htwg.se.kakuro.aview.CellPanel
-import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface, GridSizeChanged }
+import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface }
 
 import scala.swing._
 import scala.swing.Swing.LineBorder

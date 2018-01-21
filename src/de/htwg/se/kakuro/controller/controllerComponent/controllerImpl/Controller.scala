@@ -1,7 +1,7 @@
 package de.htwg.se.kakuro.controller.controllerComponent.controllerImpl
 
 import controller.controllerComponent.GameStatus._
-import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface }
+import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface, SelectorChanged }
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Field, FieldCreator }
 import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
 import de.htwg.se.kakuro.util.UndoManager
@@ -14,6 +14,7 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
 
   private val undoManager = new UndoManager
   var gameStatus: GameStatus = IDLE
+  var selection: (Int, Int) = (-1, -1)
   var showAllCandidates: Boolean = false
 
   def undo(): Unit = {
@@ -116,4 +117,13 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
 
   //override def statusText: String = ???
   override def cell(row: Int, col: Int) = field.cell(row, col)
+
+  override def isSelected(row: Int, col: Int): Boolean = selection == (row, col)
+
+  override def selectCell(row: Int, col: Int): Unit = {
+    if (isSelected(row, col)) { selection = (-1, -1) }
+    else { selection = (row, col) }
+    gameStatus = SELECTED
+    publish(new SelectorChanged)
+  }
 }

@@ -25,7 +25,7 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
     copy(grid, sums.+(s))
   }
 
-  def getWhiteRow(row: Int, col: Int): Set[Cell] = {
+  def getWhiteBlock(row: Int, col: Int): Set[Cell] = {
     grid.rows(row).drop(col).dropRight(grid.rows(row).indexWhere(p => p.isBlack, row) - width).toSet
       .asInstanceOf[Set[Cell]]
   }

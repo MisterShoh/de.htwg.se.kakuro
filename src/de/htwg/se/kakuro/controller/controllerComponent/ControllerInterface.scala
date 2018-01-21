@@ -25,6 +25,8 @@ trait ControllerInterface extends Publisher {
   //def highlight(index: Int): Unit
   //def isHighlighted(row: Int, col: Int): Boolean
   def fieldToString: String
+  def selectCell(row: Int, col: Int): Unit
+  def isSelected(row: Int, col: Int): Boolean
   def isShowCandidates(row: Int, col: Int): Boolean
   //def setShowCandidates(row: Int, col: Int): Unit
   //def unsetShowCandidates()
@@ -38,5 +40,5 @@ trait ControllerInterface extends Publisher {
 import scala.swing.event.Event
 
 class CellChanged extends Event
-case class GridSizeChanged(newSize: Int) extends Event
+class SelectorChanged extends Event
 class CandidatesChanged extends Event

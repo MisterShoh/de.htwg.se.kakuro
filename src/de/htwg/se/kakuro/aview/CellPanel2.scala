@@ -6,18 +6,23 @@ import javax.swing.SwingConstants
 
 import scala.swing._
 import scala.swing.event._
-import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface }
+import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface, SelectorChanged }
 import de.htwg.se.kakuro.model.fieldComponent.CellInterface
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Cell
 
 import scala.collection.immutable
 
-class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends BorderPanel { //(Orientation.Vertical) {
+class CellPanel2(row: Int, col: Int, controller: ControllerInterface, val isSelected: Boolean = false) extends BorderPanel { //(Orientation.Vertical) {
+
+  /*
+  var c: Constraints = new Constraints()
+  c.fill = GridBagPanel.Fill.Both
+  c.weightx = 1.0
+  c.weighty = 1.0
+  c.grid = (0, 0)
+  */
 
   val cellSize: Int = 60
-  val blackCellColor = new Color(80, 80, 80)
-  val whiteCellColor = new Color(252, 252, 252)
-  val highlightedCellColor = new Color(200, 255, 200)
 
   xLayoutAlignment = 0.5
   yLayoutAlignment = 0.5
@@ -39,11 +44,11 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends Bo
   }
   */
   def wlabel: Label = new Label() {
-    text = row.toString
+    text = size.width.toString
     //contents += new Label("_")
-    xLayoutAlignment = 0.5
-    yLayoutAlignment = 0.5
-    font = new Font("Verdana", 1, 30)
+    //xLayoutAlignment = 0.5
+    //yLayoutAlignment = 0.5
+    font = new Font("Verdana", 1, 25)
     horizontalAlignment = Alignment.Center
     verticalAlignment = Alignment.Center
     preferredSize = new Dimension(cellSize, cellSize)
@@ -52,8 +57,8 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends Bo
   def rlabel: Label = new Label() {
     text = myCell.rightSum.toString
     //contents += new Label("_")
-    xLayoutAlignment = 0.2
-    yLayoutAlignment = 0.8
+    //xLayoutAlignment = 0.2
+    //yLayoutAlignment = 0.8
     font = new Font("Verdana", 1, 20)
     horizontalTextPosition = Alignment.Center
     verticalTextPosition = Alignment.Center
@@ -67,8 +72,8 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends Bo
   def dlabel: Label = new Label() {
     text = myCell.downSum.toString
     //contents += new Label("_")
-    xLayoutAlignment = 0.8
-    yLayoutAlignment = 0.2
+    //xLayoutAlignment = 0.8
+    //yLayoutAlignment = 0.2
     font = new Font("Verdana", 1, 20)
     horizontalTextPosition = Alignment.Center
     verticalTextPosition = Alignment.Center
@@ -113,22 +118,48 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends Bo
     }
   }
 
-  class whiteCell extends FlowPanel {
+  class whiteCell extends GridBagPanel {
+
+    var c: Constraints = new Constraints()
+    c.fill = GridBagPanel.Fill.Both
+    c.weightx = 1.0
+    c.weighty = 1.0
+    c.grid = (0, 0)
+
     //def whiteCell: BoxPanel = new BoxPanel(Orientation.Vertical) {
-    contents += wlabel
-    //contents += new Label(row.toString, SwingConstants.CENTER)
-    border = Swing.BeveledBorder(Swing.Raised)
-    //border.
-    xLayoutAlignment = 0.5
-    yLayoutAlignment = 0.5
-    //xAlignment = Alignment.Center
-    //yAlignment = Alignment.Center
+    //contents += wlabel
+    add(wlabel, c)
 
     preferredSize = new Dimension(cellSize, cellSize)
     //minimumSize = new Dimension(cellSize, cellSize)
     listenTo(controller)
     background = java.awt.Color.WHITE
     foreground = java.awt.Color.BLACK
+
+    //border = Swing.LineBorder(java.awt.Color.ORANGE, 2)
+
+    listenTo(mouse.clicks)
+    listenTo(controller)
+
+    reactions += {
+      case e: CellChanged => {
+        wlabel.text = cellText(row, col)
+        repaint
+      }
+
+      case e: SelectorChanged => {
+        if (controller.isSelected(row, col))
+          border = Swing.LineBorder(java.awt.Color.ORANGE, 2)
+        else
+          border = Swing.LineBorder(java.awt.Color.BLACK, 1)
+        repaint
+      }
+      case MouseClicked(src, pt, mod, clicks, pops) => {
+        //controller.showCandidates(row, col)
+        controller.selectCell(row, col)
+        repaint
+      }
+    }
 
     override def paintComponent(g: swing.Graphics2D) {
       super.paintComponent(g)
@@ -137,17 +168,26 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends Bo
     }
   }
 
-  if (myCell.isWhite)
+  if (myCell.isWhite) {
+    val top = new FlowPanel {
+      visible = false
+      preferredSize = new Dimension(0, 0)
+      //background = java.awt.Color.BLACK
+    }
     //contents += new whiteCell
     add(new whiteCell, BorderPanel.Position.Center)
-  else if (myCell.isBlack)
+    //add(new whiteCell, c)
+    add(top, BorderPanel.Position.North)
+    add(top, BorderPanel.Position.South)
+  } else if (myCell.isBlack) {
     //contents += new blackCell
+    //add(new blackCell, c)
     add(new blackCell, BorderPanel.Position.Center)
-  else
+  } else {
     //contents += new plainCell
+    //add(new plainCell, c)
     add(new plainCell, BorderPanel.Position.Center)
-
-  //add(whiteCell, BorderPanel.Position.Center)
+  }
   background = java.awt.Color.darkGray
 
   def redraw(): Unit = {
@@ -155,32 +195,25 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface) extends Bo
     wlabel.text = cellText(row, col)
     //setPaint(whiteCell)
     //add(whiteCell, BorderPanel.Position.Center)
-    if (myCell.isWhite)
+
+    if (myCell.isWhite) {
       //contents += new whiteCell
-      add(new whiteCell, BorderPanel.Position.Center)
-    else if (myCell.isBlack)
+      var wcell = new whiteCell
+      //wcell.background = java.awt.Color.ORANGE
+      add(wcell, BorderPanel.Position.Center)
+      //add(new whiteCell, c)
+    } else if (myCell.isBlack)
       //contents += new blackCell
       add(new blackCell, BorderPanel.Position.Center)
+    //add(new whiteCell, c)
     else
       //contents += new plainCell
       add(new plainCell, BorderPanel.Position.Center)
+    //add(new whiteCell, c)
 
-    repaint
-  }
-
-  def setPaint(p: Panel): Unit = {
-    p.background = if (!controller.isWhite(row, col)) java.awt.Color.BLACK
-    else java.awt.Color.ORANGE
-    p.foreground = if (!controller.isWhite(row, col)) java.awt.Color.WHITE
-    else java.awt.Color.BLACK
+    //repaint
+    visible = true
   }
 
   //else if (controller.isHighlighted(row, col)) highlightedCellColor
 }
-/*
-
-
-BoxPanel(Orientation.Vertical) {
-
-
- */ 
