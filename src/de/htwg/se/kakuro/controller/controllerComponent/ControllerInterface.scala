@@ -45,3 +45,4 @@ import scala.swing.event.Event
 class CellChanged extends Event
 class SelectorChanged extends Event
 class CandidatesChanged extends Event
+class SizeChanged extends Event

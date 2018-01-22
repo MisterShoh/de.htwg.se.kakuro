@@ -1,6 +1,6 @@
 package de.htwg.se.kakuro.aview
 
-import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface }
+import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface, SizeChanged }
 
 import scala.swing._
 import scala.swing.event._
@@ -11,10 +11,11 @@ class SwingGui2(controller: ControllerInterface) extends Frame {
   listenTo(controller)
   title = "Kakuro"
 
-  val whiteTextSize: Int = 25
-  val blackTextSize: Int = 20
+  var whiteTextSize: Int = 25
+  var blackTextSize: Int = 20
+  var buttonTextSize: Int = 18
   var cells: Array[Array[CellPanel2]] = Array.ofDim[CellPanel2](controller.width, controller.height)
-
+  var buttons: Array[Button] = new Array[Button](10)
   def buttonbar: GridBagPanel = new GridBagPanel {
     var c: Constraints = new Constraints()
 
@@ -32,11 +33,23 @@ class SwingGui2(controller: ControllerInterface) extends Frame {
         }
       }
       button.preferredSize_=(new Dimension(45, 45))
-      button.font = new Font("Verdana", 0, 18)
+      button.font = new Font("Verdana", 0, buttonTextSize)
       //button.pain
       //contents += button
+      buttons(index) = button
       add(button, c)
       listenTo(button)
+      /*
+      reactions += {
+        case event: SizeChanged =>
+          buttonTextSize = this.size.width / 25
+          //if (this.size.width < 460) {
+          //buttonbar.contents.foreach(_.font = new Font("Verdana", 0, buttonTextSize))
+          //}
+          repaint
+          visible = true
+      }
+      */
     }
   }
 
@@ -91,7 +104,7 @@ class SwingGui2(controller: ControllerInterface) extends Frame {
       //contents += new MenuItem(Action("New") { controller.createNewGrid })
       //contents += new MenuItem(Action("Save") { controller.save })
       //contents += new MenuItem(Action("Load") { controller.load })
-      contents += new MenuItem(Action("Quit") { System.exit(0) })
+      contents += new MenuItem(Action("Quit") { sys.exit(0) })
     }
     contents += new Menu("Edit") {
       mnemonic = Key.E
@@ -120,21 +133,26 @@ class SwingGui2(controller: ControllerInterface) extends Frame {
     */
   }
 
-  minimumSize = new Dimension(200, 100)
+  //minimumSize = new Dimension(200, 100)
   visible = true
   centerOnScreen()
 
   repaint
 
   def resizeText(): Unit = {
-
+    buttonTextSize = this.size.width / 25
+    buttons.foreach(_.font = new Font("Verdana", 0, buttonTextSize))
+    //cells.flatten.foreach(_.redraw())
   }
 
   def redraw(): Unit = {
+    /*
     for {
       row <- 0 until controller.height
       column <- 0 until controller.width
     } cells(row)(column).redraw()
+    */
+    cells.flatten.foreach(_.redraw())
     //publish(UIElementResized(fieldview))
     repaint
     visible = true
