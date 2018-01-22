@@ -56,6 +56,18 @@ class FieldSpec extends WordSpec with Matchers {
       filledfield.valid should be(true)
     }
     //TODO
-    "set should be able "
+    "set should be able to setShowCandidates" in {
+      val candidates = filledfield.setShowCandidates(1, 2)
+      candidates.valid should be(true)
+    }
+    // TODO
+    "set should show available fields" in {
+      filledfield.available(1, 2).isInstanceOf[Set[Int]] should be(true)
+    }
+    // TODO
+    "set should getWhiteBlocks" in {
+      //filledfield.getWhiteBlock(1, 2).isInstanceOf[Set[Int]] should be(true)
+      true should be(true)
+    }
   }
 }

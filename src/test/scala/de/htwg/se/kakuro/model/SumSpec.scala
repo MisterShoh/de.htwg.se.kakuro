@@ -16,6 +16,12 @@ class SumSpec extends WordSpec with Matchers {
       "be set true" in {
         sumDef.isSolved should be(true)
       }
+      "have the value 0" in {
+        sumDef.sumValue should be(0)
+      }
+      "current" in {
+        sumDef.current should be(0)
+      }
     }
   }
 
