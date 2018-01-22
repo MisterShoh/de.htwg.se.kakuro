@@ -74,6 +74,7 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
 
   override def clear(row: Int, col: Int): Unit = {
     logger.debug("row: " + row.toString + " col: " + col.toString + " reset")
+    undoManager.doStep(new ResetCommand(row, col, this))
     field.reset(row, col)
   }
 
