@@ -9,7 +9,7 @@ class BlackCellSpec extends WordSpec with Matchers {
 
   "A BlackCell" when {
     "default " should {
-      val cell = Cell()
+      val cell = new SuperCell()
       "be set" in {
         cell.isSet should be(true)
       }

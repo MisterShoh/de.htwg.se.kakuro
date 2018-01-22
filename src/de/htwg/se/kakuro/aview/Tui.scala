@@ -16,7 +16,7 @@ class Tui(controller: Controller) extends Reactor {
   def handleInput(input: String): Unit = {
     input.charAt(0) match {
       case 's' => setIn(input)
-      case 'd' => setIn(input)
+      case 'd' => reset(input)
       case 'u' => controller.undo()
       case 'r' => controller.redo()
       case _ => handle2(input)
@@ -69,6 +69,19 @@ class Tui(controller: Controller) extends Reactor {
         controller.set(row, col, value)
         logger.debug("setIn() row: " + row + " col: " + col + " rt set():" +
           "length: " + values.length)
+      }
+    }
+  }
+  def reset(input: String): Unit = {
+    var values = input.split(" ")
+    var check = false
+    if (values.length == 3) {
+      var test = values(1) + values(2)
+      if (isNumber(test)) {
+        var row = values(1).toInt
+        var col = values(2).toInt
+        controller.clear(row, col)
+        logger.debug("reset() row: " + row + " col: " + col + " length: " + values.length)
       }
     }
   }
