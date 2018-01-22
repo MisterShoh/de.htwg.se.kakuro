@@ -59,9 +59,12 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
   }
 
   override def set(row: Int, col: Int, value: Int): Unit = {
-    undoManager.doStep(new SetCommand(row, col, value, this))
+    if (value == 0) undoManager.doStep(new ResetCommand(row, col, this))
+    else {
+      undoManager.doStep(new SetCommand(row, col, value, this))
+      field.set(row, col, value)
+    }
     logger.debug("row: " + row.toString + " col: " + col.toString + "type: white value: " + value.toString)
-    field.set(row, col, value)
     publish(new CellChanged)
   }
 

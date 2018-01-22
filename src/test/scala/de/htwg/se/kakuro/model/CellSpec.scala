@@ -51,7 +51,12 @@ class CellSpec extends WordSpec with Matchers {
       "return true from isBlack 2" in {
         blackCell.isBlack should be(true)
       }
-
+      "return true from hasRight" in {
+        blackCell.hasRight should be(true)
+      }
+      "return true from hasDown" in {
+        blackCell.hasDown should be(true)
+      }
     }
   }
 
