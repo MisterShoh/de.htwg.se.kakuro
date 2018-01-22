@@ -44,7 +44,7 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface, val isSele
   }
   */
   def wlabel: Label = new Label() {
-    text = size.width.toString
+    text = if (myCell.isSet) myCell.value.toString else " "
     //contents += new Label("_")
     //xLayoutAlignment = 0.5
     //yLayoutAlignment = 0.5
@@ -94,7 +94,7 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface, val isSele
   class blackCell extends GridPanel(2, 2) {
     //def blackCell: BoxPanel = new BoxPanel(Orientation.Vertical) {
     background = java.awt.Color.BLACK
-    val empty = new FlowPanel {
+    val empty: FlowPanel = new FlowPanel {
       visible = false
       //background = java.awt.Color.BLACK
     }
@@ -142,23 +142,20 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface, val isSele
     listenTo(controller)
 
     reactions += {
-      case e: CellChanged => {
+      case e: CellChanged =>
         wlabel.text = cellText(row, col)
         repaint
-      }
 
-      case e: SelectorChanged => {
+      case e: SelectorChanged =>
         if (controller.isSelected(row, col))
           border = Swing.LineBorder(java.awt.Color.ORANGE, 2)
         else
           border = Swing.LineBorder(java.awt.Color.BLACK, 1)
         repaint
-      }
-      case MouseClicked(src, pt, mod, clicks, pops) => {
+      case MouseClicked(src, pt, mod, clicks, pops) =>
         //controller.showCandidates(row, col)
         controller.selectCell(row, col)
         repaint
-      }
     }
 
     override def paintComponent(g: swing.Graphics2D) {

@@ -19,8 +19,8 @@ object Kakuro {
     //println(args(0))
 
     //if (args.head == "gui") {
-    //val gui = new SwingGui2(controller)
-    //gui.visible
+    val gui = new SwingGui2(controller)
+    gui.visible
     //}
 
     var input: String = ""
