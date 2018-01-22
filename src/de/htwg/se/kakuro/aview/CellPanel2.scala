@@ -125,7 +125,7 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface, val isSele
     c.weightx = 1.0
     c.weighty = 1.0
     c.grid = (0, 0)
-
+    border = Swing.LineBorder(java.awt.Color.BLACK, 1)
     //def whiteCell: BoxPanel = new BoxPanel(Orientation.Vertical) {
     //contents += wlabel
     add(wlabel, c)
