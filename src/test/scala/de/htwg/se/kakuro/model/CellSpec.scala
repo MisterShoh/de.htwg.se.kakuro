@@ -8,7 +8,7 @@ class CellSpec extends WordSpec with Matchers {
 
   "A Cell" when {
     "not set to any value " should {
-      val emptyCell = WhiteCell(0, false)
+      val emptyCell = Cell(true, false, 0, 0, 0)
       "have value 0" in {
         emptyCell.value should be(0)
       }
@@ -19,15 +19,39 @@ class CellSpec extends WordSpec with Matchers {
 
     }
     "set to a specific value" should {
-      var nonEmptyCell = WhiteCell(5, false)
+      var nonEmptyCell = Cell(true, false, 5, 0, 0)
       "return that value" in {
         nonEmptyCell.value should be(5)
       }
       "be set" in {
         nonEmptyCell.isSet should be(true)
+      }
+      "return true from isWhite" in {
         nonEmptyCell.isWhite should be(true)
+      }
+      "return false from isBlack" in {
         nonEmptyCell.isBlack should be(false)
       }
+
+    }
+    "set to BlackCell with rightSum and downSum" should {
+      var blackCell = Cell(false, true, 0, 12, 10)
+      "return rightSum" in {
+        blackCell.rightSum should be(12)
+      }
+      "return downSum" in {
+        blackCell.downSum should be(10)
+      }
+      "return true from isSet" in {
+        blackCell.isSet should be(true)
+      }
+      "return false from isWhite 2" in {
+        blackCell.isWhite should be(false)
+      }
+      "return true from isBlack 2" in {
+        blackCell.isBlack should be(true)
+      }
+
     }
   }
 
