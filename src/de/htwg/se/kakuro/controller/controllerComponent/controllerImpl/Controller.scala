@@ -3,7 +3,7 @@ package de.htwg.se.kakuro.controller.controllerComponent.controllerImpl
 import controller.controllerComponent.GameStatus._
 import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface, SelectorChanged }
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Field, FieldCreator }
-import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
+import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface }
 import de.htwg.se.kakuro.util.UndoManager
 import org.apache.logging.log4j.{ LogManager, Logger }
 
@@ -65,6 +65,13 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
     publish(new CellChanged)
   }
 
+  override def set(value: Int): Unit = {
+    undoManager.doStep(new SetCommand(selection._1, selection._2, value, this))
+    logger.debug("row: " + selection._1.toString + " col: " + selection._2.toString + "type: white value: " + value.toString)
+    field.set(selection._1, selection._2, value)
+    publish(new CellChanged)
+  }
+
   override def set(row: Int, col: Int, rightSum: Int, downSum: Int): Unit = {
     logger.debug("row: " + row.toString + " col: " + col.toString + "type: black" +
       " rightSum: " + rightSum.toString + " downSum: " + downSum.toString)
@@ -101,22 +108,23 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
     publish(new CandidatesChanged)
   }
 
-  override def fieldToString: String = field.toString()
+  override def fieldToString: String = field.toString
 
   //override def isShowCandidates(row: Int, col: Int): Boolean = ???
 
+  /*
   override def toggleShowAllCandidates: Unit = {
     showAllCandidates = !showAllCandidates
     gameStatus = CANDIDATES
     publish(new CellChanged)
   }
-
+  */
   //override def showAllCandidates: Boolean = ???
 
   //override def available(row: Int, col: Int): Set[Int] = ???
 
   //override def statusText: String = ???
-  override def cell(row: Int, col: Int) = field.cell(row, col)
+  override def cell(row: Int, col: Int): CellInterface = field.cell(row, col)
 
   override def isSelected(row: Int, col: Int): Boolean = selection == (row, col)
 
@@ -126,4 +134,8 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
     gameStatus = SELECTED
     publish(new SelectorChanged)
   }
+
+  override def getSelected: (Int, Int) = selection
+
+  override def hasSelect: Boolean = selection != (-1, -1)
 }

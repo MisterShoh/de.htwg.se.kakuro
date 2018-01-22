@@ -1,11 +1,8 @@
 package de.htwg.se.kakuro.aview
 
-import java.awt.{ GridBagConstraints, GridBagLayout }
-import de.htwg.se.kakuro.aview.CellPanel2
 import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface }
 
 import scala.swing._
-import scala.swing.Swing.LineBorder
 import scala.swing.event._
 
 class CellClicked(val row: Int, val column: Int) extends Event
@@ -13,7 +10,10 @@ class CellClicked(val row: Int, val column: Int) extends Event
 class SwingGui2(controller: ControllerInterface) extends Frame {
   listenTo(controller)
   title = "Kakuro"
-  var cells = Array.ofDim[CellPanel2](controller.width, controller.height)
+
+  val whiteTextSize: Int = 25
+  val blackTextSize: Int = 20
+  var cells: Array[Array[CellPanel2]] = Array.ofDim[CellPanel2](controller.width, controller.height)
 
   def buttonbar: GridBagPanel = new GridBagPanel {
     var c: Constraints = new Constraints()
@@ -23,8 +23,13 @@ class SwingGui2(controller: ControllerInterface) extends Frame {
     c.weighty = 0.0
 
     for { index <- 0 to 9 } {
-      val button = Button(if (index == 0) "" else index.toString) {
-        //controller.highlight(index)
+      val button = Button(if (index == 0) "_" else index.toString) {
+        if (controller.hasSelect) { controller.set(index) }
+        else {
+          statusline.text = "No Cell selected - " + this.size.toString
+          repaint
+          visible = true
+        }
       }
       button.preferredSize_=(new Dimension(45, 45))
       button.font = new Font("Verdana", 0, 18)
@@ -62,11 +67,11 @@ class SwingGui2(controller: ControllerInterface) extends Frame {
   reactions += {
     case event: CellChanged => redraw()
     case event: CandidatesChanged => redraw()
-    case event: UIElementResized => {
+    case event: UIElementResized =>
       statusline.text = "Size: " + this.size.toString
+      resizeText()
       repaint
       visible = true
-    }
   }
 
   val statusline = new TextField("static Text", 20)
@@ -78,11 +83,52 @@ class SwingGui2(controller: ControllerInterface) extends Frame {
     add(fieldview, BorderPanel.Position.Center)
     add(statusline, BorderPanel.Position.South)
   }
+
+  menuBar = new MenuBar {
+    contents += new Menu("File") {
+      mnemonic = Key.F
+      //contents += new MenuItem(Action("Empty") { controller.createEmptyGrid })
+      //contents += new MenuItem(Action("New") { controller.createNewGrid })
+      //contents += new MenuItem(Action("Save") { controller.save })
+      //contents += new MenuItem(Action("Load") { controller.load })
+      contents += new MenuItem(Action("Quit") { System.exit(0) })
+    }
+    contents += new Menu("Edit") {
+      mnemonic = Key.E
+      contents += new MenuItem(Action("Undo") { controller.undo() })
+      contents += new MenuItem(Action("Redo") { controller.redo() })
+    }
+    /*
+    contents += new Menu("Solve") {
+      mnemonic = Key.S
+      contents += new MenuItem(Action("Solve") { controller.solve })
+    }
+    contents += new Menu("Highlight") {
+      mnemonic = Key.H
+      for { index <- 0 to controller.gridSize } {
+        contents += new MenuItem(Action(index.toString) { controller.highlight(index) })
+      }
+    }
+    contents += new Menu("Options") {
+      mnemonic = Key.O
+      contents += new MenuItem(Action("Show all candidates") { controller.toggleShowAllCandidates })
+      contents += new MenuItem(Action("Size 1*1") { controller.resize(1) })
+      contents += new MenuItem(Action("Size 4*4") { controller.resize(4) })
+      contents += new MenuItem(Action("Size 9*9") { controller.resize(9) })
+
+    }
+    */
+  }
+
   minimumSize = new Dimension(200, 100)
   visible = true
   centerOnScreen()
 
   repaint
+
+  def resizeText(): Unit = {
+
+  }
 
   def redraw(): Unit = {
     for {
