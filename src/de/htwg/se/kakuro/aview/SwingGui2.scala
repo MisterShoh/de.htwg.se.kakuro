@@ -1,13 +1,23 @@
 package de.htwg.se.kakuro.aview
 
+import javax.swing.UIManager
+import javax.swing.border.EmptyBorder
+import javax.swing.plaf.nimbus.NimbusLookAndFeel
+
 import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface, SizeChanged }
 
 import scala.swing._
 import scala.swing.event._
+//import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeelimport
 
 class CellClicked(val row: Int, val column: Int) extends Event
 
-class SwingGui2(controller: ControllerInterface) extends Frame {
+class SwingGui2(controller: ControllerInterface) extends MainFrame {
+
+  //javax.swing.{UIManager}object UI extends SimpleSwingApplication {   UIManager.setLookAndFeel(new NimbusLookAndFeel)  ...}
+
+  UIManager.setLookAndFeel(new NimbusLookAndFeel)
+
   listenTo(controller)
   title = "Kakuro"
 
@@ -34,7 +44,7 @@ class SwingGui2(controller: ControllerInterface) extends Frame {
       }
       button.preferredSize_=(new Dimension(45, 45))
       button.font = new Font("Verdana", 0, buttonTextSize)
-      //button.pain
+      button.border = Swing.EmptyBorder
       //contents += button
       buttons(index) = button
       add(button, c)
@@ -142,7 +152,9 @@ class SwingGui2(controller: ControllerInterface) extends Frame {
   def resizeText(): Unit = {
     buttonTextSize = this.size.width / 25
     buttons.foreach(_.font = new Font("Verdana", 0, buttonTextSize))
-    //cells.flatten.foreach(_.redraw())
+    buttons.foreach(_.preferredSize = new Dimension(this.size.width / 12, this.size.width / 12))
+    //cells.flatten.foreach(_.resizeText(this.size))
+    cells.flatten.foreach(_.resizeText())
   }
 
   def redraw(): Unit = {

@@ -21,7 +21,8 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface, val isSele
   c.weighty = 1.0
   c.grid = (0, 0)
   */
-
+  var whiteTextSize = 25
+  var blackTextSize = 20
   val cellSize: Int = 60
 
   xLayoutAlignment = 0.5
@@ -48,7 +49,7 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface, val isSele
     //contents += new Label("_")
     //xLayoutAlignment = 0.5
     //yLayoutAlignment = 0.5
-    font = new Font("Verdana", 1, 25)
+    font = new Font("Verdana", 1, whiteTextSize) //25
     horizontalAlignment = Alignment.Center
     verticalAlignment = Alignment.Center
     preferredSize = new Dimension(cellSize, cellSize)
@@ -59,7 +60,7 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface, val isSele
     //contents += new Label("_")
     //xLayoutAlignment = 0.2
     //yLayoutAlignment = 0.8
-    font = new Font("Verdana", 1, 20)
+    font = new Font("Verdana", 1, blackTextSize)
     horizontalTextPosition = Alignment.Center
     verticalTextPosition = Alignment.Center
     if (myCell.hasRight)
@@ -74,7 +75,7 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface, val isSele
     //contents += new Label("_")
     //xLayoutAlignment = 0.8
     //yLayoutAlignment = 0.2
-    font = new Font("Verdana", 1, 20)
+    font = new Font("Verdana", 1, blackTextSize)
     horizontalTextPosition = Alignment.Center
     verticalTextPosition = Alignment.Center
     if (myCell.hasDown)
@@ -140,6 +141,7 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface, val isSele
 
     listenTo(mouse.clicks)
     listenTo(controller)
+    listenTo(wlabel)
 
     reactions += {
       case e: CellChanged =>
@@ -152,6 +154,15 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface, val isSele
         else
           border = Swing.LineBorder(java.awt.Color.BLACK, 1)
         repaint
+
+      /*
+      case event: UIElementResized =>
+        wlabel.text = size.toString
+        //text = "Size: " + this.size.toString
+        //resizeText()
+        wlabel.repaint
+        visible = true
+      */
       case MouseClicked(src, pt, mod, clicks, pops) =>
         //controller.showCandidates(row, col)
         controller.selectCell(row, col)
@@ -210,6 +221,17 @@ class CellPanel2(row: Int, col: Int, controller: ControllerInterface, val isSele
 
     //repaint
     visible = true
+  }
+
+  //def resizeText(upsize: Dimension): Unit = {
+  def resizeText(): Unit = {
+    //whiteTextSize = upsize.width / 22
+    whiteTextSize = (this.size.width / 2.6).toInt
+    //blackTextSize = upsize.width / 25
+    blackTextSize = (this.size.width / 2.9).toInt
+    //println(this.size.toString + ", " + upsize.toString)
+    redraw()
+    //wlabel
   }
 
   //else if (controller.isHighlighted(row, col)) highlightedCellColor
