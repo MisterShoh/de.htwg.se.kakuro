@@ -9,6 +9,7 @@ import scala.swing.Button
 
 @RunWith(classOf[JUnitRunner])
 class GuiSpec extends WordSpec with Matchers {
+  /*
   "A Gui" when {
     "created" should {
       var creator = new FieldCreator
@@ -30,4 +31,5 @@ class GuiSpec extends WordSpec with Matchers {
       }
     }
   }
+  */
 }
