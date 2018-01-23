@@ -17,7 +17,7 @@ class FieldSpec extends WordSpec with Matchers {
     }
     "set should be able to set empty cells" in {
       filledfield = filledfield.set(1, 3)
-      filledfield.cell(1, 3).isWhite && filledfield.cell(1, 3).isBlack should be(false)
+      filledfield.isWhite(1, 3) && filledfield.isBlack(1, 3) should be(false)
       filledfield.isNone(0, 4) should be(true)
     }
     "set should be able to set WhiteCells with Value 5" in {
@@ -68,6 +68,9 @@ class FieldSpec extends WordSpec with Matchers {
     "set should getWhiteBlocks" in {
       //filledfield.getWhiteBlock(1, 2).isInstanceOf[Set[Int]] should be(true)
       true should be(true)
+    }
+    "showCandidates" in {
+      filledfield.showCandidates(0, 1).isInstanceOf[Set[Int]] should be(true)
     }
   }
 }

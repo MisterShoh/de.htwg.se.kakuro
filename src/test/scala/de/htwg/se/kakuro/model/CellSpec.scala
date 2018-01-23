@@ -32,6 +32,12 @@ class CellSpec extends WordSpec with Matchers {
       "return false from isBlack" in {
         nonEmptyCell.isBlack should be(false)
       }
+      "toStringRight" in {
+        nonEmptyCell.toStringRight.isInstanceOf[String] should be(true)
+      }
+      "toStringDown" in {
+        nonEmptyCell.toStringDown.isInstanceOf[String] should be(true)
+      }
 
     }
     "set to BlackCell with rightSum and downSum" should {
