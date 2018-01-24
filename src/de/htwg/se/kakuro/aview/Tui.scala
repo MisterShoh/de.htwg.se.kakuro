@@ -22,7 +22,7 @@ class Tui(controller: Controller) extends Reactor {
       case _ => logger.info("didn't understand input: please try again")
     }
   }
-
+  /*
   def handle2(input: String): Unit = {
     input match {
       case "q" =>
@@ -37,7 +37,7 @@ class Tui(controller: Controller) extends Reactor {
       }
     }
   }
-
+*/
   reactions += {
     case event: CellChanged => {
       logger.debug("reactions Tui Cellchanged")

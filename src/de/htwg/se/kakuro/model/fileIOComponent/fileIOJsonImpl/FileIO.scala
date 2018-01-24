@@ -6,7 +6,7 @@ import play.api.libs.json._
 
 import scala.io.Source
 
-class FileIO extends FileIOInterface{
+class FileIO extends FileIOInterface {
   override def load: Option[FieldInterface] = {
     var gridOption: Option[FieldInterface] = None
     val source: String = Source.fromFile("grid.json").getLines.mkString
