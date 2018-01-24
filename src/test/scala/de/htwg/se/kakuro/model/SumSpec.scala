@@ -4,6 +4,7 @@ import org.scalatest.{ Matchers, WordSpec }
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Sum
 @RunWith(classOf[JUnitRunner])
 class SumSpec extends WordSpec with Matchers {
+  val sumDef = new Sum
   "A Sum is the sum of all values in a vector" when {
     "an default sum" should {
       val sumDef = new Sum

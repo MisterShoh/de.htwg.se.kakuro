@@ -19,7 +19,7 @@ class Tui(controller: Controller) extends Reactor {
       case 'd' => reset(input)
       case 'u' => controller.undo()
       case 'r' => controller.redo()
-      case _ => handle2(input)
+      case _ => logger.info("didn't understand input: please try again")
     }
   }
 
@@ -55,9 +55,11 @@ class Tui(controller: Controller) extends Reactor {
       if (isNumber(test)) {
         var row = values(1).toInt
         var col = values(2).toInt
-        controller.set(row, col)
-        logger.debug("deleteIn() row: " + row + " col: " + col + " rt delete():" +
-          " length: " + values.length)
+        if (isValid(col) && isValid(row)) {
+          controller.set(row, col)
+          logger.debug("deleteIn() row: " + row + " col: " + col + " rt delete():" +
+            " length: " + values.length)
+        } else logger.info("didn't understand input: please try again")
       }
     }
     if (values.length == 4) {
@@ -66,9 +68,12 @@ class Tui(controller: Controller) extends Reactor {
         var row = values(1).toInt
         var col = values(2).toInt
         var value = values(3).toInt
-        controller.set(row, col, value)
-        logger.debug("setIn() row: " + row + " col: " + col + " rt set():" +
-          "length: " + values.length)
+        if (isValid(value) && isValid(col) && isValid(row)) {
+          controller.set(row, col, value)
+          logger.debug("setIn() row: " + row + " col: " + col + " rt set():" +
+            "length: " + values.length)
+        } else logger.info("didn't understand input: please try again")
+
       }
     }
   }
@@ -93,7 +98,12 @@ class Tui(controller: Controller) extends Reactor {
     logger.info("Undo: u")
     logger.info("Redo: r")
   }
-
+  def isValid(value: Int): Boolean = {
+    if (value <= 9 && value >= 0) {
+      return true
+    }
+    false
+  }
   def printCandidates(): Unit = {
     println("Candidates: ")
     for (row <- 0 until controller.width; col <- 0 until controller.height) {

@@ -1,7 +1,6 @@
 package de.htwg.se.kakuro
 
 import de.htwg.se.kakuro.aview.Tui
-import de.htwg.se.kakuro.aview.SwingGui2
 import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.Controller
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Field
 import org.apache.logging.log4j.Logger
@@ -10,6 +9,7 @@ import org.apache.logging.log4j.LogManager
 object Kakuro {
   def main(args: Array[String]): Unit = {
     val logger: Logger = LogManager.getLogger(this.getClass.getName)
+
     val defaultsize = 8
     val controller = new Controller(new Field(defaultsize))
     controller.initField()

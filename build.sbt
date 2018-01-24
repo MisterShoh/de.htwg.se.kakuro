@@ -2,7 +2,7 @@ name          := "htwg-scala-kakuro"
 organization  := "de.htwg.se"
 version       := "0.0.2"
 scalaVersion  := "2.11.8"
-scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
+scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8","-Dlog4j.configurationFile=log4j2.xml")
 
 resolvers += Resolver.jcenterRepo
 

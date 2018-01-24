@@ -4,8 +4,8 @@ import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
 
 class UndoManager {
-  private var undoStack: List[Command] = Nil
-  private var redoStack: List[Command] = Nil
+  var undoStack: List[Command] = Nil
+  var redoStack: List[Command] = Nil
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
 
   def doStep(command: Command) = {
