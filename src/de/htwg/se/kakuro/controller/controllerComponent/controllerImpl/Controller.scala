@@ -1,9 +1,11 @@
 package de.htwg.se.kakuro.controller.controllerComponent.controllerImpl
 
-import controller.controllerComponent.GameStatus._
-import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface, SelectorChanged }
+import de.htwg.se.kakuro.controller.controllerComponent.GameStatus._
+import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface, SelectorChanged }
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Field, FieldCreator }
 import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface }
+import de.htwg.se.kakuro.model.fileIOComponent.FileIOInterface
+import de.htwg.se.kakuro.model.fileIOComponent.fileIOJsonImpl.FileIO
 import de.htwg.se.kakuro.util.UndoManager
 import org.apache.logging.log4j.{ LogManager, Logger }
 
@@ -17,6 +19,9 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
   var selection: (Int, Int) = (-1, -1)
   var showAllCandidates: Boolean = false
 
+  //val fileIo = injector.instance[FileIOInterface]
+  val fileIo: FileIOInterface = new FileIO()
+
   def undo(): Unit = {
     undoManager.undoStep
     gameStatus = UNDO
@@ -29,6 +34,27 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
     publish(new CellChanged)
   }
 
+  def save: Unit = {
+    fileIo.save(field)
+    gameStatus = SAVED
+    publish(new CellChanged)
+  }
+
+  def load: Unit = {
+    val gridOption = fileIo.load
+    gridOption match {
+      case None => {
+        //createEmptyGrid
+        gameStatus = COULDNOTLOAD
+      }
+      case Some(_grid) => {
+        field = _grid
+        gameStatus = LOADED
+      }
+    }
+    publish(new CellChanged)
+  }
+
   def initField(): FieldInterface = {
     var generator = new FieldCreator()
     field = generator.fill(field)
@@ -36,6 +62,7 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
     field.set(1, 2, 7)
     field
   }
+
   def available(row: Int, col: Int): Set[Int] = Set(0, 0)
   def isShowCandidates(row: Int, col: Int): Boolean = false
   def isWhite(row: Int, col: Int): Boolean = cell(row, col).isWhite
@@ -106,11 +133,13 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
 
   //override def isSet(row: Int, col: Int): Boolean = true //cell(row, col).isSet
   override def isSet(row: Int, col: Int): Boolean = cell(row, col).isSet
+  /*
   def showCandidates(row: Int, col: Int): Unit = {
     field = field.setShowCandidates(row, col)
     gameStatus = CANDIDATES
     publish(new CandidatesChanged)
   }
+  */
 
   override def fieldToString: String = field.toString
 

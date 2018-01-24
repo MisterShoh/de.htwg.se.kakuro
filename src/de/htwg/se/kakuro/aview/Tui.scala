@@ -1,7 +1,7 @@
 package de.htwg.se.kakuro.aview
 
 import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.Controller
-import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged }
+import de.htwg.se.kakuro.controller.controllerComponent.CellChanged
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
 
@@ -23,6 +23,7 @@ class Tui(controller: Controller) extends Reactor {
     }
   }
 
+  /*
   def handle2(input: String): Unit = {
     input match {
       case "q" =>
@@ -37,13 +38,14 @@ class Tui(controller: Controller) extends Reactor {
       }
     }
   }
+  */
 
   reactions += {
     case event: CellChanged => {
       logger.debug("reactions Tui Cellchanged")
       printTui()
     }
-    case event: CandidatesChanged => printCandidates
+    //case event: CandidatesChanged => printCandidates
   }
   def isNumber(x: String): Boolean = x forall Character.isDigit
 

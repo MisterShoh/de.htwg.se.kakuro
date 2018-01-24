@@ -1,6 +1,6 @@
 package de.htwg.se.kakuro.controller.controllerComponent
 
-import controller.controllerComponent.GameStatus.GameStatus
+import de.htwg.se.kakuro.controller.controllerComponent.GameStatus.GameStatus
 import de.htwg.se.kakuro.model.fieldComponent.CellInterface
 
 import scala.swing.Publisher
@@ -22,7 +22,7 @@ trait ControllerInterface extends Publisher {
   def clear(row: Int, col: Int): Unit
   //def isSet(row: Int, col: Int): Boolean
   def isWhite(row: Int, col: Int): Boolean
-  def showCandidates(row: Int, col: Int): Unit
+  //def showCandidates(row: Int, col: Int): Unit
   //def highlight(index: Int): Unit
   //def isHighlighted(row: Int, col: Int): Boolean
   def fieldToString: String
@@ -44,5 +44,5 @@ import scala.swing.event.Event
 
 class CellChanged extends Event
 class SelectorChanged extends Event
-class CandidatesChanged extends Event
-class SizeChanged extends Event
+//class CandidatesChanged extends Event
+//class SizeChanged extends Event

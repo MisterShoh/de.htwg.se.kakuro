@@ -4,7 +4,7 @@ import javax.swing.UIManager
 import javax.swing.border.EmptyBorder
 import javax.swing.plaf.nimbus.NimbusLookAndFeel
 
-import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface, SizeChanged }
+import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface }
 
 import scala.swing._
 import scala.swing.event._
@@ -89,7 +89,7 @@ class SwingGui2(controller: ControllerInterface) extends MainFrame {
   }
   reactions += {
     case event: CellChanged => redraw()
-    case event: CandidatesChanged => redraw()
+    //case event: CandidatesChanged => redraw()
     case event: UIElementResized =>
       statusline.text = "Size: " + this.size.toString
       resizeText()
