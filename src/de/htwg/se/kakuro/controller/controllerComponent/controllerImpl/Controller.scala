@@ -96,7 +96,11 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
   }
 
   override def set(value: Int): Unit = {
-    undoManager.doStep(new SetCommand(selection._1, selection._2, value, this))
+    if (value == 0) undoManager.doStep(new ResetCommand(selection._1, selection._2, this))
+    else {
+      undoManager.doStep(new SetCommand(selection._1, selection._2, value, this))
+      field.set(selection._1, selection._2, value)
+    }
     logger.debug("row: " + selection._1.toString + " col: " + selection._2.toString + "type: white value: " + value.toString)
     field.set(selection._1, selection._2, value)
     publish(new CellChanged)
