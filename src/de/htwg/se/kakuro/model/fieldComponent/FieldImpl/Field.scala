@@ -1,26 +1,28 @@
 package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
+import com.google.inject.Inject
 import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface, SumInterface }
 import org.apache.logging.log4j.{ LogManager, Logger }
 
-case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInterface {
+case class Field /*@Inject() */ (grid: Matrix[Cell] /*, sums: Set[SumInterface]*/ ) extends FieldInterface {
 
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
   //var grid = Array.ofDim[Cell](height, width)
   //var s : Set[Int] = Set()
-  def this(grid: Matrix[Cell]) = this(grid, Set.empty[SumInterface])
+  //def this(grid: Matrix[Cell]) = this(grid, Set.empty[SumInterface])
   def this(width: Int, height: Int) = this(new Matrix[Cell](width, height, new Cell()))
   def this(size: Int) = this(new Matrix[Cell](size, new Cell()))
 
   //var blackCells: Array[BlackCell]
-  def isShowCandidates(row: Int, col: Int): Boolean = false
-  def showCandidates(row: Int, col: Int): Set[Int] = available(row, col)
-  def unsetShowCandidates(row: Int, col: Int): FieldInterface = this
+  //def isShowCandidates(row: Int, col: Int): Boolean = false
+  //def showCandidates(row: Int, col: Int): Set[Int] = available(row, col)
+  //def unsetShowCandidates(row: Int, col: Int): FieldInterface = this
 
-  def rows(row: Int): Vector[Cell] = grid.rows(row)
-  def cols(col: Int): Vector[Cell] = grid.rows.map(row => row(col))
-
+  //def rows(row: Int): Vector[Cell] = grid.rows(row)
+  //def cols(col: Int): Vector[Cell] = grid.rows.map(row => row(col))
+  /*
   def toggleShotAllCandidates(): Unit = {}
+
   override def putSum(s: SumInterface): FieldInterface = {
     copy(grid, sums.+(s))
   }
@@ -70,7 +72,7 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
     //blackCells.foreach(c => if(c.downVal != 0) _sums.+new Sum())
     this
   }
-
+*/
   override def set(row: Int, col: Int, value: Int): FieldInterface = {
     logger.debug("field.set(row: Int, col: Int, value: Int)" + "value - " + value)
     copy(grid.replaceCell(row, col, new Cell(value)))
@@ -131,11 +133,11 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
 
   def cell(row: Int, col: Int): CellInterface = grid.cell(row, col)
 
-  override def createNewGrid(size: Int): FieldInterface = (new FieldCreator).createNewField(size)
+  //override def createNewGrid(size: Int): FieldInterface = (new FieldCreator).createNewField(size)
 
-  override def valid: Boolean = sums.forall(_.isValid)
+  //override def valid: Boolean = sums.forall(_.isValid)
 
-  override def solved: Boolean = sums.forall(_.isSolved)
+  //override def solved: Boolean = sums.forall(_.isSolved)
 
   //override def size: Int = grid.size
   override def width: Int = grid.width
@@ -143,8 +145,8 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
 
   //override def cells(): Matrix[CellInterface] = grid.asInstanceOf[Matrix[CellInterface]]
 
-  override def available(row: Int, col: Int): Set[Int] = Set(1, 2, 3, 4, 6, 5, 7, 8, 9) //TODO fix ...
-  override def setShowCandidates(row: Int, col: Int): FieldInterface = this //copy(grid.replaceCell(row, col, cell(row, col).copy(showCandidates = true)))
+  //override def available(row: Int, col: Int): Set[Int] = Set(1, 2, 3, 4, 6, 5, 7, 8, 9) //TODO fix ...
+  //override def setShowCandidates(row: Int, col: Int): FieldInterface = this //copy(grid.replaceCell(row, col, cell(row, col).copy(showCandidates = true)))
   override def isBlack(row: Int, col: Int): Boolean = cell(row, col).isBlack
 
   override def isWhite(row: Int, col: Int): Boolean = cell(row, col).isWhite

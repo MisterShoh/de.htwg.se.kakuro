@@ -1,7 +1,5 @@
 package de.htwg.se.kakuro.model.fieldComponent
 
-import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
-
 trait FieldCreatorTemplate {
 
   def makeField(size: Int): FieldInterface //abstract

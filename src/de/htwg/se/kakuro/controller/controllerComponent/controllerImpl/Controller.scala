@@ -1,5 +1,7 @@
 package de.htwg.se.kakuro.controller.controllerComponent.controllerImpl
 
+import com.google.inject.{ Guice, Inject }
+import de.htwg.se.kakuro.KakuroModule
 import de.htwg.se.kakuro.controller.controllerComponent.GameStatus._
 import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface, SelectorChanged }
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Field, FieldCreator }
@@ -11,15 +13,15 @@ import org.apache.logging.log4j.{ LogManager, Logger }
 
 import scala.swing.Publisher
 
-class Controller(var field: FieldInterface) extends ControllerInterface with Publisher {
+class Controller @Inject() (var field: FieldInterface) extends ControllerInterface with Publisher {
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
-
+  //val injector = Guice.createInjector(new KakuroModule)
+  //val fileIo = injector.instance[FileIOInterface]
   private val undoManager = new UndoManager
   var gameStatus: GameStatus = IDLE
   var selection: (Int, Int) = (-1, -1)
   var showAllCandidates: Boolean = false
 
-  //val fileIo = injector.instance[FileIOInterface]
   val fileIo: FileIOInterface = new FileIO()
 
   def undo(): Unit = {
@@ -55,16 +57,16 @@ class Controller(var field: FieldInterface) extends ControllerInterface with Pub
     publish(new CellChanged)
   }
 
-  def initField(): FieldInterface = {
+  def initField(): Unit = {
     var generator = new FieldCreator()
     field = generator.fill(field)
     //field = samplefield.createNewField(8)
-    field.set(1, 2, 7)
-    field
+    //field.set(1, 2, 7)
+    //field
   }
 
   def available(row: Int, col: Int): Set[Int] = Set(0, 0)
-  def isShowCandidates(row: Int, col: Int): Boolean = false
+  //def isShowCandidates(row: Int, col: Int): Boolean = false
   def isWhite(row: Int, col: Int): Boolean = cell(row, col).isWhite
   /*
   def set(row: Int, col: Int, value: Int): Boolean = {

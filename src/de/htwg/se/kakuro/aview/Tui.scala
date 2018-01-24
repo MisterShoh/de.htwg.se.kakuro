@@ -1,14 +1,14 @@
 package de.htwg.se.kakuro.aview
 
 import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.Controller
-import de.htwg.se.kakuro.controller.controllerComponent.{ CandidatesChanged, CellChanged }
+import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface }
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
 
 import scala.swing.Reactor
 // https://www.safaribooksonline.com/library/view/scala-cookbook/9781449340292/
 
-class Tui(controller: Controller) extends Reactor {
+class Tui(controller: ControllerInterface) extends Reactor {
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
   listenTo(controller)
   //def size: Int = controller.width
@@ -106,11 +106,13 @@ class Tui(controller: Controller) extends Reactor {
     }
     false
   }
+  /*
   def printCandidates(): Unit = {
     println("Candidates: ")
     for (row <- 0 until controller.width; col <- 0 until controller.height) {
       if (controller.isShowCandidates(row, col)) println("(" + row + "," + col + "):" + controller.available(row, col).toList.sorted)
     }
   }
+  */
 }
 

@@ -47,30 +47,5 @@ class FieldSpec extends WordSpec with Matchers {
     "set should be able to check if cell is black or white" in {
       filledfield.cell(1, 3).isWhite && filledfield.cell(2, 4).isBlack should be(true)
     }
-    //TODO
-    "set should be able to tell if solved" in {
-      filledfield.solved should be(true)
-    }
-    //TODO
-    "set should be able to tell if valid" in {
-      filledfield.valid should be(true)
-    }
-    //TODO
-    "set should be able to setShowCandidates" in {
-      val candidates = filledfield.setShowCandidates(1, 2)
-      candidates.valid should be(true)
-    }
-    // TODO
-    "set should show available fields" in {
-      filledfield.available(1, 2).isInstanceOf[Set[Int]] should be(true)
-    }
-    // TODO
-    "set should getWhiteBlocks" in {
-      //filledfield.getWhiteBlock(1, 2).isInstanceOf[Set[Int]] should be(true)
-      true should be(true)
-    }
-    "showCandidates" in {
-      filledfield.showCandidates(0, 1).isInstanceOf[Set[Int]] should be(true)
-    }
   }
 }

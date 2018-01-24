@@ -10,11 +10,11 @@ class MatrixSpec extends WordSpec with Matchers {
     "empty " should {
       "be created by using a dimention and a sample cell" in {
         val matrix = new Matrix[Cell](2, Cell(true, false, 5, 0, 0))
-        matrix.size should be(2)
+        matrix.isInstanceOf[Matrix[Cell]] should be(true)
       }
       "for test purposes only be created with a Vector of Vectors" in {
         val testMatrix = Matrix(Vector(Vector(Cell(true, false, 5, 0, 0))))
-        testMatrix.size should be(1)
+        testMatrix.isInstanceOf[Matrix[Cell]] should be(true)
       }
 
     }

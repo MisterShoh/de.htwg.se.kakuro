@@ -58,9 +58,7 @@ class ControllerSpec extends WordSpec with Matchers {
       "available" in {
         controller.available(0, 1).isInstanceOf[Set[Int]] should be(true)
       }
-      "isShowCandidates" in {
-        controller.isShowCandidates(0, 1) should be(false)
-      }
+
       //Why
       "isWhite" in {
         controller.cell(3, 3).isWhite should be(false)

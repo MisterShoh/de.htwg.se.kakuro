@@ -1,7 +1,7 @@
 package de.htwg.se.kakuro.controller.controllerComponent
 
 import de.htwg.se.kakuro.controller.controllerComponent.GameStatus.GameStatus
-import de.htwg.se.kakuro.model.fieldComponent.CellInterface
+import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface }
 
 import scala.swing.Publisher
 
@@ -13,6 +13,7 @@ trait ControllerInterface extends Publisher {
   def undo(): Unit
   def redo(): Unit
   def isSet(row: Int, col: Int): Boolean
+  def initField(): Unit
   //def resize(newSize: Int): Unit
   def cell(row: Int, col: Int): CellInterface
   def set(row: Int, col: Int, value: Int): Unit

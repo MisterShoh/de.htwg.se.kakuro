@@ -1,7 +1,5 @@
 package de.htwg.se.kakuro.model.fieldComponent
 
-import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Matrix
-
 trait FieldInterface {
 
   def cell(row: Int, col: Int): CellInterface
@@ -11,31 +9,31 @@ trait FieldInterface {
   //def cells(): Matrix[CellInterface]
   //def blackCells(): Vector[CellInterface]
   //def sums(): Vector[SumInterface]
-  def generateSums: FieldInterface
-  def rows(row: Int): Vector[CellInterface]
-  def sums: Set[SumInterface]
+  //def generateSums: FieldInterface
+  //def rows(row: Int): Vector[CellInterface]
+  //def sums: Set[SumInterface]
   //def grid: Matrix[CellInterface]
   //def coords(cell: CellInterface): (Int, Int)
-  def putSum(s: SumInterface): FieldInterface
+  //def putSum(s: SumInterface): FieldInterface
   def isBlack(row: Int, col: Int): Boolean
   def isWhite(row: Int, col: Int): Boolean
   def isNone(row: Int, col: Int): Boolean
   //def cells(): Seq[CellInterface]
   def reset(row: Int, col: Int): FieldInterface
-  def createNewGrid(size: Int): FieldInterface
-  def showCandidates(row: Int, col: Int): Set[Int]
-  def isShowCandidates(row: Int, col: Int): Boolean
-  def setShowCandidates(row: Int, col: Int): FieldInterface
-  def toggleShotAllCandidates(): Unit
-  def unsetShowCandidates(row: Int, col: Int): FieldInterface
-  def valid: Boolean
-  def solved: Boolean
+  //def createNewGrid(size: Int): FieldInterface
+  //def showCandidates(row: Int, col: Int): Set[Int]
+  //def isShowCandidates(row: Int, col: Int): Boolean
+  //def setShowCandidates(row: Int, col: Int): FieldInterface
+  //def toggleShotAllCandidates(): Unit
+  //def unsetShowCandidates(row: Int, col: Int): FieldInterface
+  //def valid: Boolean
+  //def solved: Boolean
 
   def width: Int
   def height: Int
 
   //def isHighlighted(row: Int, col: Int): Boolean
-  def available(row: Int, col: Int): Set[Int]
+  //def available(row: Int, col: Int): Set[Int]
 }
 
 //Own File for everything
