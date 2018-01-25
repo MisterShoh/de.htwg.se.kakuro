@@ -20,7 +20,7 @@ trait FieldInterface {
   def isNone(row: Int, col: Int): Boolean
   //def cells(): Seq[CellInterface]
   def reset(row: Int, col: Int): FieldInterface
-  //def createNewGrid(size: Int): FieldInterface
+  def createNewField(size: Int): FieldInterface
   //def showCandidates(row: Int, col: Int): Set[Int]
   //def isShowCandidates(row: Int, col: Int): Boolean
   //def setShowCandidates(row: Int, col: Int): FieldInterface
