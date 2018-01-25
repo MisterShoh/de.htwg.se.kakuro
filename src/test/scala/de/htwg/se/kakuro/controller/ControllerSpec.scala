@@ -1,3 +1,5 @@
+package de.htwg.se.kakuro.controller
+
 import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.Controller
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Cell, FieldCreator, Matrix }
 import org.junit.runner.RunWith

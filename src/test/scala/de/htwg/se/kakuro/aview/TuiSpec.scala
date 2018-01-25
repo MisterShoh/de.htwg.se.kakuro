@@ -1,8 +1,12 @@
+package de.htwg.se.kakuro.aview
+
 import de.htwg.se.kakuro.aview.Tui
 import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.Controller
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.FieldCreator
+import org.apache.logging.log4j.Logger
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import com.google.inject.Guice
 import org.scalatest.{ Matchers, WordSpec }
 
 @RunWith(classOf[JUnitRunner])
@@ -15,6 +19,9 @@ class TuiSpec extends WordSpec with Matchers {
       var tui = new Tui(controller)
       "be a tui" in {
         tui.isInstanceOf[Tui] should be(true)
+      }
+      "have a logger" in {
+        tui.logger.isInstanceOf[Logger] should be(true)
       }
       "be able to set input in field" in {
         tui.handleInput("s 1 2 9")
