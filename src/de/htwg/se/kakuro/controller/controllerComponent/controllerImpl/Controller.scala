@@ -23,8 +23,6 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
   var selection: (Int, Int) = (-1, -1)
   var showAllCandidates: Boolean = false
 
-  //val fileIo: FileIOInterface = new FileIO()
-
   def undo(): Unit = {
     undoManager.undoStep
     gameStatus = UNDO

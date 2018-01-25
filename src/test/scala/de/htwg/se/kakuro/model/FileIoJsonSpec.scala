@@ -15,14 +15,16 @@ class FileIoJsonSpec extends WordSpec with Matchers {
   var controller = new Controller(field)
   "A created FileIoJson" when {
 
-    "load" in {
-      //fileIo.load
-      true should be(true)
+    "save and reload field" in {
+      filledfield = filledfield.set(1, 2, 9)
+      filledfield.cell(1, 2).value should be(9)
+      fileIo.save(filledfield)
+      /*
+      fileIo.load
+      */
+      filledfield.cell(1, 2).value should be(9)
     }
-    "save" in {
-      fileIo.save(field)
-      true should be(true)
-    }
+
     "gridToJson" in {
       fileIo.isInstanceOf[FileIO] should be(true)
     }

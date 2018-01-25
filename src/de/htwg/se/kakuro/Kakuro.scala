@@ -12,16 +12,18 @@ object Kakuro {
   val injector = Guice.createInjector(new KakuroModule)
   val controller = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
-  val gui = new SwingGui2(controller)
-  gui.size = new Dimension(580, 680)
-  //gui.visible = true
+  var input: String = ""
+  //val gui = new SwingGui2(controller)
   controller.initField()
   def main(args: Array[String]): Unit = {
-
-    var input: String = ""
     do {
       tui.printTui()
       input = scala.io.StdIn.readLine()
+      if (input == "gui") {
+        val gui = new SwingGui2(controller)
+        gui.size = new Dimension(580, 680)
+        gui.visible = true
+      }
       if (input != "exit" && input != "") tui.handleInput(input.toString)
       logger.debug("kakuro() input: " + input)
     } while (input != "exit" && input != "q")

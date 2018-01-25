@@ -69,7 +69,7 @@ class SwingGui2(controller: ControllerInterface) extends MainFrame {
       visible = true
   }
 
-  val statusline = new TextField("static Text", 20)
+  val statusline = new TextField(controller.statusText, 20)
   listenTo(statusline)
 
   contents = new BorderPanel {
