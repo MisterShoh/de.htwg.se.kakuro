@@ -2,15 +2,16 @@ package de.htwg.se.kakuro.model.fileIOComponent.fileIOJsonImpl
 
 import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface }
 import de.htwg.se.kakuro.model.fileIOComponent.FileIOInterface
-import com.google.inject.Guice
-import com.google.inject.name.Names
+import org.apache.logging.log4j.{ LogManager, Logger }
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Field
 import play.api.libs.json._
 
 import scala.io.Source
 
 class FileIO extends FileIOInterface {
+
   override def load: Option[FieldInterface] = {
+    val logger: Logger = LogManager.getLogger(this.getClass.getName)
     var gridOption: Option[FieldInterface] = None
     val source: String = Source.fromFile("grid.json").getLines.mkString
     val json: JsValue = Json.parse(source)
@@ -26,7 +27,8 @@ class FileIO extends FileIOInterface {
           val row = (json \\ "row")(index).as[Int]
           val col = (json \\ "col")(index).as[Int]
           val cell = (json \\ "cell")(index)
-          val cellType = (cell \ "type")(index).as[Int]
+          val cellType = (cell \ "type").as[Int]
+          logger.debug("CELLTYPE:" + cellType)
           val value = (cell \ "value").as[Int]
           val right = (cell \ "right").as[Int]
           val down = (cell \ "down").as[Int]

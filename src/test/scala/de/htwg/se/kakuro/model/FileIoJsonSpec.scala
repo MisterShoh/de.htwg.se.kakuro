@@ -19,9 +19,7 @@ class FileIoJsonSpec extends WordSpec with Matchers {
       filledfield = filledfield.set(1, 2, 9)
       filledfield.cell(1, 2).value should be(9)
       fileIo.save(filledfield)
-      /*
       fileIo.load
-      */
       filledfield.cell(1, 2).value should be(9)
     }
 

@@ -8,6 +8,7 @@ import scala.xml.{ Elem, NodeSeq, PrettyPrinter }
 
 class FileIO extends FileIOInterface {
   override def load: Option[FieldInterface] = {
+    /*
     var gridOption: Option[FieldInterface] = None
     val file = scala.xml.XML.loadFile("grid.xml")
     val widthAttr = file \\ "grid" \ "@width"
@@ -39,8 +40,9 @@ class FileIO extends FileIOInterface {
       case None =>
     }
     gridOption
+  */
+    None
   }
-
   override def save(grid: FieldInterface): Unit = saveString(grid)
 
   def saveXML(grid: FieldInterface): Unit = {

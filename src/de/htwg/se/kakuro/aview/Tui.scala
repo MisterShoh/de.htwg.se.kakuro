@@ -15,6 +15,8 @@ class Tui(controller: ControllerInterface) extends Reactor {
       case 'd' => reset(input)
       case 'u' => controller.undo()
       case 'r' => controller.redo()
+      case 'S' => controller.save()
+      case 'l' => controller.load()
       case _ => logger.info("didn't understand input: please try again")
     }
   }
@@ -78,6 +80,8 @@ class Tui(controller: ControllerInterface) extends Reactor {
     logger.info("Wert löschen: d row col")
     logger.info("Undo: u")
     logger.info("Redo: r")
+    logger.info("Save: s")
+    logger.info("Load: l")
   }
   def isValid(value: Int): Boolean = {
     if (value <= 9 && value >= 0) {
