@@ -51,11 +51,15 @@ class ControllerSpec extends WordSpec with Matchers {
         //controller.field.cell(1, 4).downSum should be(13)
         true should be(true)
       }
+      //TODO
       "save" in {
-        controller.cell(1, 3).value should be(5)
+        controller.set(1, 5, 5)
+        controller.cell(1, 5).value should be(5)
         controller.save
-        //controller.load
-        controller.cell(1, 3).value should be(5)
+        controller.set(1, 5, 0)
+        controller.load
+        controller.cell(1, 5).value should be(0)
+        //controller.field.cell(1, 5).value should be(5)
       }
       "be able to clear" in {
         controller.set(1, 2, 5)
@@ -79,11 +83,11 @@ class ControllerSpec extends WordSpec with Matchers {
 
       //Why
       "isWhite" in {
-        controller.cell(3, 3).isWhite should be(false)
-        controller.isWhite(3, 3) should be(false)
+        controller.cell(3, 3).isWhite should be(true)
+        controller.isWhite(3, 3) should be(true)
       }
       "isBlack" in {
-        controller.cell(1, 0).isBlack should be(false)
+        controller.cell(1, 0).isBlack should be(true)
       }
       "createEmptyGrid" in {
         controller.createEmptyGrid(4)
@@ -121,6 +125,19 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.selectCell(1, 5)
         controller.set(7)
         controller.cell(1, 5).value should be(7)
+      }
+      "set selected 0" in {
+        controller.selectCell(1, 6)
+        controller.set(0)
+        controller.cell(1, 6).value should be(0)
+      }
+      //TODO
+      "isValid" in {
+        controller.isValid should be(true)
+      }
+      //TODO
+      "isSolved" in {
+        controller.isSolved should be(true)
       }
     }
 

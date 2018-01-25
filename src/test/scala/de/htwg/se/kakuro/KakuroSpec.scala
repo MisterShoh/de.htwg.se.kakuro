@@ -19,6 +19,7 @@ class KakuroSpec extends WordSpec with Matchers {
       "create a field" in {
         kakuro.controller.cell(1, 2).isWhite should be(true)
       }
+      //TODO
       "handle Input" in {
         kakuro.input = "s 1 2 3"
         kakuro.controller.cell(1, 2).value should be(0)

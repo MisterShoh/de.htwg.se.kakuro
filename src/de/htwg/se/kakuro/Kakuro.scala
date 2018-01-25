@@ -13,9 +13,8 @@ object Kakuro {
   val controller = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
   var input: String = ""
-  //val gui = new SwingGui2(controller)
   controller.initField()
-  def main(args: Array[String]): Unit = {
+  def main(): Unit = {
     do {
       tui.printTui()
       input = scala.io.StdIn.readLine()

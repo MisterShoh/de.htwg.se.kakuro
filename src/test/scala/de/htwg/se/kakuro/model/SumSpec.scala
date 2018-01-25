@@ -23,6 +23,9 @@ class SumSpec extends WordSpec with Matchers {
       "current" in {
         sumDef.current should be(0)
       }
+      "getCandidates" in {
+        sumDef.getCandidates.isInstanceOf[Set[Int]] should be(true)
+      }
     }
   }
 
