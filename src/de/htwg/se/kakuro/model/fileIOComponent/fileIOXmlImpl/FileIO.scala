@@ -1,36 +1,20 @@
 package de.htwg.se.kakuro.model.fileIOComponent.fileIOXmlImpl
 
-import com.google.inject.Guice
-import com.google.inject.name.Names
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Field
 import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
 import de.htwg.se.kakuro.model.fileIOComponent.FileIOInterface
-import net.codingwell.scalaguice.InjectorExtensions._
 
 import scala.xml.{ Elem, NodeSeq, PrettyPrinter }
 
 class FileIO extends FileIOInterface {
   override def load: Option[FieldInterface] = {
     var gridOption: Option[FieldInterface] = None
-
     val file = scala.xml.XML.loadFile("grid.xml")
-    //val sizeAttr = file \\ "grid" \ "@size"
-    //val size = sizeAttr.text.toInt
     val widthAttr = file \\ "grid" \ "@width"
     val heightAttr = file \\ "grid" \ "@height"
 
     val width = widthAttr.text.toInt
     val height = heightAttr.text.toInt
-
-    /*
-  val injector = Guice.createInjector(new SudokuModule)
-  size match {
-    case 1 => gridOption = Some(injector.instance[GridInterface](Names.named("tiny")))
-    case 4 => gridOption = Some(injector.instance[GridInterface](Names.named("small")))
-    case 9 => gridOption = Some(injector.instance[GridInterface](Names.named("normal")))
-    case _ =>
-  }
-  */
 
     gridOption = Some(new Field(width, height))
 

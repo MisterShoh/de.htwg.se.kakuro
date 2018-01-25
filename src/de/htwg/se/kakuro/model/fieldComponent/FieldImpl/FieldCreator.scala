@@ -3,40 +3,10 @@ package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 import de.htwg.se.kakuro.model.fieldComponent.{ FieldCreatorTemplate, FieldInterface }
 
 class FieldCreator extends FieldCreatorTemplate {
-
-  //var field: new Field()
-
   override def makeField(size: Int): FieldInterface = {
     var field = new Field(size)
     field
   }
-  /*
-  def stringToField(input: String): FieldInterface = {
-    var lines = input.split('\n')
-    var row: Int = lines.size
-    var col: Int = lines.head.count(_ == ',' + 1)
-    var tabular = Array.ofDim[String](row, col)
-
-    var field: FieldInterface = new Field(row, col)
-    //var rSums: List[Tuple2[Int, Int]] = List()
-    for (row <- tabular.indices) {
-      tabular(row) = lines(row).split(',')
-      for (col <- tabular(row).indices) {
-        tabular(row)(col).split(" ").map(c => c.toInt).toList match {
-          case Nil => field = field.set(row, col, 0)
-          case whiteCellValue :: Nil => field = field.set(row, col, whiteCellValue)
-          case rightVal :: downVal :: Nil => {
-            field = if (rightVal == 0 && downVal == 0)
-              field.set(row, col)
-            else
-              field.set(row, col, rightVal, downVal)
-          }
-        }
-      }
-    }
-    //field.generateSums(field)
-  }
-*/
   override def fill(_field: FieldInterface): FieldInterface = {
     var grid: FieldInterface = new Field(_field.height, _field.width)
 

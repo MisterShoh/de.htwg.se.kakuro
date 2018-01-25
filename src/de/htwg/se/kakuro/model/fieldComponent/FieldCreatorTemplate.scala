@@ -2,7 +2,7 @@ package de.htwg.se.kakuro.model.fieldComponent
 
 trait FieldCreatorTemplate {
 
-  def makeField(size: Int): FieldInterface //abstract
+  def makeField(size: Int): FieldInterface
 
   def createNewField(size: Int): FieldInterface = {
     var field: FieldInterface = makeField(size)
@@ -12,14 +12,12 @@ trait FieldCreatorTemplate {
   }
 
   def prepare(field: FieldInterface): FieldInterface = {
-    //default: NOOP
     field
   }
 
-  def fill(field: FieldInterface): FieldInterface // abstract
+  def fill(field: FieldInterface): FieldInterface
 
   def postprocess(field: FieldInterface): FieldInterface = {
-    //default: NOOP
     field
   }
 }

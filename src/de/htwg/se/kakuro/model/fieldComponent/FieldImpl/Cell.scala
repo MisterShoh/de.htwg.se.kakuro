@@ -15,7 +15,6 @@ case class Cell(
   def this(value: Int) = this(true, false, value, 0, 0)
   def this(rightSum: Int, downSum: Int) = this(false, true, 0, rightSum, downSum)
   val whiteStrings = List("  ", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9")
-  //override def toStringRight: String =  if(value == 0) "##" else if (value < 10) " "+ value else value.toString
 
   override def hasRight: Boolean = rightSum > 0
   override def hasDown: Boolean = downSum > 0
@@ -53,13 +52,6 @@ case class Cell(
     }
   }
 
-  //override def toString: String = toStringRight+"\n"+toStringDown
-
   override def isSet: Boolean = if (isWhite) value > 0 else true
 
-  //override def showCandidates: Boolean = false
-
-  //override def value: Int = if(white) content else -1
-
-  //override def isWhite: Boolean = white
 }

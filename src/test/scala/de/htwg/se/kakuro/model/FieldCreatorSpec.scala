@@ -2,7 +2,6 @@ package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{ Matchers, WordSpec }
-import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.FieldCreator
 
 @RunWith(classOf[JUnitRunner])
 class FieldCreatorSpec extends WordSpec with Matchers {

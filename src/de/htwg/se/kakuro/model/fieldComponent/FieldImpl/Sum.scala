@@ -8,7 +8,6 @@ import scala.swing.Reactor
 
 case class Sum(sumValue: Int, members: Vector[CellInterface], isHorizontal: Boolean = true) extends SumInterface with Reactor {
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
-  //def sumValue: Int = if (isHorizontal) black.rightVal else black.downVal
 
   def this() = this(0, Vector[CellInterface]())
 
