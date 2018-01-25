@@ -100,15 +100,25 @@ class ControllerSpec extends WordSpec with Matchers {
       "getSelected" in {
         controller.getSelected
         controller.hasSelect
-        controller.isSelected(1, 3)
         controller.selectCell(1, 3)
-        false should be(false)
+        controller.isSelected(1, 3) should be(true)
       }
       "statusText" in {
         controller.statusText.isInstanceOf[String]
       }
       "isSet" in {
-        controller.cell(3, 3).isSet should be(true)
+        controller.isSet(3, 3) should be(true)
+
+      }
+      "selected" in {
+        controller.selectCell(1, 3)
+        controller.selectCell(1, 3)
+        controller.isSelected(1, 3) should be(true)
+      }
+      "set selected" in {
+        controller.selectCell(1, 5)
+        controller.set(7)
+        controller.cell(1, 5).value should be(7)
       }
     }
 
