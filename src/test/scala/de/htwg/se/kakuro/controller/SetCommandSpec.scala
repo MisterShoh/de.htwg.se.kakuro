@@ -1,12 +1,15 @@
+package de.htwg.se.kakuro.controller
+
 import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.{ Controller, SetCommand }
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Field, FieldCreator, Matrix }
+import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{ Matchers, WordSpec }
 @RunWith(classOf[JUnitRunner])
 class SetCommandSpec extends WordSpec with Matchers {
   var creator = new FieldCreator
-  var field = creator.makeField(8)
+  var field: FieldInterface = creator.makeField(8)
   var controller = new Controller(field)
   val setCommand = new SetCommand(1, 2, 3, controller)
 

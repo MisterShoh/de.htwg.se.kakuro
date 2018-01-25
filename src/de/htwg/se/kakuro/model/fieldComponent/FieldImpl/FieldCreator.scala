@@ -1,12 +1,79 @@
 package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
 import de.htwg.se.kakuro.model.fieldComponent.{ FieldCreatorTemplate, FieldInterface }
+import scala.io.Source
 
 class FieldCreator extends FieldCreatorTemplate {
   override def makeField(size: Int): FieldInterface = {
     var field = new Field(size)
     field
   }
+
+  /*
+  def readCsv(filename:String):FieldInterface = {
+  //Source.fromFile(filename).count()
+  for (line <- Source.fromFile(filename).getLines){
+    line.split(',')
+  }
+  new Field(0)
+  }
+
+  def stringld(input: String): FieldInterface = {
+  var lines = input.split('\n')
+  var row: Int = lines.size
+  var col: Int = lines.head.count(_ == ',' + 1)
+  var tabular = Array.ofDim[String](row, col)
+
+  var field: FieldInterface = new Field(row, col)
+  //var rSums: List[Tuple2[Int, Int]] = List()
+  for (row <- tabular.indices) {
+    tabular(row) = lines(row).split(',')
+    for (col <- tabular(row).indices) {
+      tabular(row)(col).split(" ").map(c => c.toInt).toList match {
+        case Nil => field = field.set(row, col, 0)
+        case whiteCellValue :: Nil => field = field.set(row, col, whiteCellValue)
+        case rightVal :: downVal :: Nil => {
+          field = if (rightVal == 0 && downVal == 0)
+            field.set(row, col)
+          else
+            field.set(row, col, rightVal, downVal)
+        }
+      }
+    }
+  }
+  //field.generateSums(field)
+  }
+  */
+
+  override def generateSums(field: FieldInterface): FieldInterface = {
+    var _members: List[Cell] = List()
+
+    for {
+      row <- (0 until field.width).reverse
+      col <- (0 until field.height).reverse
+    } {
+      if (field.cell(row, col).isWhite) {
+        _members.::(field.cell(row, col))
+      } else if (field.cell(row, col).isBlack) {
+        field.putSum(new Sum(field.cell(row, col).rightSum, _members.toVector))
+        _members = List()
+      }
+    }
+
+    for {
+      col <- (0 until field.height).reverse
+      row <- (0 until field.width).reverse
+    } {
+      if (field.cell(row, col).isWhite) {
+        _members.::(field.cell(row, col))
+      } else if (field.cell(row, col).isBlack) {
+        field.putSum(new Sum(field.cell(row, col).downSum, _members.toVector))
+        _members = List()
+      }
+    }
+    field
+  }
+
   override def fill(_field: FieldInterface): FieldInterface = {
     var grid: FieldInterface = new Field(_field.height, _field.width)
 

@@ -134,4 +134,8 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
   override def getSelected: (Int, Int) = selection
 
   override def hasSelect: Boolean = selection != (-1, -1)
+
+  override def isValid: Boolean = field.valid
+
+  override def isSolved: Boolean = field.solved
 }
