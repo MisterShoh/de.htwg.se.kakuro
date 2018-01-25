@@ -1,9 +1,8 @@
 package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 import com.google.inject.Inject
-import de.htwg.se.kakuro.model.fieldComponent.MatrixInterface
 import org.apache.logging.log4j.{ LogManager, Logger }
 
-case class Matrix[T] /*@Inject()*/ (rows: Vector[Vector[T]]) { //} extends MatrixInterface[T] {
+case class Matrix[T](rows: Vector[Vector[T]]) {
 
   def this(size: Int, filling: T) = this(Vector.tabulate(size, size) { (row, col) => filling })
 

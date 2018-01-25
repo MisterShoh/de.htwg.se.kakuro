@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface, SumInterface }
 import org.apache.logging.log4j.{ LogManager, Logger }
 
-case class Field /*@Inject() */ (grid: Matrix[Cell] /*, sums: Set[SumInterface]*/ ) extends FieldInterface {
+case class Field(grid: Matrix[Cell] /*, sums: Set[SumInterface]*/ ) extends FieldInterface {
 
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
   //var grid = Array.ofDim[Cell](height, width)
@@ -133,7 +133,7 @@ case class Field /*@Inject() */ (grid: Matrix[Cell] /*, sums: Set[SumInterface]*
 
   def cell(row: Int, col: Int): CellInterface = grid.cell(row, col)
 
-  //override def createNewGrid(size: Int): FieldInterface = (new FieldCreator).createNewField(size)
+  override def createNewField(size: Int): FieldInterface = (new FieldCreator).createNewField(size)
 
   //override def valid: Boolean = sums.forall(_.isValid)
 

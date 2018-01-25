@@ -1,13 +1,13 @@
 package de.htwg.se.kakuro.controller.controllerComponent.controllerImpl
 
 import com.google.inject.{ Guice, Inject }
+import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.kakuro.KakuroModule
 import de.htwg.se.kakuro.controller.controllerComponent.GameStatus._
 import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface, GameStatus, SelectorChanged }
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Field, FieldCreator }
 import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface }
 import de.htwg.se.kakuro.model.fileIOComponent.FileIOInterface
-import de.htwg.se.kakuro.model.fileIOComponent.fileIOJsonImpl.FileIO
 import de.htwg.se.kakuro.util.UndoManager
 import org.apache.logging.log4j.{ LogManager, Logger }
 
@@ -15,15 +15,15 @@ import scala.swing.Publisher
 
 class Controller @Inject() (var field: FieldInterface) extends ControllerInterface with Publisher {
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
-  //val injector = Guice.createInjector(new KakuroModule)
-  //val fileIo = injector.instance[FileIOInterface]
-  val fileIo: FileIOInterface = new FileIO()
-
+  val injector = Guice.createInjector(new KakuroModule)
+  val fileIo = injector.instance[FileIOInterface]
   private val undoManager = new UndoManager
   var gameStatus: GameStatus = IDLE
   def statusText: String = GameStatus.message(gameStatus)
   var selection: (Int, Int) = (-1, -1)
   var showAllCandidates: Boolean = false
+
+  //val fileIo: FileIOInterface = new FileIO()
 
   def undo(): Unit = {
     undoManager.undoStep
