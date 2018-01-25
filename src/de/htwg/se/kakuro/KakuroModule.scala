@@ -17,7 +17,6 @@ class KakuroModule extends AbstractModule with ScalaModule {
     bindConstant().annotatedWith(Names.named("DefaultSize")).to(defaultSize)
     bind[FieldInterface].to[Field]
     bind[ControllerInterface].to[Controller]
-
     bind[FileIOInterface].to[fileIOJsonImpl.FileIO]
   }
 

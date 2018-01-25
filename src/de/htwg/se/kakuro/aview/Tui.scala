@@ -1,17 +1,13 @@
 package de.htwg.se.kakuro.aview
 
-import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.Controller
 import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface }
 import org.apache.logging.log4j.Logger
 import org.apache.logging.log4j.LogManager
-
 import scala.swing.Reactor
-// https://www.safaribooksonline.com/library/view/scala-cookbook/9781449340292/
 
 class Tui(controller: ControllerInterface) extends Reactor {
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
   listenTo(controller)
-  //def size: Int = controller.width
 
   def handleInput(input: String): Unit = {
     input.charAt(0) match {
@@ -23,29 +19,11 @@ class Tui(controller: ControllerInterface) extends Reactor {
     }
   }
 
-  /*
-  def handle2(input: String): Unit = {
-    input match {
-      case "q" =>
-      case "n" => controller.createEmptyGrid(0)
-      case "z" => controller.undo()
-      case "y" => controller.redo()
-      case _ => input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
-        case row :: col :: value :: Nil => controller.set(row, col, value)
-        case row :: col :: Nil => controller.showCandidates(row, col)
-        //case index::Nil => controller.highlight(index)
-        case _ => logger.info("didn't understand input: please try again")
-      }
-    }
-  }
-  */
-
   reactions += {
     case event: CellChanged => {
       logger.debug("reactions Tui Cellchanged")
       printTui()
     }
-    //case event: CandidatesChanged => printCandidates
   }
   def isNumber(x: String): Boolean = x forall Character.isDigit
 
@@ -95,6 +73,7 @@ class Tui(controller: ControllerInterface) extends Reactor {
 
   def printTui(): Unit = {
     logger.info("\n" + controller.fieldToString)
+    logger.info("Open GUI: gui")
     logger.info("Wert setzen: s row col value")
     logger.info("Wert löschen: d row col")
     logger.info("Undo: u")
@@ -106,13 +85,5 @@ class Tui(controller: ControllerInterface) extends Reactor {
     }
     false
   }
-  /*
-  def printCandidates(): Unit = {
-    println("Candidates: ")
-    for (row <- 0 until controller.width; col <- 0 until controller.height) {
-      if (controller.isShowCandidates(row, col)) println("(" + row + "," + col + "):" + controller.available(row, col).toList.sorted)
-    }
-  }
-  */
 }
 

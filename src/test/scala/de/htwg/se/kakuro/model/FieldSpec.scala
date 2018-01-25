@@ -1,6 +1,5 @@
-import java.util.logging.LogManager
-
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Cell, FieldCreator }
+import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
 import org.junit.runner.RunWith
 import org.scalatest.{ Matchers, WordSpec }
 import org.scalatest.junit.JUnitRunner
@@ -12,6 +11,7 @@ class FieldSpec extends WordSpec with Matchers {
     var creator = new FieldCreator
     var field = creator.makeField(8)
     var filledfield = creator.fill(field)
+
     "set should have a String representation" in {
       filledfield.toString.isEmpty should be(false)
     }
@@ -46,6 +46,11 @@ class FieldSpec extends WordSpec with Matchers {
     }
     "set should be able to check if cell is black or white" in {
       filledfield.cell(1, 3).isWhite && filledfield.cell(2, 4).isBlack should be(true)
+    }
+    "createNewField" in {
+      val newField = (new FieldCreator).createNewField(8)
+      newField.isInstanceOf[FieldInterface] should be(true)
+      newField.height should be(8)
     }
   }
 }

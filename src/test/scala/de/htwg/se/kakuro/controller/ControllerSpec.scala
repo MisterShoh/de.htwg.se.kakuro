@@ -23,6 +23,16 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.undo()
         controller.field.cell(1, 3).value should be(0)
       }
+      "reset in set" in {
+        controller.set(1, 3, 5)
+        controller.field.cell(1, 3).value should be(5)
+        controller.set(1, 3, 0)
+        controller.undo()
+        controller.field.cell(1, 3).value should be(5)
+      }
+      "invalid inout" in {
+        controller.isValidInput(8888) should be(false)
+      }
       "be able to set (row,col,val)" in {
         controller.set(1, 3, 5)
         controller.field.cell(1, 3).value should be(5)
@@ -38,6 +48,12 @@ class ControllerSpec extends WordSpec with Matchers {
         //controller.field.cell(1, 4).rightSum should be(12)
         //controller.field.cell(1, 4).downSum should be(13)
         true should be(true)
+      }
+      "save" in {
+        controller.cell(1, 3).value should be(5)
+        controller.save
+        //controller.load
+        controller.cell(1, 3).value should be(5)
       }
       "be able to clear" in {
         controller.set(1, 2, 5)
@@ -62,6 +78,7 @@ class ControllerSpec extends WordSpec with Matchers {
       //Why
       "isWhite" in {
         controller.cell(3, 3).isWhite should be(false)
+        controller.isWhite(3, 3) should be(false)
       }
       "isBlack" in {
         controller.cell(1, 0).isBlack should be(false)
@@ -83,9 +100,25 @@ class ControllerSpec extends WordSpec with Matchers {
       "getSelected" in {
         controller.getSelected
         controller.hasSelect
-        controller.isSelected(1, 3)
         controller.selectCell(1, 3)
-        false should be(false)
+        controller.isSelected(1, 3) should be(true)
+      }
+      "statusText" in {
+        controller.statusText.isInstanceOf[String]
+      }
+      "isSet" in {
+        controller.isSet(3, 3) should be(true)
+
+      }
+      "selected" in {
+        controller.selectCell(1, 3)
+        controller.selectCell(1, 3)
+        controller.isSelected(1, 3) should be(true)
+      }
+      "set selected" in {
+        controller.selectCell(1, 5)
+        controller.set(7)
+        controller.cell(1, 5).value should be(7)
       }
     }
 

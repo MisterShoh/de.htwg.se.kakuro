@@ -23,8 +23,6 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
   var selection: (Int, Int) = (-1, -1)
   var showAllCandidates: Boolean = false
 
-  //val fileIo: FileIOInterface = new FileIO()
-
   def undo(): Unit = {
     undoManager.undoStep
     gameStatus = UNDO
@@ -47,7 +45,6 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
     val gridOption = fileIo.load
     gridOption match {
       case None => {
-        //createEmptyGrid
         gameStatus = COULDNOTLOAD
       }
       case Some(_grid) => {
@@ -61,25 +58,10 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
   def initField(): Unit = {
     var generator = new FieldCreator()
     field = generator.fill(field)
-    //field = samplefield.createNewField(8)
-    //field.set(1, 2, 7)
-    //field
   }
 
   def available(row: Int, col: Int): Set[Int] = Set(0, 0)
-  //def isShowCandidates(row: Int, col: Int): Boolean = false
   def isWhite(row: Int, col: Int): Boolean = cell(row, col).isWhite
-  /*
-  def set(row: Int, col: Int, value: Int): Boolean = {
-    logger.debug("row: " + row.toString + " col: " + col.toString + " value:" + value.toString)
-    if (field.cell(row, col).isInstanceOf[WhiteCellInterface]
-      && isValidInput(row)
-      && isValidInput(col)
-      && isValidInput(value)) {
-      //field.cell(row, col).asInstanceOf[WhiteCellInterface].value = value
-      true
-    } else { false }
-  }*/
 
   override def set(row: Int, col: Int): Unit = {
     undoManager.doStep(new SetCommand(row, col, 0, this))
@@ -135,35 +117,9 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
     field = new Field(8)
     publish(new CellChanged)
   }
-
-  //def cell(row: Int, col: Int) = field.cell(row, col)
-
-  //override def isSet(row: Int, col: Int): Boolean = true //cell(row, col).isSet
   override def isSet(row: Int, col: Int): Boolean = cell(row, col).isSet
-  /*
-  def showCandidates(row: Int, col: Int): Unit = {
-    field = field.setShowCandidates(row, col)
-    gameStatus = CANDIDATES
-    publish(new CandidatesChanged)
-  }
-  */
 
   override def fieldToString: String = field.toString
-
-  //override def isShowCandidates(row: Int, col: Int): Boolean = ???
-
-  /*
-  override def toggleShowAllCandidates: Unit = {
-    showAllCandidates = !showAllCandidates
-    gameStatus = CANDIDATES
-    publish(new CellChanged)
-  }
-  */
-  //override def showAllCandidates: Boolean = ???
-
-  //override def available(row: Int, col: Int): Set[Int] = ???
-
-  //override def statusText: String = ???
   override def cell(row: Int, col: Int): CellInterface = field.cell(row, col)
 
   override def isSelected(row: Int, col: Int): Boolean = selection == (row, col)
