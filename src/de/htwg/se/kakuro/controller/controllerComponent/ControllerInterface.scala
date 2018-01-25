@@ -9,6 +9,8 @@ trait ControllerInterface extends Publisher {
 
   def width: Int
   def height: Int
+  def isValid: Boolean
+  def isSolved: Boolean
   def createEmptyGrid(size: Int): Unit
   def undo(): Unit
   def redo(): Unit
