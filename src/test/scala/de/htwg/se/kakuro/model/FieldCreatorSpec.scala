@@ -15,8 +15,8 @@ class FieldCreatorSpec extends WordSpec with Matchers {
     }
     "create an filled field" should {
       var creator = new FieldCreator
-      var field = creator.makeField(8)
-      var filledfield = creator.fill(field)
+      var filledfield = creator.makeField(8)
+      //var filledfield = creator.fill(field)
       "have size 8" in {
         filledfield.height should be(8)
       }

@@ -9,8 +9,9 @@ class FieldSpec extends WordSpec with Matchers {
   "A created Field" when {
 
     var creator = new FieldCreator
-    var field = creator.makeField(8)
-    var filledfield = creator.fill(field)
+    //var field = creator.makeField(8)
+    //var filledfield = creator.fill(field)
+    var filledfield = creator.createNewField(8)
 
     "set should have a String representation" in {
       filledfield.toString.isEmpty should be(false)

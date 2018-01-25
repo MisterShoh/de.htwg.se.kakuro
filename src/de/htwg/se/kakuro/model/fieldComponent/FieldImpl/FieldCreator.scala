@@ -5,7 +5,7 @@ import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldCreatorTempl
 import scala.io.Source
 
 class FieldCreator extends FieldCreatorTemplate {
-  override def makeField(size: Int): Field = {
+  override def makeField(size: Int): FieldInterface = {
     var field = new Field(size)
     field = fill(field)
     field = generateSums(field)
