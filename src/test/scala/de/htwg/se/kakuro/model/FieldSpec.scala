@@ -1,5 +1,3 @@
-import java.util.logging.LogManager
-
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Cell, FieldCreator }
 import org.junit.runner.RunWith
 import org.scalatest.{ Matchers, WordSpec }
@@ -12,6 +10,7 @@ class FieldSpec extends WordSpec with Matchers {
     var creator = new FieldCreator
     var field = creator.makeField(8)
     var filledfield = creator.fill(field)
+
     "set should have a String representation" in {
       filledfield.toString.isEmpty should be(false)
     }
