@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/AvasDream/de.htwg.se.kakuro.svg?branch=master)](https://travis-ci.org/AvasDream/de.htwg.se.kakuro)
-
+[![Coverage Status](https://coveralls.io/repos/github/AvasDream/de.htwg.se.kakuro/badge.svg?branch=master)](https://coveralls.io/github/AvasDream/de.htwg.se.kakuro?branch=master)
 htwg-scala-kakuro
 =========================
 
