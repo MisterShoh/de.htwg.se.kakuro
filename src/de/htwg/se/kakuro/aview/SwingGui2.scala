@@ -91,7 +91,7 @@ class SwingGui2(controller: ControllerInterface) extends MainFrame {
     case event: CellChanged => redraw()
     //case event: CandidatesChanged => redraw()
     case event: UIElementResized =>
-      statusline.text = "Size: " + this.size.toString
+      //statusline.text = "Size: " + this.size.toString
       resizeText()
       repaint
       visible = true
@@ -120,6 +120,8 @@ class SwingGui2(controller: ControllerInterface) extends MainFrame {
       mnemonic = Key.E
       contents += new MenuItem(Action("Undo") { controller.undo() })
       contents += new MenuItem(Action("Redo") { controller.redo() })
+      contents += new MenuItem(Action("Save") { controller.save() })
+      contents += new MenuItem(Action("Load") { controller.load() })
     }
     /*
     contents += new Menu("Solve") {
@@ -166,6 +168,7 @@ class SwingGui2(controller: ControllerInterface) extends MainFrame {
     */
     cells.flatten.foreach(_.redraw())
     //publish(UIElementResized(fieldview))
+    statusline.text = controller.statusText
     repaint
     visible = true
   }

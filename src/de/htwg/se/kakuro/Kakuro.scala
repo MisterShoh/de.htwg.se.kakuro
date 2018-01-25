@@ -1,5 +1,7 @@
 package de.htwg.se.kakuro
 
+import java.awt.Dimension
+
 import com.google.inject.Guice
 import de.htwg.se.kakuro.aview.{ SwingGui2, Tui }
 import de.htwg.se.kakuro.controller.controllerComponent.ControllerInterface
@@ -14,7 +16,8 @@ object Kakuro {
   val controller = new Controller(new Field(defaultsize))
   val tui = new Tui(controller)
   val gui = new SwingGui2(controller)
-  //gui.visible
+  gui.size = new Dimension(580, 680)
+  //gui.visible = true
   controller.initField()
   def main(args: Array[String]): Unit = {
 
