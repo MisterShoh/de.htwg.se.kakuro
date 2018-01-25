@@ -64,7 +64,6 @@ class SwingGui2(controller: ControllerInterface) extends MainFrame {
   reactions += {
     case event: CellChanged => redraw()
     case event: UIElementResized =>
-      statusline.text = "Size: " + this.size.toString
       resizeText()
       repaint
       visible = true
@@ -88,6 +87,8 @@ class SwingGui2(controller: ControllerInterface) extends MainFrame {
       mnemonic = Key.E
       contents += new MenuItem(Action("Undo") { controller.undo() })
       contents += new MenuItem(Action("Redo") { controller.redo() })
+      contents += new MenuItem(Action("Save") { controller.save() })
+      contents += new MenuItem(Action("Load") { controller.load() })
     }
   }
 

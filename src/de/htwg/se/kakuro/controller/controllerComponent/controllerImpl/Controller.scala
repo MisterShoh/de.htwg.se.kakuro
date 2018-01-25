@@ -4,7 +4,7 @@ import com.google.inject.{ Guice, Inject }
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.kakuro.KakuroModule
 import de.htwg.se.kakuro.controller.controllerComponent.GameStatus._
-import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface, SelectorChanged }
+import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface, GameStatus, SelectorChanged }
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Field, FieldCreator }
 import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface }
 import de.htwg.se.kakuro.model.fileIOComponent.FileIOInterface
@@ -19,8 +19,11 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
   val fileIo = injector.instance[FileIOInterface]
   private val undoManager = new UndoManager
   var gameStatus: GameStatus = IDLE
+  def statusText: String = GameStatus.message(gameStatus)
   var selection: (Int, Int) = (-1, -1)
   var showAllCandidates: Boolean = false
+
+  //val fileIo: FileIOInterface = new FileIO()
 
   def undo(): Unit = {
     undoManager.undoStep

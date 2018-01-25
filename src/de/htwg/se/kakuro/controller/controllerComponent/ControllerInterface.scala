@@ -12,6 +12,8 @@ trait ControllerInterface extends Publisher {
   def createEmptyGrid(size: Int): Unit
   def undo(): Unit
   def redo(): Unit
+  def save(): Unit
+  def load(): Unit
   def isSet(row: Int, col: Int): Boolean
   def initField(): Unit
   def cell(row: Int, col: Int): CellInterface
@@ -28,6 +30,7 @@ trait ControllerInterface extends Publisher {
   def hasSelect: Boolean
   def available(row: Int, col: Int): Set[Int]
   def gameStatus: GameStatus
+  def statusText: String
 }
 
 import scala.swing.event.Event
