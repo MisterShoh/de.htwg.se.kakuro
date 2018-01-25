@@ -53,13 +53,14 @@ class ControllerSpec extends WordSpec with Matchers {
       }
       //TODO
       "save" in {
-        controller.set(1, 5, 5)
-        controller.cell(1, 5).value should be(5)
+        controller.set(1, 6, 5)
+        controller.cell(1, 6).value should be(5)
         controller.save
-        controller.set(1, 5, 0)
+        controller.selectCell(1, 6)
+        controller.set(5)
+        //controller.set(1, 6, 3)
         controller.load
-        controller.cell(1, 5).value should be(0)
-        //controller.field.cell(1, 5).value should be(5)
+        controller.cell(1, 6).value should be(5)
       }
       "be able to clear" in {
         controller.set(1, 2, 5)
