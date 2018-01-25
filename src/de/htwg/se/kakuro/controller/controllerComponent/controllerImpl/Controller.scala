@@ -57,7 +57,9 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
 
   def initField(): Unit = {
     var generator = new FieldCreator()
-    field = generator.fill(field)
+    field = generator.createNewField(8)
+    //field = generator.fill(field)
+    //field = generator.generateSums(field)
   }
 
   def available(row: Int, col: Int): Set[Int] = Set(0, 0)

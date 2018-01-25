@@ -1,11 +1,14 @@
 package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
-import de.htwg.se.kakuro.model.fieldComponent.{ FieldCreatorTemplate, FieldInterface }
+import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldCreatorTemplate, FieldInterface }
+
 import scala.io.Source
 
 class FieldCreator extends FieldCreatorTemplate {
   override def makeField(size: Int): FieldInterface = {
     var field = new Field(size)
+    field = fill(field)
+    field = generateSums(field)
     field
   }
 
@@ -45,37 +48,37 @@ class FieldCreator extends FieldCreatorTemplate {
   }
   */
 
-  override def generateSums(field: FieldInterface): FieldInterface = {
-    var _members: List[Cell] = List()
-
+  def generateSums(field: Field): Field = {
+    var _members: Set[Cell] = Set()
+    var _field = field
     for {
-      row <- (0 until field.width).reverse
-      col <- (0 until field.height).reverse
+      row <- (0 until _field.width).reverse
+      col <- (0 until _field.height).reverse
     } {
-      if (field.cell(row, col).isWhite) {
-        _members.::(field.cell(row, col))
-      } else if (field.cell(row, col).isBlack) {
-        field.putSum(new Sum(field.cell(row, col).rightSum, _members.toVector))
-        _members = List()
+      if (_field.cell(row, col).isWhite) {
+        _members = _members.+(_field.cell(row, col))
+      } else if (_field.cell(row, col).isBlack) {
+        _field = _field.putSum(Sum(_field.cell(row, col).rightSum, _members))
+        _members = Set()
       }
     }
 
     for {
-      col <- (0 until field.height).reverse
-      row <- (0 until field.width).reverse
+      col <- (0 until _field.height).reverse
+      row <- (0 until _field.width).reverse
     } {
-      if (field.cell(row, col).isWhite) {
-        _members.::(field.cell(row, col))
-      } else if (field.cell(row, col).isBlack) {
-        field.putSum(new Sum(field.cell(row, col).downSum, _members.toVector))
-        _members = List()
+      if (_field.cell(row, col).isWhite) {
+        _members = _members.+(_field.cell(row, col))
+      } else if (_field.cell(row, col).isBlack) {
+        _field = _field.putSum(Sum(_field.cell(row, col).downSum, _members))
+        _members = Set()
       }
     }
-    field
+    _field
   }
 
-  override def fill(_field: FieldInterface): FieldInterface = {
-    var grid: FieldInterface = new Field(_field.height, _field.width)
+  def fill(_field: Field): Field = {
+    var grid: Field = new Field(_field.height, _field.width)
 
     grid = grid.set(0, 0)
     grid = grid.set(0, 1, 0, 23)

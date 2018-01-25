@@ -14,7 +14,7 @@ object Kakuro {
   val tui = new Tui(controller)
   var input: String = ""
   controller.initField()
-  def main(): Unit = {
+  def main(args: Array[String]): Unit = {
     do {
       tui.printTui()
       input = scala.io.StdIn.readLine()

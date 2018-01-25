@@ -15,8 +15,9 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
 
   //val sums: Set[Sum] = Set.empty[Sum]
 
-  def putSum(s: SumInterface): FieldInterface = {
-    copy(grid, sums + s)
+  def putSum(s: SumInterface): Field = {
+    //val newSum = sums + s
+    copy(grid = grid, sums = sums + s)
   }
   //var blackCells: Array[BlackCell]
   //def isShowCandidates(row: Int, col: Int): Boolean = false
@@ -106,45 +107,38 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
   }
   */
 
-  override def set(row: Int, col: Int, value: Int): FieldInterface = {
+  override def set(row: Int, col: Int, value: Int): Field = {
     logger.debug("field.set(row: Int, col: Int, value: Int)" + "value - " + value)
     copy(grid.replaceCell(row, col, new Cell(value)))
   }
 
-  override def set(row: Int, col: Int): FieldInterface =
+  override def set(row: Int, col: Int): Field =
     copy(grid.replaceCell(row, col, new Cell()))
 
-  override def set(row: Int, col: Int, rightVal: Int, downVal: Int): FieldInterface = {
+  override def set(row: Int, col: Int, rightVal: Int, downVal: Int): Field = {
     copy(grid.replaceCell(row, col, new Cell(rightVal, downVal)))
   }
 
-  override def reset(row: Int, col: Int): FieldInterface =
+  override def reset(row: Int, col: Int): Field =
     copy(grid.replaceCell(row, col, new Cell(0)))
 
-  /*
-  def addRightSum(row: Int, col: Int, sum: Int): FieldInterface = {
-    val value = cell(row, col).value
-    val down = cell(row, col).downSum
-    copy(grid.replaceCell(row, col, Cell(true, false, value, sum + value, down)))
-  }
-  def addDownSum(row: Int, col: Int, sum: Int): FieldInterface = {
-
-    val value = cell(row, col).value
-    val right = cell(row, col).rightSum
-    copy(grid.replaceCell(row, col, Cell(true, false, value, right, sum + value)))
-  }
-  */
-
   override def toString: String = {
-    logger.debug("field.toString()")
+    //logger.debug("field.toString()")
     var result: String = "\n 0  1  2  3  4  5  6  7\n"
     result += "+--+--+--+--+--+--+--+--+\n"
     //var flength = grid.length - 1
     for (j <- 0 until width) {
       result += stringRow(j)
-    }
-    result + "\n valid: " + valid.toString + ", solved " + solved.toString + "\n"
+    };
+    result // + "\n" + printDebug()
   }
+
+  /*
+  def printDebug(): String = {
+    //sums.toSet.toString()
+    sums.size + " valid: " + valid.toString + ", solved " + solved.toString + "\n"
+  }
+  */
 
   def stringRow(row: Int): String = {
     logger.debug("field.stringRow()")
@@ -178,9 +172,9 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
   */
   //override def blackCells(): Vector[BlackCellInterface] = { grid.toVector.filter(_.isBlack).asInstanceOf[Vector[BlackCellInterface]] }
 
-  def cell(row: Int, col: Int): CellInterface = grid.cell(row, col)
+  def cell(row: Int, col: Int): Cell = grid.cell(row, col)
 
-  override def createNewField(size: Int): FieldInterface = (new FieldCreator).createNewField(size)
+  //override def createNewField(size: Int): FieldInterface = (new FieldCreator).createNewField(size)
 
   override def valid: Boolean = sums.forall(_.isValid)
   override def solved: Boolean = sums.forall(_.isSolved)
