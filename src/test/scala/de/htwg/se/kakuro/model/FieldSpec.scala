@@ -53,5 +53,11 @@ class FieldSpec extends WordSpec with Matchers {
       newField.isInstanceOf[FieldInterface] should be(true)
       newField.height should be(8)
     }
+    "isValid" in {
+      filledfield.valid should be(true)
+    }
+    "isSolved" in {
+      filledfield.solved should be(false)
+    }
   }
 }
