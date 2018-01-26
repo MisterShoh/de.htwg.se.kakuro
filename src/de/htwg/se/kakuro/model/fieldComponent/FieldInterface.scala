@@ -10,13 +10,14 @@ trait FieldInterface {
   def set(row: Int, col: Int, rightSum: Int, downSum: Int): FieldInterface
   //def cells(): Matrix[CellInterface]
   //def blackCells(): Vector[CellInterface]
-  def sums: Set[SumInterface]
+  def sums: Vector[SumInterface]
   //def generateSums: FieldInterface
   //def rows(row: Int): Vector[CellInterface]
   //def sums: Set[SumInterface]
   //def grid: Matrix[CellInterface]
   //def coords(cell: CellInterface): (Int, Int)
-  def putSum(s: SumInterface): FieldInterface
+  //def putSum(s: SumInterface): FieldInterface
+  def generateSums(): FieldInterface
   def isBlack(row: Int, col: Int): Boolean
   def isWhite(row: Int, col: Int): Boolean
   def isNone(row: Int, col: Int): Boolean
@@ -64,6 +65,6 @@ trait SumInterface {
   def sumValue: Int
   def current: Int
   def getCandidates: Set[Int]
-  def members: Set[Cell]
+  def members: Vector[Cell]
 
 }

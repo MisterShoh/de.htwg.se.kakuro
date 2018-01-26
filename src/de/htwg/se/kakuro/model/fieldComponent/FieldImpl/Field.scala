@@ -4,21 +4,22 @@ import com.google.inject.Inject
 import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface, SumInterface }
 import org.apache.logging.log4j.{ LogManager, Logger }
 
-case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInterface {
+case class Field(grid: Matrix[Cell], sums: Vector[Sum]) extends FieldInterface {
 
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
   //var grid = Array.ofDim[Cell](height, width)
   //var s : Set[Int] = Set()
-  def this(grid: Matrix[Cell]) = this(grid, Set.empty[SumInterface])
+  def this(grid: Matrix[Cell]) = this(grid, Vector.empty[Sum])
   def this(width: Int, height: Int) = this(new Matrix[Cell](width, height, new Cell()))
   def this(size: Int) = this(new Matrix[Cell](size, new Cell()))
 
-  //val sums: Set[Sum] = Set.empty[Sum]
+  //val sums: Vector[Sum] = generateSums()
 
-  def putSum(s: SumInterface): Field = {
+  def set(s: Sum): Field = {
     //val newSum = sums + s
-    copy(grid = grid, sums = sums + s)
+    copy(grid = grid, sums = sums :+ s)
   }
+
   //var blackCells: Array[BlackCell]
   //def isShowCandidates(row: Int, col: Int): Boolean = false
   //def showCandidates(row: Int, col: Int): Set[Int] = available(row, col)
@@ -105,16 +106,52 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
       }
     }
   }
+
   */
+  def generateSums(): FieldInterface = {
+    var _sums: Vector[Sum] = Vector.empty[Sum]
+    var members: Vector[Cell] = Vector.empty[Cell]
+    var _field = this //field
+    for {
+      row <- (0 until width).reverse
+      col <- (0 until height).reverse
+    } {
+      if (cell(row, col).isWhite) {
+        members = members :+ cell(row, col)
+        //println("------(" + row + ", " + col + "): added to - " + members.toString())
+      } else if (cell(row, col).hasRight) {
+        _field = _field.set(Sum(_field.cell(row, col).rightSum, members))
+        //_sums = sums :+ Sum(cell(row, col).rightSum, members)
+        //println("------(" + row + ", " + col + "): new Sum from - " + members.toString())
+        members = Vector()
+      }
+    }
+
+    for {
+      col <- (0 until height).reverse
+      row <- (0 until width).reverse
+    } {
+      if (cell(row, col).isWhite) {
+        members = members :+ cell(row, col)
+        //println("------(" + row + ", " + col + "): added to - " + members.toString())
+      } else if (cell(row, col).hasDown) {
+        _field = _field.set(Sum(_field.cell(row, col).downSum, members))
+        //_sums = sums :+ Sum(cell(row, col).downSum, members)
+        //println("------(" + row + ", " + col + "): added to - " + members.toString())
+        members = Vector()
+      }
+    }
+    _field
+  }
 
   override def set(row: Int, col: Int, value: Int): Field = {
     logger.debug("field.set(row: Int, col: Int, value: Int)" + "value - " + value)
     copy(grid.replaceCell(row, col, new Cell(value)))
   }
 
-  override def set(row: Int, col: Int): Field =
+  override def set(row: Int, col: Int): Field = {
     copy(grid.replaceCell(row, col, new Cell()))
-
+  }
   override def set(row: Int, col: Int, rightVal: Int, downVal: Int): Field = {
     copy(grid.replaceCell(row, col, new Cell(rightVal, downVal)))
   }
@@ -129,16 +166,13 @@ case class Field(grid: Matrix[Cell], sums: Set[SumInterface]) extends FieldInter
     //var flength = grid.length - 1
     for (j <- 0 until width) {
       result += stringRow(j)
-    };
-    result // + "\n" + printDebug()
+    }
+    result + "\n" + printDebug()
   }
 
-  /*
   def printDebug(): String = {
-    //sums.toSet.toString()
-    sums.size + " valid: " + valid.toString + ", solved " + solved.toString + "\n"
+    sums.toString() + sums.size + " valid: " + valid.toString + ", solved " + solved.toString + "\n"
   }
-  */
 
   def stringRow(row: Int): String = {
     logger.debug("field.stringRow()")

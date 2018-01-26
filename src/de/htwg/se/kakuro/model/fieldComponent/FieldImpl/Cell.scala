@@ -52,6 +52,15 @@ case class Cell(
     }
   }
 
+  override def toString: String = {
+    if (isWhite)
+      "W " + value
+    else if (isBlack)
+      "B >" + rightSum + ", v" + downSum
+    else
+      "_"
+  }
+
   override def isSet: Boolean = if (isWhite) value > 0 else true
 
 }

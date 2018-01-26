@@ -35,13 +35,13 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
     publish(new CellChanged)
   }
 
-  def save: Unit = {
+  def save(): Unit = {
     fileIo.save(field)
     gameStatus = SAVED
     publish(new CellChanged)
   }
 
-  def load: Unit = {
+  def load(): Unit = {
     val gridOption = fileIo.load
     gridOption match {
       case None => {
@@ -90,6 +90,7 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
     }
     logger.debug("row: " + selection._1.toString + " col: " + selection._2.toString + "type: white value: " + value.toString)
     field.set(selection._1, selection._2, value)
+    field.generateSums()
     publish(new CellChanged)
   }
 

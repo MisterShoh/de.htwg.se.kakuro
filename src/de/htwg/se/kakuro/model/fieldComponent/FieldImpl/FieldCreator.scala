@@ -21,45 +21,48 @@ class FieldCreator extends FieldCreatorTemplate {
   new Field(0)
   }
 
-  def stringld(input: String): FieldInterface = {
-  var lines = input.split('\n')
-  var row: Int = lines.size
-  var col: Int = lines.head.count(_ == ',' + 1)
-  var tabular = Array.ofDim[String](row, col)
 
-  var field: FieldInterface = new Field(row, col)
-  //var rSums: List[Tuple2[Int, Int]] = List()
-  for (row <- tabular.indices) {
-    tabular(row) = lines(row).split(',')
-    for (col <- tabular(row).indices) {
-      tabular(row)(col).split(" ").map(c => c.toInt).toList match {
-        case Nil => field = field.set(row, col, 0)
-        case whiteCellValue :: Nil => field = field.set(row, col, whiteCellValue)
-        case rightVal :: downVal :: Nil => {
-          field = if (rightVal == 0 && downVal == 0)
-            field.set(row, col)
-          else
-            field.set(row, col, rightVal, downVal)
+  def stringld(input: String): FieldInterface = {
+    var lines = input.split('\n')
+    var row: Int = lines.size
+    var col: Int = lines.head.count(_ == ',' + 1)
+    var tabular = Array.ofDim[String](row, col)
+
+    var field: FieldInterface = new Field(row, col)
+    //var rSums: List[Tuple2[Int, Int]] = List()
+    for (row <- tabular.indices) {
+      tabular(row) = lines(row).split(',')
+      for (col <- tabular(row).indices) {
+        tabular(row)(col).split(" ").map(c => c.toInt).toList match {
+          case Nil => field = field.set(row, col, 0)
+          case whiteCellValue :: Nil => field = field.set(row, col, whiteCellValue)
+          case rightVal :: downVal :: Nil => {
+            field = if (rightVal == 0 && downVal == 0)
+              field.set(row, col)
+            else
+              field.set(row, col, rightVal, downVal)
+          }
         }
       }
     }
-  }
-  //field.generateSums(field)
+    //field.generateSums(field)
   }
   */
-
   def generateSums(field: Field): Field = {
-    var _members: Set[Cell] = Set()
+    var members: Vector[Cell] = Vector.empty[Cell]
     var _field = field
     for {
       row <- (0 until _field.width).reverse
       col <- (0 until _field.height).reverse
     } {
       if (_field.cell(row, col).isWhite) {
-        _members = _members.+(_field.cell(row, col))
-      } else if (_field.cell(row, col).isBlack) {
-        _field = _field.putSum(Sum(_field.cell(row, col).rightSum, _members))
-        _members = Set()
+        members = members :+ _field.cell(row, col)
+        println("------(" + row + ", " + col + "): added to - " + members.toString())
+      } else if (_field.cell(row, col).hasRight) {
+        _field = _field.set(Sum(_field.cell(row, col).rightSum, members))
+
+        println("------(" + row + ", " + col + "): new Sum from - " + members.toString())
+        members = Vector()
       }
     }
 
@@ -68,15 +71,16 @@ class FieldCreator extends FieldCreatorTemplate {
       row <- (0 until _field.width).reverse
     } {
       if (_field.cell(row, col).isWhite) {
-        _members = _members.+(_field.cell(row, col))
-      } else if (_field.cell(row, col).isBlack) {
-        _field = _field.putSum(Sum(_field.cell(row, col).downSum, _members))
-        _members = Set()
+        members = members :+ _field.cell(row, col)
+        println("------(" + row + ", " + col + "): added to - " + members.toString())
+      } else if (_field.cell(row, col).hasDown) {
+        _field = _field.set(Sum(_field.cell(row, col).downSum, members))
+        println("------(" + row + ", " + col + "): added to - " + members.toString())
+        members = Vector()
       }
     }
     _field
   }
-
   def fill(_field: Field): Field = {
     var grid: Field = new Field(_field.height, _field.width)
 
@@ -143,7 +147,7 @@ class FieldCreator extends FieldCreatorTemplate {
     grid = grid.set(7, 4)
     grid = grid.set(7, 5, 3, 0)
     grid = grid.set(7, 6, 0)
-    grid = grid.set(7, 7, 0)
+    grid = grid.set(7, 7, 2)
     grid
   }
 

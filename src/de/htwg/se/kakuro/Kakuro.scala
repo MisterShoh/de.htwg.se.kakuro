@@ -14,15 +14,20 @@ object Kakuro {
   val tui = new Tui(controller)
   var input: String = ""
   controller.initField()
+
+  val gui = new SwingGui2(controller)
+  gui.size = new Dimension(580, 680)
+  gui.visible = true
+
   def main(args: Array[String]): Unit = {
     do {
       tui.printTui()
       input = scala.io.StdIn.readLine()
-      if (input == "gui") {
+      /*if (input == "gui") {
         val gui = new SwingGui2(controller)
         gui.size = new Dimension(580, 680)
         gui.visible = true
-      }
+      }*/
       if (input != "exit" && input != "") tui.handleInput(input.toString)
       logger.debug("kakuro() input: " + input)
     } while (input != "exit" && input != "q")
