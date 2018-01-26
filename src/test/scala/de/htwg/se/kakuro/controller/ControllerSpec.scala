@@ -16,7 +16,6 @@ class ControllerSpec extends WordSpec with Matchers {
       "be created by using a field" in {
         controller.isInstanceOf[Controller] should be(true)
       }
-      // TODO undo/redo test
       "be able to und/redo set" in {
         controller.set(1, 3, 5)
         controller.field.cell(1, 3).value should be(5)
@@ -51,7 +50,6 @@ class ControllerSpec extends WordSpec with Matchers {
         //controller.field.cell(1, 4).downSum should be(13)
         true should be(true)
       }
-      //TODO
       "save" in {
         controller.set(1, 6, 5)
         controller.cell(1, 6).value should be(5)
@@ -74,7 +72,6 @@ class ControllerSpec extends WordSpec with Matchers {
       "height" in {
         controller.height should be(8)
       }
-      //TODO
       "be able to set (val)" in {
         //controller.set(5)
         false should be(false)
@@ -133,11 +130,9 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.set(0)
         controller.cell(1, 6).value should be(0)
       }
-      //TODO
       "isValid" in {
         controller.isValid should be(true)
       }
-      //TODO
       "isSolved" in {
         controller.isSolved should be(true)
       }

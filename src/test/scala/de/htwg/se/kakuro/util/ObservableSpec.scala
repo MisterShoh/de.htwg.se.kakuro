@@ -11,6 +11,9 @@ class ObservableSpec extends WordSpec with Matchers {
   val obs = new Observer {
     override def update: Unit = ???
   }
+  val obs2 = new Observer {
+    override def update: Unit = ???
+  }
   "A Observable" when {
     "not set to any value " should {
 
