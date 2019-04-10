@@ -34,8 +34,8 @@ trait ControllerInterface extends Publisher {
   def available(row: Int, col: Int): Set[Int]
   def gameStatus: GameStatus
   def statusText: String
-  def fill(_field: Field): Field
-  def generateSums(field: Field): Field
+  def fill: this.type
+  def generateSums: Field
 }
 
 import scala.swing.event.Event
