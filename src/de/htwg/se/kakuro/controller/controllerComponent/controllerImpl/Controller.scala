@@ -5,7 +5,7 @@ import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.kakuro.KakuroModule
 import de.htwg.se.kakuro.controller.controllerComponent.GameStatus._
 import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface, GameStatus, SelectorChanged }
-import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Field, FieldCreator }
+import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Field, Cell, Sum } //FieldCreator
 import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface }
 import de.htwg.se.kakuro.model.fileIOComponent.FileIOInterface
 import de.htwg.se.kakuro.util.UndoManager
@@ -41,7 +41,7 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
     publish(new CellChanged)
   }
 
-  def load: Unit = {
+  def load(): Unit = {
     val gridOption = fileIo.load
     gridOption match {
       case None => {
@@ -56,10 +56,112 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
   }
 
   def initField(): Unit = {
-    var generator = new FieldCreator()
-    field = generator.createNewField(8)
+    //var generator = new FieldCreator()
+    //field = generator.createNewField(8)
+    field = new Field(8)
+    //generateSums(field.asInstanceOf[Field])
     //field = generator.fill(field)
-    //field = generator.generateSums(field)
+    field = fill(field.asInstanceOf[Field])
+    field = generateSums(field.asInstanceOf[Field])
+  }
+
+  def fill(_field: Field): Field = {
+    var grid: Field = new Field(_field.height, _field.width)
+
+    grid = grid.set(0, 0)
+    grid = grid.set(0, 1, 0, 23)
+    grid = grid.set(0, 2, 0, 30)
+    grid = grid.set(0, 3)
+    grid = grid.set(0, 4)
+    grid = grid.set(0, 5, 0, 27)
+    grid = grid.set(0, 6, 0, 12)
+    grid = grid.set(0, 7, 0, 16)
+    grid = grid.set(1, 0, 16, 0)
+    grid = grid.set(1, 1, 0)
+    grid = grid.set(1, 2, 0)
+    grid = grid.set(1, 3)
+    grid = grid.set(1, 4, 24, 17)
+    grid = grid.set(1, 5, 0)
+    grid = grid.set(1, 6, 0)
+    grid = grid.set(1, 7, 0)
+    grid = grid.set(2, 0, 17, 0)
+    grid = grid.set(2, 1, 0)
+    grid = grid.set(2, 2, 0)
+    grid = grid.set(2, 3, 29, 15)
+    grid = grid.set(2, 4, 0)
+    grid = grid.set(2, 5, 0)
+    grid = grid.set(2, 6, 0)
+    grid = grid.set(2, 7, 0)
+    grid = grid.set(3, 0, 35, 0)
+    grid = grid.set(3, 1, 0)
+    grid = grid.set(3, 2, 0)
+    grid = grid.set(3, 3, 0)
+    grid = grid.set(3, 4, 0)
+    grid = grid.set(3, 5, 0)
+    grid = grid.set(3, 6, 0, 12)
+    grid = grid.set(3, 7)
+    grid = grid.set(4, 0)
+    grid = grid.set(4, 1, 7, 0)
+    grid = grid.set(4, 2, 0)
+    grid = grid.set(4, 3, 0)
+    grid = grid.set(4, 4, 8, 7)
+    grid = grid.set(4, 5, 0)
+    grid = grid.set(4, 6, 0)
+    grid = grid.set(4, 7, 0, 7)
+    grid = grid.set(5, 0)
+    grid = grid.set(5, 1, 0, 11)
+    grid = grid.set(5, 2, 16, 10)
+    grid = grid.set(5, 3, 0)
+    grid = grid.set(5, 4, 0)
+    grid = grid.set(5, 5, 0)
+    grid = grid.set(5, 6, 0)
+    grid = grid.set(5, 7, 0)
+    grid = grid.set(6, 0, 21, 0)
+    grid = grid.set(6, 1, 0)
+    grid = grid.set(6, 2, 0)
+    grid = grid.set(6, 3, 0)
+    grid = grid.set(6, 4, 0)
+    grid = grid.set(6, 5, 5, 0)
+    grid = grid.set(6, 6, 0)
+    grid = grid.set(6, 7, 0)
+    grid = grid.set(7, 0, 6, 0)
+    grid = grid.set(7, 1, 0)
+    grid = grid.set(7, 2, 0)
+    grid = grid.set(7, 3, 0)
+    grid = grid.set(7, 4)
+    grid = grid.set(7, 5, 3, 0)
+    grid = grid.set(7, 6, 0)
+    grid = grid.set(7, 7, 0)
+    grid
+  }
+
+  def generateSums(field: Field): Field = {
+    var _members: Set[Cell] = Set()
+    var _field = field
+    for {
+      row <- (0 until _field.width).reverse
+      col <- (0 until _field.height).reverse
+    } {
+      if (_field.cell(row, col).isWhite) {
+        _members = _members.+(_field.cell(row, col))
+      } else if (_field.cell(row, col).isBlack) {
+        _field = _field.putSum(Sum(_field.cell(row, col).rightSum, _members))
+        _members = Set()
+      }
+    }
+
+    for {
+      col <- (0 until _field.height).reverse
+      row <- (0 until _field.width).reverse
+    } {
+      if (_field.cell(row, col).isWhite) {
+        _members = _members.+(_field.cell(row, col))
+      } else if (_field.cell(row, col).isBlack) {
+        _field = _field.putSum(Sum(_field.cell(row, col).downSum, _members))
+        _members = Set()
+      }
+    }
+    _field
   }
 
   def available(row: Int, col: Int): Set[Int] = Set(0, 0)
@@ -121,7 +223,7 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
   }
   override def isSet(row: Int, col: Int): Boolean = cell(row, col).isSet
 
-  override def fieldToString: String = field.toString
+  //override def fieldToString: String = field.toString
   override def cell(row: Int, col: Int): CellInterface = field.cell(row, col)
 
   override def isSelected(row: Int, col: Int): Boolean = selection == (row, col)

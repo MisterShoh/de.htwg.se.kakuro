@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.kakuro.model.fieldComponent.FieldImpl
 
 import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldCreatorTemplate, FieldInterface }
@@ -7,8 +8,8 @@ import scala.io.Source
 class FieldCreator extends FieldCreatorTemplate {
   override def makeField(size: Int): FieldInterface = {
     var field = new Field(size)
-    field = fill(field)
-    field = generateSums(field)
+    //field = fill(field)
+    //field = generateSums(field)
     field
   }
 
@@ -47,7 +48,7 @@ class FieldCreator extends FieldCreatorTemplate {
   //field.generateSums(field)
   }
   */
-
+  /*
   def generateSums(field: Field): Field = {
     var _members: Set[Cell] = Set()
     var _field = field
@@ -146,5 +147,6 @@ class FieldCreator extends FieldCreatorTemplate {
     grid = grid.set(7, 7, 0)
     grid
   }
-
+*/
 }
+*/ 

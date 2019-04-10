@@ -2,6 +2,7 @@ package de.htwg.se.kakuro.controller.controllerComponent
 
 import de.htwg.se.kakuro.controller.controllerComponent.GameStatus.GameStatus
 import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface }
+import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Field, Cell, Sum }
 
 import scala.swing.Publisher
 
@@ -25,7 +26,7 @@ trait ControllerInterface extends Publisher {
   def set(value: Int): Unit
   def clear(row: Int, col: Int): Unit
   def isWhite(row: Int, col: Int): Boolean
-  def fieldToString: String
+  /*def fieldToString: String*/
   def selectCell(row: Int, col: Int): Unit
   def isSelected(row: Int, col: Int): Boolean
   def getSelected: (Int, Int)
@@ -33,6 +34,8 @@ trait ControllerInterface extends Publisher {
   def available(row: Int, col: Int): Set[Int]
   def gameStatus: GameStatus
   def statusText: String
+  def fill(_field: Field): Field
+  def generateSums(field: Field): Field
 }
 
 import scala.swing.event.Event
