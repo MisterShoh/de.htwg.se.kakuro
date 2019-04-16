@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.kakuro.model.fieldComponent
 
 trait FieldCreatorTemplate {
@@ -10,3 +11,4 @@ trait FieldCreatorTemplate {
   }
 
 }
+*/ 
