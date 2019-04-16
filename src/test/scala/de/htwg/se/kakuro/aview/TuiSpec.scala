@@ -1,8 +1,9 @@
 package de.htwg.se.kakuro.aview
 
-import de.htwg.se.kakuro.aview.Tui
+//import de.htwg.se.kakuro.aview.Tui
 import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.Controller
-import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.FieldCreator
+//import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.FieldCreator
+import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.Field
 import org.apache.logging.log4j.Logger
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -13,9 +14,11 @@ import org.scalatest.{ Matchers, WordSpec }
 class TuiSpec extends WordSpec with Matchers {
   "A Tui" when {
     "created" should {
-      var creator = new FieldCreator
-      var field = creator.makeField(8)
+      //var creator = new FieldCreator
+      //var field = creator.makeField(8)
+      var field = new Field(8)
       var controller = new Controller(field)
+      controller.initField()
       var tui = new Tui(controller)
       "be a tui" in {
         tui.isInstanceOf[Tui] should be(true)

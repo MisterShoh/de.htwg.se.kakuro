@@ -1,5 +1,5 @@
 import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.{ Controller, SetCommand }
-import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.FieldCreator
+//import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.FieldCreator
 import de.htwg.se.kakuro.util.{ Command, Observable, Observer, UndoManager }
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner

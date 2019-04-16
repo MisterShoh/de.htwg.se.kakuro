@@ -1,5 +1,6 @@
-import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Cell, FieldCreator }
+import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Cell, Field } //, FieldCreator
 import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
+import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.Controller
 import org.junit.runner.RunWith
 import org.scalatest.{ Matchers, WordSpec }
 import org.scalatest.junit.JUnitRunner
@@ -8,10 +9,13 @@ class FieldSpec extends WordSpec with Matchers {
 
   "A created Field" when {
 
-    var creator = new FieldCreator
+    //var creator = new FieldCreator
     //var field = creator.makeField(8)
     //var filledfield = creator.fill(field)
-    var filledfield = creator.createNewField(8)
+    //var filledfield = creator.createNewField(8)
+    var filledfield = new Field(8)
+    var controller = new Controller(filledfield)
+    controller.initField()
 
     "set should have a String representation" in {
       filledfield.toString.isEmpty should be(false)
@@ -49,15 +53,16 @@ class FieldSpec extends WordSpec with Matchers {
       filledfield.cell(1, 3).isWhite && filledfield.cell(2, 4).isBlack should be(true)
     }
     "createNewField" in {
-      val newField = (new FieldCreator).createNewField(8)
-      newField.isInstanceOf[FieldInterface] should be(true)
+      //val newField = (new FieldCreator).createNewField(8)
+      val newField = new Field(8)
+      newField.isInstanceOf[Field] should be(true)
       newField.height should be(8)
     }
     "isValid" in {
       filledfield.valid should be(true)
     }
     "isSolved" in {
-      filledfield.solved should be(false)
+      filledfield.solved should be(true)
     }
   }
 }

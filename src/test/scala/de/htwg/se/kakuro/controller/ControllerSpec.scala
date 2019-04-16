@@ -1,7 +1,7 @@
 package de.htwg.se.kakuro.controller
 
 import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.Controller
-import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Cell, FieldCreator, Matrix }
+import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Cell, Matrix, Field } //, FieldCreator
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{ Matchers, WordSpec }
@@ -10,9 +10,11 @@ import org.scalatest.{ Matchers, WordSpec }
 class ControllerSpec extends WordSpec with Matchers {
   "A controller" when {
     "empty " should {
-      var creator = new FieldCreator
-      var field = creator.makeField(8)
+      //var creator = new FieldCreator
+      //var field = creator.makeField(8)
+      var field = new Field(8)
       var controller = new Controller(field)
+      controller.initField()
       "be created by using a field" in {
         controller.isInstanceOf[Controller] should be(true)
       }
@@ -96,9 +98,9 @@ class ControllerSpec extends WordSpec with Matchers {
       "check valid input" in {
         controller.isValidInput(4) should be(true)
       }
-      "toString" in {
-        controller.fieldToString.isInstanceOf[String] should be(true)
-      }
+      //"toString" in {
+      //controller.fieldToString.isInstanceOf[String] should be(true)
+      //}
       "cell" in {
         controller.cell(1, 2).isInstanceOf[Cell] should be(true)
       }

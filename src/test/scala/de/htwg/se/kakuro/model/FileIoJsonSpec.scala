@@ -1,5 +1,5 @@
 import de.htwg.se.kakuro.controller.controllerComponent.controllerImpl.Controller
-import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Cell, FieldCreator }
+import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Cell, Field } //, FieldCreator
 import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
 import de.htwg.se.kakuro.model.fileIOComponent.FileIOInterface
 import org.junit.runner.RunWith
@@ -9,10 +9,12 @@ import de.htwg.se.kakuro.model.fileIOComponent.fileIOJsonImpl.FileIO
 @RunWith(classOf[JUnitRunner])
 class FileIoJsonSpec extends WordSpec with Matchers {
   val fileIo: FileIOInterface = new FileIO()
-  var filledfield = (new FieldCreator).createNewField(8)
+  //var filledfield = (new FieldCreator).createNewField(8)
   //var creator = new FieldCreator
   //var filledfield = creator.(field)
+  var filledfield = new Field(8)
   var controller = new Controller(filledfield)
+  controller.initField()
   "A created FileIoJson" when {
 
     "save and reload field" in {
