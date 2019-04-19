@@ -74,7 +74,7 @@ class Tui(controller: ControllerInterface) extends Reactor {
   }
 
   def printTui(): Unit = {
-    logger.info("\n" + controller.fieldToString)
+    logger.info("\n" + toString)
     logger.info("Open GUI: gui")
     logger.info("Wert setzen: s row col value")
     logger.info("Wert löschen: d row col")
@@ -89,5 +89,37 @@ class Tui(controller: ControllerInterface) extends Reactor {
     }
     false
   }
-}
 
+  override def toString: String = {
+    //logger.debug("field.toString()")
+    var result: String = "\n 0  1  2  3  4  5  6  7\n"
+    result += "+--+--+--+--+--+--+--+--+\n"
+    //var flength = grid.length - 1
+    for (j <- 0 until controller.width) {
+      result += stringRow(j)
+    };
+    result // + "\n" + printDebug()
+  }
+
+  def stringRow(row: Int): String = {
+    logger.debug("field.stringRow()")
+    var result: String = "|"
+    for (col <- 0 until controller.width) {
+      result += controller.cell(row, col).toStringRight
+      //result += grid(row).toStringRight
+      result += "|"
+    }
+    result += " " + row + "\n|"
+    for (col <- 0 until controller.width) {
+      result += controller.cell(row, col).toStringDown
+      //result += grid(row)(i).toStringDown
+      result += "|"
+    }
+    result += "\n+"
+    for (i <- 0 until controller.width) {
+      result += "--+"
+    }
+    result += "\n"
+    result
+  }
+}
