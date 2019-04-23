@@ -12,6 +12,8 @@ import de.htwg.se.kakuro.util.UndoManager
 import org.apache.logging.log4j.{ LogManager, Logger }
 
 import scala.swing.Publisher
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class Controller @Inject() (var field: FieldInterface) extends ControllerInterface with Publisher {
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
@@ -37,9 +39,11 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
   }
 
   def save: Unit = {
-    fileIo.save(field)
-    gameStatus = SAVED
-    publish(new CellChanged)
+    val future = Future {
+      fileIo.save(field)
+      gameStatus = SAVED
+      publish(new CellChanged)
+    }
   }
 
   def load(): Unit = {
