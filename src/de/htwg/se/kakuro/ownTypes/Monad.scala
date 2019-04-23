@@ -2,7 +2,7 @@ package de.htwg.se.kakuro.ownTypes
 
 import de.htwg.se.kakuro.model.fieldComponent.FieldInterface
 
-class ItemMonad[T](val items: Seq[T]) {
+class Monad[T](val items: Seq[T]) {
   def map(f: T => T): Seq[T] = items.map(item => f(item))
 }
 
