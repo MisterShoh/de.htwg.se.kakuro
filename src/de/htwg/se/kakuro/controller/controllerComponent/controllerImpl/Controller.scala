@@ -13,6 +13,7 @@ import org.apache.logging.log4j.{ LogManager, Logger }
 
 import scala.swing.Publisher
 import scala.concurrent.Future
+import scala.concurrent.blocking
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class Controller @Inject() (var field: FieldInterface) extends ControllerInterface with Publisher {
@@ -40,9 +41,11 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
 
   def save: Unit = {
     val future = Future {
-      fileIo.save(field)
-      gameStatus = SAVED
-      publish(new CellChanged)
+      blocking {
+        fileIo.save(field)
+        gameStatus = SAVED
+        publish(new CellChanged)
+      }
     }
   }
 
@@ -105,29 +108,33 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
   }
 
   def generateSums(): Field = { //field: Field
-    var _members: Set[Cell] = Set()
     var _field = field.asInstanceOf[Field]
-    for {
-      row <- (0 until _field.width).reverse
-      col <- (0 until _field.height).reverse
-    } {
-      if (_field.cell(row, col).isWhite) {
-        _members = _members.+(_field.cell(row, col))
-      } else if (_field.cell(row, col).isBlack) {
-        _field = _field.putSum(Sum(_field.cell(row, col).rightSum, _members))
-        _members = Set()
-      }
-    }
+    val fut = Future {
+      blocking {
+        var _members: Set[Cell] = Set()
+        for {
+          row <- (0 until _field.width).reverse
+          col <- (0 until _field.height).reverse
+        } {
+          if (_field.cell(row, col).isWhite) {
+            _members = _members.+(_field.cell(row, col))
+          } else if (_field.cell(row, col).isBlack) {
+            _field = _field.putSum(Sum(_field.cell(row, col).rightSum, _members))
+            _members = Set()
+          }
+        }
 
-    for {
-      col <- (0 until _field.height).reverse
-      row <- (0 until _field.width).reverse
-    } {
-      if (_field.cell(row, col).isWhite) {
-        _members = _members.+(_field.cell(row, col))
-      } else if (_field.cell(row, col).isBlack) {
-        _field = _field.putSum(Sum(_field.cell(row, col).downSum, _members))
-        _members = Set()
+        for {
+          col <- (0 until _field.height).reverse
+          row <- (0 until _field.width).reverse
+        } {
+          if (_field.cell(row, col).isWhite) {
+            _members = _members.+(_field.cell(row, col))
+          } else if (_field.cell(row, col).isBlack) {
+            _field = _field.putSum(Sum(_field.cell(row, col).downSum, _members))
+            _members = Set()
+          }
+        }
       }
     }
     _field
