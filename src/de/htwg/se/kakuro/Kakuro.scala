@@ -3,7 +3,7 @@ package de.htwg.se.kakuro
 import java.awt.Dimension
 
 import com.google.inject.Guice
-import de.htwg.se.kakuro.aview.{ SwingGui2, Tui }
+import de.htwg.se.kakuro.aview.{ SwingGui2, Tui, HttpServer }
 import de.htwg.se.kakuro.controller.controllerComponent.ControllerInterface
 import org.apache.logging.log4j.{ LogManager, Logger }
 
@@ -12,6 +12,7 @@ object Kakuro {
   val injector = Guice.createInjector(new KakuroModule)
   val controller = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
+  val webServer = new HttpServer(controller, tui)
   var input: String = ""
   controller.initField()
   def main(args: Array[String]): Unit = {
@@ -26,5 +27,6 @@ object Kakuro {
       if (input != "exit" && input != "") tui.handleInput(input.toString)
       logger.debug("kakuro() input: " + input)
     } while (input != "exit" && input != "q")
+    webServer.unbind
   }
 }
