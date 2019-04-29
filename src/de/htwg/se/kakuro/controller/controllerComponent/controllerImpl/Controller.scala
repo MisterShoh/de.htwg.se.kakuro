@@ -1,10 +1,13 @@
 package de.htwg.se.kakuro.controller.controllerComponent.controllerImpl
 
+import akka.actor.{ ActorSystem, Props, Actor }
 import com.google.inject.{ Guice, Inject }
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.kakuro.KakuroModule
 import de.htwg.se.kakuro.controller.controllerComponent.GameStatus._
 import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface, GameStatus, SelectorChanged }
+import de.htwg.se.kakuro.controller.controllerComponent.checkImpl.Checker
+import de.htwg.se.kakuro.controller.controllerComponent.checkImpl.Checker._
 import de.htwg.se.kakuro.model.fieldComponent.FieldImpl.{ Field, FieldCreator }
 import de.htwg.se.kakuro.model.fieldComponent.{ CellInterface, FieldInterface }
 import de.htwg.se.kakuro.model.fileIOComponent.FileIOInterface
@@ -22,6 +25,10 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
   def statusText: String = GameStatus.message(gameStatus)
   var selection: (Int, Int) = (-1, -1)
   var showAllCandidates: Boolean = false
+  var gameResult = false
+
+  val system = ActorSystem("MySystem")
+  val actor = system.actorOf(Props[Checker], "CheckerActor")
 
   def undo(): Unit = {
     undoManager.undoStep
@@ -53,6 +60,15 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
       }
     }
     publish(new CellChanged)
+  }
+
+  def check: Boolean = {
+    actor ! Checker.Check(this)
+    return gameResult
+  }
+
+  def setGameResult(): Unit = {
+    gameResult = true
   }
 
   def initField(): Unit = {

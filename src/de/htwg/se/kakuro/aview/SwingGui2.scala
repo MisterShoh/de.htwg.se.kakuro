@@ -3,6 +3,7 @@ package de.htwg.se.kakuro.aview
 import javax.swing.UIManager
 import javax.swing.plaf.nimbus.NimbusLookAndFeel
 import de.htwg.se.kakuro.controller.controllerComponent.{ CellChanged, ControllerInterface }
+import de.htwg.se.kakuro.aview.CellPanel2._
 import scala.swing._
 import scala.swing.event._
 
@@ -89,6 +90,29 @@ class SwingGui2(controller: ControllerInterface) extends MainFrame {
       contents += new MenuItem(Action("Redo") { controller.redo() })
       contents += new MenuItem(Action("Save") { controller.save() })
       contents += new MenuItem(Action("Load") { controller.load() })
+    }
+    contents += new Menu("Check") {
+      mnemonic = Key.C
+      contents += new MenuItem(Action("Check") {
+        if (!controller.check()) {
+          for (cell <- cells) {
+            for (c <- cell) {
+              if (c.myCell.isWhite) {
+                c.contents(1).background = java.awt.Color.RED
+              }
+            }
+          }
+        }
+      })
+      contents += new MenuItem(Action("Continue") {
+        for (cell <- cells) {
+          for (c <- cell) {
+            if (c.myCell.isWhite) {
+              c.contents(1).background = java.awt.Color.WHITE
+            }
+          }
+        }
+      })
     }
   }
 

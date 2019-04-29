@@ -16,6 +16,8 @@ trait ControllerInterface extends Publisher {
   def redo(): Unit
   def save(): Unit
   def load(): Unit
+  def check(): Boolean
+  def setGameResult(): Unit
   def isSet(row: Int, col: Int): Boolean
   def initField(): Unit
   def cell(row: Int, col: Int): CellInterface
