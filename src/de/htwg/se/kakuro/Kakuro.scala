@@ -3,8 +3,10 @@ package de.htwg.se.kakuro
 import java.awt.Dimension
 
 import com.google.inject.Guice
-import de.htwg.se.kakuro.aview.{ SwingGui2, Tui, HttpServer }
+import de.htwg.se.kakuro.aview.{ HttpServer, SwingGui2, Tui }
 import de.htwg.se.kakuro.controller.controllerComponent.ControllerInterface
+import de.htwg.se.kakuro.microservices.{ SimpleCounter, SimpleCounterServer }
+import de.htwg.se.kakuro.database.kakuroService
 import org.apache.logging.log4j.{ LogManager, Logger }
 
 object Kakuro {
@@ -14,6 +16,9 @@ object Kakuro {
   val tui = new Tui(controller)
   val webServer = new HttpServer(controller, tui)
   var input: String = ""
+  val webserver = new SimpleCounterServer(new SimpleCounter)
+  val kakuroserver = new kakuroService();
+  println(s"Server online at http://localhost:8081/\nPress RETURN to stop...")
   controller.initField()
   def main(args: Array[String]): Unit = {
     do {
