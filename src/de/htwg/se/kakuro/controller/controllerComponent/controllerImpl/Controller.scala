@@ -16,7 +16,9 @@ import org.apache.logging.log4j.{ LogManager, Logger }
 
 import scala.swing.Publisher
 
-class Controller @Inject() (var field: FieldInterface) extends ControllerInterface with Publisher {
+class Controller @Inject() () extends ControllerInterface with Publisher {
+  var generator = new FieldCreator()
+  var field: FieldInterface = generator.createNewField(8)
   val logger: Logger = LogManager.getLogger(this.getClass.getName)
   val injector = Guice.createInjector(new KakuroModule)
   val fileIo = injector.instance[FileIOInterface]
@@ -29,6 +31,10 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
 
   val system = ActorSystem("MySystem")
   val actor = system.actorOf(Props[Checker], "CheckerActor")
+
+  def setField(field: FieldInterface): Unit = {
+    this.field = field
+  }
 
   def undo(): Unit = {
     undoManager.undoStep
@@ -71,7 +77,7 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
     gameResult = true
   }
 
-  def initField(): Unit = {
+  def initField(): Unit = { // Diese Funktion wird in Model geschoben
     var generator = new FieldCreator()
     field = generator.createNewField(8)
     //field = generator.fill(field)
@@ -156,4 +162,6 @@ class Controller @Inject() (var field: FieldInterface) extends ControllerInterfa
   override def isValid: Boolean = field.valid
 
   override def isSolved: Boolean = field.solved
+
+  override def getField: FieldInterface = field
 }

@@ -35,6 +35,8 @@ trait ControllerInterface extends Publisher {
   def available(row: Int, col: Int): Set[Int]
   def gameStatus: GameStatus
   def statusText: String
+  def getField: FieldInterface
+  def setField(field: FieldInterface): Unit
 }
 
 import scala.swing.event.Event
